@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang='ko'>
+   <head>
+       <meta charset='utf-8'>
+       <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+       <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+       <title>헤더</title>
+
+        <!-- 폰트 -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+       <style>
+
+            @font-face {
+                font-family: 'Wemakeprice-Regular';
+                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Wemakeprice-Regular.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+            }
+           html{height: 1500px;}
+           html,*,body{margin: 0; }
+           header{width: 100%; height: 90px; display: flex; align-items: center; justify-content: space-between; padding: 5px 20px; border-bottom: 1px solid #ddd; box-sizing: border-box; position: fixed; font-family: 'Wemakeprice-Regular'; }
+           header a{text-decoration: none; display: block; color: rgb(0, 0, 0);}
+           header a:hover {color: #FC6636; font-weight: bold;}
+           header .logo{width: 230px;}
+           header ul {list-style: none; display: flex; justify-content: space-around; width: 1000px; font-size: 24px;}
+
+        
+           
+
+
+
+            /*로그인 후 창*/
+           header .login {width: 300px; display: flex; align-items: center; justify-content: space-around;}
+
+           header .bell {position: relative; cursor: pointer;}
+           header .bell .bell_list_bg{display: none; width: 300px; height: 340px; background: url(header_img/말풍선.png) no-repeat center; position: absolute; left: -135px; top: 40px;  box-sizing: border-box; overflow: hidden; cursor: default; padding-top: 50px;}
+           header .bell .bell_list{margin: 0 auto; display: flex; flex-flow: column; width: 98.5%; height: 260px; overflow-y: scroll; font-family: 'Noto Sans KR', sans-serif;}
+        
+            /*토글 클래스*/
+           header .bell .bell_list_bg.show {display: block;}
+
+            /* 스크롤바*/
+           .bell_list::-webkit-scrollbar{ width: 5px;}
+           .bell_list::-webkit-scrollbar-thumb {background-color:#FC6636;border-radius: 10px;}
+
+            /*알림창 list*/
+           header .bell .bell_list span{border-bottom: 1px solid #ddd; padding: 10px; background-color: rgb(253, 253, 253); cursor: pointer;}
+           header .bell .bell_list span:nth-of-type(1){border-top: 1px solid #ddd;}
+           header .bell .bell_list span:hover{background-color: blanchedalmond;}
+
+
+
+
+            /*로그아웃 창*/
+           header .logout{width: 300px; display: flex; align-items: center; justify-content: space-around;  display: none;}
+       </style>
+       <script src='https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js'></script>
+
+       <script>
+           $(function(){
+               $(".bell").click(function(){
+                    $(".bell_list_bg").toggleClass("show");
+               });
+           });
+       </script>
+   </head>
+   <body>
+        <header>
+            <a href="#" class="logo"><img src="header_img/logo.png" alt="로고"></a>
+
+            <ul class="menu">
+                <li><a href="#">레시피 찾기</a></li>
+                <li><a href="#">레시피 작성</a></li>
+                <li><a href="#">게시판</a></li>
+                <li><a href="#">마이페이지</a></li>
+            </ul>
+
+            <div class="login">
+                <div href="#" class="bell">
+                    <img src="header_img/bell.png" alt="알림">
+                    <div class="bell_list_bg">
+                        <div class="bell_list">
+                            <span>레시피에 신고가 접수됐습니다.</span>
+                            <span>신고문의가 접수됐습니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                            <span>계정이 영구 삭제됩니다.</span>
+                        </div> 
+                    </div>
+                </div>
+                <span class="login_name">노성봉<strong style="font-weight: normal;">님</strong></span>
+                <a href="#" class="logout_btn">로그아웃</a>
+            </div>
+
+
+            <div class="logout">
+                <a href="#" class="sign_up_btn">회원가입</a>
+                <a href="#" class="login_btn">로그인</a>
+            </div>
+        </header>
+
+   </body>
+</html>
