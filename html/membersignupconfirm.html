@@ -23,16 +23,16 @@
     font-style: normal;
 }
 
-*{font-family: 'Noto Sans KR', sans-serif; }
 .main_container{width: 500px; margin: 0 auto; padding-top : 120px;}
 .form_title_p{font-weight: bold; font-size: 22px; display: inline-block; margin: 15px; line-height: 20px;}
 .signupconfirm_form{border: 1px solid rgba(128, 128, 128, 0.603); margin: 0 auto; position: relative;}
 .chk{line-height: 33px; margin: 10px; position: absolute; right: 0px;}
-textarea{color: #363131;width: 476px; height: 200px; resize: none; margin: 0 10px 8px; font-size: 0.9em; background-color: rgba(128, 128, 128, 0.068); border:0.5px solid rgba(196, 195, 195, 0.603); padding: 0 10px; box-sizing: border-box;}
-.form_next_button{width: 100%; height: 44px; background-color: rgba(128, 128, 128, 0.623); border: 1px; border-radius: 3px; color: white; font-size: 17px; font-weight: 400; margin-top: 20px; }
+textarea{color: #363131;width: 476px; height: 200px; resize: none; margin: 0 10px 8px; font-size: 0.9em; background-color: rgba(128, 128, 128, 0.068); border:0.5px solid rgba(196, 195, 195, 0.603); padding: 0 10px; box-sizing: border-box; font-family: 'Noto Sans KR', sans-serif;}
+.form_next_button{font-family: 'Noto Sans KR', sans-serif; cursor:pointer; width: 100%; height: 44px; background-color: rgba(128, 128, 128, 0.623); border: 1px; border-radius: 3px; color: white; font-size: 17px; font-weight: 400; margin-top: 20px; }
 .hr:first-child{border-bottom: 1px solid rgba(128, 128, 128, 0.603);}
 .hr:last-child{border-top: 1px solid rgba(128, 128, 128, 0.603);}
 .form_text_alert_padding{padding-bottom: 15px;}
+.signupcon_section{font-family: 'Noto Sans KR', sans-serif;}
 </style>
 <script src='https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js'></script>
 <script>
@@ -68,6 +68,7 @@ textarea{color: #363131;width: 476px; height: 200px; resize: none; margin: 0 10p
 </head>
 <body>
     <header id ="header"></header>
+    <section class="signupcon_section">
     <div id="container" class="main_container">
         <div style="padding: 20px;"></div>
         <div class="signupconfirm_container">
@@ -490,11 +491,12 @@ textarea{color: #363131;width: 476px; height: 200px; resize: none; margin: 0 10p
                     <div id="alert_member_id" class="form_text_alert"></div>
                 </div>
                 <div>
-                    <input type="button" class="form_next_button" onclick = "location.href= 'signup.html'" value="다음" disabled></input>
+                    <input type="button" class="form_next_button" onclick = "location.href= 'membersignup.html'" value="다음" disabled></input>
                 </div>
             </div>
         </div>
     </div>
+</section>
     <footer id ="footer"></footer>
 </body>
 </html>
