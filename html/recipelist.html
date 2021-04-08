@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>recipelist.html</title>
 
-    
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
     <script src='https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js'></script>
      <script>
           $(function(){
@@ -30,17 +33,16 @@
         font-weight: normal;
         font-style: normal;
     } 
-    body{
-        font-family: 'Noto Sans KR', sans-serif;
-    }
 
     section{
         width: 1300px;
         margin: 30px auto;
+        font-family: 'Noto Sans KR', sans-serif;
     }
     .top{
         width: 1300px;
         margin:0px auto;
+        
     }
     .title{
         text-align: center;
@@ -48,7 +50,7 @@
         height: 160px;
         background-image: url("../images/web/back3.jpg") ;
         background-position: center; 
-        font-size: 22px;
+        font-size: 27px;
         font-weight: bold;
     }
     /* 카테고리 : 한식, 양식, 일식, 중식 */
@@ -117,6 +119,22 @@
         font-weight: bold;
         display: inline-block;
     }
+    .button{
+            font-weight: bold;
+            font-size: 15px;
+            width: 150px;
+            height: 45px;
+            margin: 10px;
+            margin-left: 0px;
+            background: #55A72B;
+            color: white;
+            border-radius: 10px;
+    }
+    .box {
+            border-radius: 8px;
+            border: solid 2px #36313138;
+            outline: none;
+        }
     
 </style>
 <script>
@@ -130,19 +148,19 @@
         <!--레시피 리스트-->
         <article style="background-color: rgb(255,248,248);">
             <div class="top">
-                <div class="title">레시피 리스트</div>
+                <div class="title" style=" font-family: 'Noto Sans KR', sans-serif;">레시피 리스트</div>
                     <!-- 카테고리 : 한식, 양식, 일식, 중식 -->
-                    <div style="margin-top: 27px; margin-left:460px;">
-                        <input type="button" value="한식" class="category" id="1">  
-                        <input type="button" value="양식" class="category" id="2">  
-                        <input type="button" value="중식" class="category" id="3">  
-                        <input type="button" value="일식" class="category" id="4">
-                        <input type="button" value="퓨전" class="category" id="5"> <br>
+                    <div style="margin-top: 27px; margin-left:460px;" >
+                        <input type="button" value="한식" class="category" id="1"  style=" font-family: 'Noto Sans KR', sans-serif;">  
+                        <input type="button" value="양식" class="category" id="2"  style=" font-family: 'Noto Sans KR', sans-serif;">  
+                        <input type="button" value="중식" class="category" id="3"  style=" font-family: 'Noto Sans KR', sans-serif;">  
+                        <input type="button" value="일식" class="category" id="4"  style=" font-family: 'Noto Sans KR', sans-serif;">
+                        <input type="button" value="퓨전" class="category" id="5"  style=" font-family: 'Noto Sans KR', sans-serif;"> <br>
                     </div>
 
                     <!-- 선택 : 재료/요리명, 부재료, 주재료, 양념 -->
                     <div>
-                    <select id ="recipe_ingre" style="margin-top: 22px; margin-left:440px;margin-bottom: 50px;">
+                    <select id ="recipe_ingre" style="margin-top: 22px; height: 32px; margin-left:440px;margin-bottom: 50px;font-family: 'Noto Sans KR', sans-serif;" class="box">
                         <option class="op" selected>재료/요리명</option>
                         <option class="op" >부재료</option>
                         <option class="op" >주재료</option>
@@ -150,10 +168,10 @@
                     </select>
 
                     <!-- 재료 및 부재료 입력 -->
-                    <input type="text" value="입력하여 주세요" id="text" >
+                    <input type="text" value="입력하여 주세요" id="text" class="box" style="height: 32px;font-family: 'Noto Sans KR', sans-serif;">
 
                     <!-- 검색버튼 -->
-                    <input type="button" value="검색" id="submit">
+                    <input type="button" value="검색" id="submit" style="cursor: pointer;" class="button">
                     </div>
             </div>
         </article>
