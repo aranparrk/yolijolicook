@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  파일이 생성됨 - 일요일-4월-04-2021   
+--  파일이 생성됨 - 월요일-4월-05-2021   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Table SCRAP
@@ -15,6 +15,11 @@
   STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "COOK"."SCRAP"."SCRAP_NO" IS '스크랩번호';
+   COMMENT ON COLUMN "COOK"."SCRAP"."MEMBER_ID" IS '아이디';
+   COMMENT ON COLUMN "COOK"."SCRAP"."RECIPE_NO" IS '레시피번호';
+   COMMENT ON COLUMN "COOK"."SCRAP"."SCRAP_DT" IS '스크랩날짜';
 REM INSERTING into COOK.SCRAP
 SET DEFINE OFF;
 Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (1,'id1',1,to_date('21/04/01','RR/MM/DD'));

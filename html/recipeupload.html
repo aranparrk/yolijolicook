@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" style="height: auto;">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <script src = "http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+    <style>
+        /* 폰트 */
+        @font-face {
+            font-family: 'Wemakeprice-Bold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Wemakeprice-Bold.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Wemakeprice-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Wemakeprice-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        *{
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #363131;
+            font-size: 18px;
+        }
+       /* 공통 */
+
+        #section{
+            width: 800px;
+            margin: 0 auto ;
+            
+        }
+        #header{
+            position: relative;
+        }
+        form{
+            margin: 70px auto 100px auto;
+
+        }
+        article{
+            margin-bottom: 150px;
+            width: 100%;
+            margin: 0 auto;
+            margin-bottom: 100px;
+            background-color: rgba(250, 235, 215, 0.226);
+            border: solid 10px #fc67362c;
+            border-radius: 15px;
+            /* border: solid #000 1px; */
+            text-align: center;
+            padding: 50px 0;
+        }
+
+             
+        .title2{
+            font-family: 'Wemakeprice-Regular';
+            font-size: 24px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+    
+        .button{
+            font-weight: bold;
+            font-size: 15px;
+            width: 150px;
+            height: 45px;
+            margin: 10px;
+            margin-left: 0px;
+            background: #55A72B;
+            color: white;
+            border-radius: 10px;
+            border: none;
+        }
+        .box {
+            border-radius: 8px;
+            border: solid 2px #36313138;
+        }
+
+       /* .infoArea{
+           margin-top: 150px;
+       } */
+       
+       /* 타이틀 */
+
+        .title{
+            font-family: 'Wemakeprice-Bold';
+            width: 100%;
+            margin-bottom: 50px;
+            text-align: center;
+            padding: 50px 10px 10px 10px;
+            font-size: 35px;
+            font-weight: 500;
+        }
+        /* 재료추가 */
+        #ingre2{
+            margin : 20px 0px;
+        }
+        .svg-inline--fa{
+            display : none;
+        }
+        /* 주의 */
+        .warn{
+            padding-left: 420px ;
+            font-size: 14px;
+            display: block;
+            color: #CB1C19;
+        }
+
+        /* 저장 취소 버튼 */
+        .submitBtn{
+            text-align: right;
+        }
+
+    </style>
+    
+    <!-- 자바스크립트 나중에 최신버전으로 바꾸기-->
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> 
+    
+    <!-- 선택한 메인사진 미리보기 -->
+    <script>
+        // ...............header..................
+        $(function(){
+            $("#header").load("header.html");
+            $("#footer").load("footer.html");
+        });
+    
+    
+         $(document).ready(function(){ function readURL(input) { 
+        if (input.files && input.files[0]) {
+             var reader = new FileReader(); //파일을 읽기 위한 FileReader객체 생성 
+             reader.onload = function (e) {  //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
+                 $('#preview').attr('src', e.target.result); //이미지 Tag의 SRC속성에 읽어들인 File내용을 지정 //(아래 코드에서 읽어들인 dataURL형식)
+                 }
+                  reader.readAsDataURL(input.files[0]); //File내용을 읽어 dataURL형식의 문자열로 저장 
+                } 
+            }//readURL()--
+                //file 양식으로 이미지를 선택(값이 변경) 되었을때 처리하는 코드
+                 $("#upload_file").change(function(){ //alert(this.value); 
+                //선택한 이미지 경로 표시
+                 readURL(this);
+                 }); 
+         });
+
+
+
+    </script>
+
+</head>
+
+
+
+<body>
+    <header id="header">
+    </header>
+
+   <section id="section">
+    <!--조리소개-->
+    <form>
+        <div class="titleArea">
+            <div class="title" >레시피 등록</div>
+        </div>  
+        <article>
+            <div class="infoArea">
+               
+                <div id="mainPhoto"> 
+                    <div  class="mainPhoto" style="display: inline-flex;">
+                        <div>
+                        <p class="title2" style=" margin-top: 70px;"> 대표사진등록</p>
+                        <img id="preview" src=""  width="300px" height="300px" style="margin-top: 15px;">
+                        <input type='file' id="upload_file" name="recipe_img" style="margin-left: 60px;" >
+
+                        </div>
+                        <div style="display: inline; float: right;margin:95px 50px 0px 0px;">
+                            <p style="margin-right: 80px;"> 최소 사이즈 : 300PX<br> 최대 사이즈 : 600PX</p>
+                             <img src="./recipe_img/ex.PNG" width="300px" height="300px">
+                         </div>
+                    </div>
+                </div>
+
+
+
+                <div>
+                    <p class="title2" style="margin-top: 60px;">레시피 제목</p>
+                    <input type="text" name="recipe_name" class="box infoTitle" placeholder="예) 소고기 미역국 끓이기" style="width:610px; ">
+                </div>
+                <div>
+                    <p class="title2">요리소개</p>
+                    <textarea name="recipe_intro" class="box infoIntro" placeholder="이 레시피의 탄생배경을 적어주세요. 예) 어머니로부터 배운 미역국 레시피를 남편의 입맛에 맞게 고안했습니다." style="height:100px; width:610px; resize:none;"></textarea>
+                </div>
+
+                <div style="display: inline-block; margin: 40px 16px 16px 0px;">
+                    <span>소요시간</span>
+                    <div style="display: inline-block;">
+                        <input class="box" type="text" placeholder="예)30분 이상" name="recipe_time">
+                    </div>
+
+                    <div style="display: inline-block; margin-left: 20px;">
+                        <span>난이도</span>
+                            <select class="box">
+                                <option class="op" selected value="1">초보환영</option>
+                                <option class="op" value="2">보통</option>
+                                <option class="op" value="3">어려움</option>
+                            </select>
+                    </div>
+
+                                
+                    <!-- 선택 : 한식 양식 중식 일식 퓨전 -->
+                    <div style="display: inline-block;margin-left:20px;">
+                        <span>카테고리 선택</span>
+                        <select class="box">
+                            <option class="op" selected value="1">한식</option>
+                            <option class="op" value="2">양식</option>
+                            <option class="op" value="3">일식</option>
+                            <option class="op" value="4">중식</option>
+                            <option class="op" value="5">퓨전</option>
+                        </select>
+                    </div>
+                </div>
+            </div><!-- /container -->
+        </article>
+
+       <!--조리재료/계량-->
+       <article>
+        <div class="ingreArea">
+        
+            <div class="title2 ingre">재료</div>
+
+            <div id="ingre">
+                <select class="box" name="recipe_ingre_type" style="display: inline-block;">
+                    <option class="op" selected value="1">주재료</option>
+                    <option class="op" value="2">부재료</option>
+                    <option class="op" value="3">양념</option>
+                    </select>
+                    <input class="box recipeIngreName" name="recipe_ingre_name" type="text" placeholder="예) 닭고기">
+                    <span>계량</span>
+                    <input class="box recipeIngreMetering" name="recipe_ingre_metering" type="text" placeholder="예) 300g">
+                    <span class="warn"> &#9888; 계량 단위를 정확히 적어주세요</span>
+                </div>
+
+            <div id="ingre2">
+                <label class="ingreBox">
+                <select class="box" name="recipe_ingre_type" style="display: inline-block;">
+                    <option class="op" selected value="1">주재료</option>
+                    <option class="op" value="2">부재료</option>
+                    <option class="op" value="3">양념</option>
+                    </select>
+                    <input class="box recipeIngreName" name="recipe_ingre_name" type="text" placeholder="예) 닭고기">
+                    <span>계량</span>
+                    <input class="box recipeIngreMetering" name="recipe_ingre_metering" type="text" placeholder="예) 300g">
+                    <i class="fas fa-times" style=" padding: 2px;cursor:pointer;"></i>
+                </label>
+            </div>
+
+
+            
+
+
+        </div>
+        <div>
+            <input class="button plusIntre ingreButton" type="button" value="추가" style="margin-top: 40px;margin-bottom: 16px;">
+        </div>
+<!-- 재료추가 script -->
+        <script>
+            $(function(){
+                //추가버튼 클릭시
+            $(".ingreButton").click(function(){ 
+                var $ingreArea = $('.ingreArea');
+                var ingreBox = '<div id="ingre2"><label class="ingreBox"><select class="box" name="recipe_ingre_type" style="display: inline-block;"><option class="op" selected value="1">주재료</option><option class="op" value="2">부재료</option><option class="op" value="3">양념</option></select><input class="box recipeIngreName" name="recipe_ingre_name" type="text" placeholder="예) 닭고기"><span>계량</span><input class="box recipeIngreMetering" name="recipe_ingre_metering" type="text" placeholder="예) 300g"><i class="fas fa-times" style=" padding: 2px;cursor:pointer; display:none;"></i></label></div>'
+                console.log(ingreBox);
+                $ingreArea.append(ingreBox);
+
+            });
+
+            $(".ingreBox").mouseover(function(){
+                $(".svg-inline--fa").css("display","inline-block")
+            });
+
+            $(".ingreBox").mouseout(function(){
+                $(".svg-inline--fa").css("display","none")
+            });
+            $(".svg-inline--fa").mouseout(function(){
+                $(".svg-inline--fa").css("display","none")
+            });
+
+            });
+        </script>
+    </article>
+
+    <!--조리과정-->
+    <article>
+        <!-- </div>/cont_box -->
+        <div class="processArea">
+
+            <input type="file" name="file" id="recipe_img" file_gubun="step" style="display:none;" multiple=""> <!-- 파일업로드 -->
+            <p class="title2">요리순서</p>
+            <span class="recipeStepText" style="width: 100%;" >
+                <b> <span style="color:#CB1C19 ;">&#9888;&nbsp;&nbsp;요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.</span> </b><br><br>
+                <div style="text-align: left; margin-left: 150px; margin-bottom: 30px;">
+                예)    &nbsp;10분간 익혀주세요 ▷ 10분간 약한불로 익혀주세요.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;마늘편은 익혀주세요 ▷ 마늘편을 충분히 익혀주셔야 매운 맛이 사라집니다.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;꿀을 조금 넣어주세요 ▷ 꿀이 없는 경우, 설탕 1스푼으로 대체 가능합니다.
+                </div>
+            </span> 
+            <!--step1-->
+            <div  id="divStepArea" style="display: inline; margin:0 20px;">
+            <div>
+                <div style="display:inline;" class="step">
+                    <p style="margin-right: 380px;"><b>Step1</b></p><br>
+                    <div>
+                        <textarea name="recipe_step_text[]"class="box" placeholder="예) 소고기는 기름기를 떼어내고 적당한 크기로 썰어주세요." style="height:160px; width:430px; resize:none;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div >
+                <input type='file' id="upload_file" name="recipe_img" style="float: right; margin-right: 60px;" >
+            </div>
+        </div>
+        <br>
+            <!--step2-->
+            <div  id="divStepArea" style="display: inline; margin:0 20px;">
+                <div>
+                    <div style="display:inline;" class="step">
+                        <p style="margin-right: 380px;"><b>Step2</b></p><br>
+                        <div style="display: inline-block;">
+                            <textarea name="recipe_step_text[]"class="box" placeholder="입력해주세요" style="height:160px; width:430px; resize:none;"></textarea>
+                        </div>
+                        <i class="fas fa-times" style="margin-bottom: 145px; padding: 2px;cursor:pointer; display: none;"></i>
+                    </div>
+                </div>
+                <div >
+                    <input type='file' id="upload_file" name="recipe_img" style="float: right; margin-right: 60px;" >
+                </div>
+            </div>
+            <br>
+                        <!--step3-->
+                        <div  id="divStepArea" style="display: inline; margin:0 20px;">
+                            <div>
+                                <div style="display:inline;" class="step">
+                                    <p style="margin-right: 380px;"><b>Step3</b></p><br>
+                                    <div>
+                                        <textarea name="recipe_step_text[]"class="box" placeholder="입력해주세요" style="height:160px; width:430px; resize:none;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div >
+                                <input type='file' id="upload_file" name="recipe_img" style="float: right; margin-right: 60px;" >
+                            </div>
+                        </div>
+                        <br>
+
+        </div>
+        <!-- </div> -->
+    
+        <!-- 레시피 과정 추가 / 순서추가 버튼 클릭시 보임 -->
+        <!-- step template -->
+
+        <br><br>
+        <div class="btn_add mag_b_25" style="padding:0 0 20px 180px; width:820px;">
+            <button type="button" onclick="addStep()" class="button btn btn-default">
+                <span class="glyphicon glyphicon-plus-sign"></span>추가
+            </button>
+        </div>
+
+    </article>
+
+    <div class="submitBtn">
+        <button type="button" onclick="history.back();" class="button btn-lg btn-default">취소</button> <!-- 이전페이지로 이동 -->
+        <button type="button" onclick="doSubmit('save')" class="button btn-lg btn-primary">저장</button><!-- DB저장 후 마이페이지로 이동 -->  
+    </div>
+                                                       
+</form>
+<footer id="footer"></footer>
+</section>
+
+
+</body>
+</html>
