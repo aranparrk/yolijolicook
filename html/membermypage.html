@@ -976,6 +976,8 @@
                 if(listsize > 10){
                     $(".board").css("height","500px");
                     $(".board .items").css("height","500px");
+                }else{
+                    $(".board").css("margin-bottom","150px");
                 }
 
                 var cmtlistsize = $(".board .items .item").length;
@@ -984,6 +986,8 @@
                 if(cmtlistsize > 10){
                     $(".board_cmt").css("height","500px");
                     $(".board_cmt .items").css("height","500px");
+                }else{
+                    $(".board_cmt").css("margin-bottom","150px");
                 }
 
 
@@ -1059,6 +1063,8 @@
                     if(listsize2 > 10){
                         $("." + tabData).css("height","500px");
                         $("." + tabData + " .items").css("height","500px");
+                    }else{
+                        $("."+tabData).css("margin-bottom","150px");
                     }
 
                     
