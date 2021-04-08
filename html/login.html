@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 | 요리조리쿡</title>
+
+     <!-- 폰트 -->
+     <link rel="preconnect" href="https://fonts.gstatic.com">
+     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+@font-face {
+    font-family: 'Wemakeprice-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Wemakeprice-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Wemakeprice-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Wemakeprice-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+*{font-family: 'Noto Sans KR', sans-serif; }
+.login_section{color: #363131; height: 700px;}
+.login_form_container{width: 400px; margin:  auto; padding-top : 200px;}
+.login_form_title_div{margin: auto; text-align: center;}
+.login_form_title_h{font-weight: bold; font-size: 40px; display: inline-block; padding: 8px; margin-bottom: 30px;}
+.login_form_input{width: 100%; height: 45px; border: 1px solid; border-radius: 3px; border-color: gray;}
+.login_form_text_alert{height: 20px; font-size: 14px; color: red; margin-left: 2px;}
+.login_form_text_alert_padding{padding-bottom: 10px;}
+.login_form_submit_button{width: 100%; height: 55px; background-color: #55a72b; border: 1px ; border-radius: 3px; color: white; font-size: 17px; font-weight: 400;}
+.logincheckbox{line-height: 25px; padding: 6px 0; font-size: 0.85em;}
+.login_find_info{text-align: center; color: gray;}
+.login_find_info a{text-decoration: none; color: gray; font-size: 0.8em; line-height: 20px;}
+#login_alert_help_block{font-size : 0.8em; color: #363131;}
+.login_guide_txt{position: relative; bottom: 1.5px;}
+</style>
+
+<script src='https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js'></script>
+<script>
+    $(function(){
+        // header, footer 연결
+        $("#header").load("header.html");
+        $("#footer").load("footer.html");
+
+        $("#member_id").focus();
+
+        // 아이디 저장 체크박스 선택시 안내 메세지
+        $("input[type=checkbox]").change(function(){
+            if($("input[type=checkbox]").is(":checked")){
+                $("#login_alert_help_block").text("개인정보 보호를 위해, 개인 PC에서만 사용해 주세요").css("color", "#363131");
+            }else{
+                $("#login_alert_help_block").text("");
+            }
+        });
+
+        // 입력칸을 공란으로 제출 시 경고 메세지 출력
+        $(".login_form_submit_button").on("click",function(){
+            if($("#member_id").val() == "" || $("#member_id").val() == null){
+                $("#alert_member_id").text("아이디를 입력하세요.");
+            }else{
+                $("#alert_member_id").text("");
+            }
+
+            if($("#member_pwd").val() == "" || $("#member_pwd").val() == null){
+                $("#alert_member_pwd").text("비밀번호를 입력하세요.");
+            }else{
+                $("#alert_member_pwd").text("");
+            }
+        });
+
+        let idValue = localStorage.getItem("member_id");
+        if(idValue != null && idValue != ""){
+            $("input[name=member_id").val(idValue);
+        }
+
+        // 아이디 저장
+        let $chkObj = $("input[type=checkbox]");
+        let $formObj = $("form");
+        $formObj.submit(function(event){
+            if($chkObj.prop("checked")){
+                let $idObj = $("input[name=id]");
+                localStorage.setItem("member_id", $idObj.val());
+            }else{
+                localStorage.removeItem("member_id");
+            }
+
+            var idValue = $("input[name=member_id]").val();
+            var pwdValue = $("input[name=member_pwd]").val();
+
+            //로그인
+            $.ajax({
+                url: "/login",
+                method: "post",
+                data: {"member_id" : idValue, "member_pwd" : pwdValue},
+                success : function(responseObj){
+                    console.log(responseObj.status);
+                    if(responseObj.status == 1){
+                        alert("로그인성공");
+                        location.href="../main.html"
+                    }else if(responseObj.status==0){
+                        alert("등록된 정보가 없습니다. 회원가입 해주세요.");
+                    }else if(responseObj.status==-1){
+                        alert("비밀번호가 틀렸습니다. 다시 확인해주세요");
+                    }
+                },
+                error : function(jqueryXHR){
+                    alert(jQueryXHR);
+                }
+            })
+        })
+    });
+</script>
+</head>
+<body>
+    <header id ="header"></header>
+    <section class = "login_section">
+        <div id="container" class="main_container">
+            <div class="login_container">
+                <div class="login_form_container">
+                    <form name="login_form">
+                        <div class="login_form_title_div">
+                            <h1 class="login_form_title_h">로그인</h1>
+                        </div>
+                        <div>
+                            <div>
+                                <input type="text" id="member_id" placeholder="아이디" class="login_form_input"/>
+                            </div>
+                            <div class="login_form_text_alert_padding">
+                                <div id="alert_member_id" class="login_form_text_alert"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <input type="password" id="member_pwd" placeholder="비밀번호" class="login_form_input" />
+                            </div>
+                            <div class="login_form_text_alert_padding">
+                                <div id="alert_member_pwd" class="login_form_text_alert"></div>
+                            </div>
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <div>
+                            <input type="button" name="login" id="loginbtn" class="login_form_submit_button" value="로그인">
+                        </div>
+                        <div class = "logincheckbox">
+                            <input type = "checkbox" name = "login_perma" value = "1" style="padding-top: 5px;">
+                            <span class = "login_guide_txt" style = "color: gray; ">아이디 저장</span>
+                        </div>
+                        <div class="login_form_text_alert_padding">
+                            <div id="login_alert_help_block" class="login_form_text_alert"></div> 
+                        </div>
+                        <div class="login_find_info">
+                            <a href = "findID.html">아이디</a><span style = "color: gray;"> / </span>
+                            <a href = "findPWD.html">비밀번호 찾기</a><span style = "color: gray;font-weight: bold;">　|　</span>
+                            <a href = "signupconfirm.html">회원가입</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <footer id ="footer"></footer>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 | 요리조리쿡</title>
+
+     <!-- 폰트 -->
+     <link rel="preconnect" href="https://fonts.gstatic.com">
+     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+@font-face {
+    font-family: 'Wemakeprice-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Wemakeprice-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Wemakeprice-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Wemakeprice-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+*{font-family: 'Noto Sans KR', sans-serif; }
+.signup_section{color: #363131; height: 697px;}
+.signup_form_container{width: 400px; margin: auto; padding-top : 150px;}
+.signup_form_title_div{margin: auto; text-align: center;}
+.signup_form_title_h{font-weight: bold; font-size: 40px; display: inline-block; padding-top: 8px;margin-bottom: 30px;}
+.signup_form_input{width: 100%; height: 45px; border: 1px solid; border-radius: 3px; border-color: gray;}
+.signup_form_text_alert{height: 20px; font-size: 14px; margin-left: 2px;}
+.signup_form_text_alert_padding{padding-bottom: 10px;}
+.signup_form_submit_button{width: 100%; height: 55px; background-color: #55a72b; border: 1px ; border-radius: 3px; color: white; font-size: 17px; font-weight: 400;}
+.signup_form_submit_email{height : 30px; width : 55px ;background-color: #55a72b; color:white; border: 1px ; border-radius: 3px; position: relative; left: 330px;  bottom: 38px;}
+.signup_modal_background{ position:fixed; width:100%; height:100%; background: rgba(117, 117, 117, 0.8); top:0; left:0;  text-align: center; display: none;}
+.signup_modal_content{background-color: white; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 250px; height: 150px; margin:auto; text-align:center; border-radius: 3px; position: fixed; font-family: 'Noto Sans KR', sans-serif; display: none;}
+.signup_send_email{background-color: #55a72b; color:white; border: 1px ; border-radius: 3px; height: 30px; width: 60px; margin-top: 10px;}
+
+</style>
+<script src='https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js'></script>
+<script>
+$(function(){
+    // header, footer 연결
+    $("#header").load("header.html");
+    $("#footer").load("footer.html");
+
+    // 모달창
+    $(".signup_form_submit_email").click(function(){ 
+        $(".signup_modal_background").fadeIn();
+        $(".signup_modal_content").fadeIn();
+    }); 
+    $(".signup_modal_background").click(function(){ 
+        $(".signup_modal_background").fadeOut();
+        $(".signup_modal_content").fadeOut();
+        $("#alert_email_no").text("");
+    });
+
+    // 인증번호 확인 버튼
+    $("#emailcon").on("click", function(){
+        if($("input[name='email_no']").val() == null || $("input[name='email_no']").val() == ""){
+            $("#alert_email_no").text("인증번호를 입력하세요").css("color", "red");
+        }
+    });
+
+    $("#member_id").focus();
+
+    // 아이디 유효성 검사
+    $("#member_id").keydown(function(){
+        var id = $("#member_id").val();
+        var alert_id = $("#alert_member_id");
+        var idregex = /^[a-z0-9]{5,11}$/;
+        var idresult = idregex.exec(id);
+        
+        if(id == null || id == ""){
+            alert_id.text("아이디를 입력하세요.").css("color", "red");
+            return;
+        }else if(idresult != null){
+            alert_id.text("")
+        }else{
+            alert_id.text("아이디 양식에 맞게 입력하세요").css("color", "red");
+        }
+    });
+
+    // 비밀번호 유효성 검사
+    $("#member_pwd").keydown(function(){
+        var pwd = $("#member_pwd").val();
+        var alert_pwd = $("#alert_member_pwd");
+        var pwdregex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{7,15}$/;
+        var pwdresult = pwdregex.exec(pwd);
+        
+        if(pwd == null || pwd == ""){
+            alert_pwd.text("비밀번호를 입력하세요.").css("color", "red");
+            return;
+        }else if(pwdresult != null){
+            alert_pwd.text("")
+        }else{
+            alert_pwd.text("비밀번호 양식에 맞게 입력하세요").css("color", "red");
+        }
+    });
+
+    // 비밀번호 확인
+    $("#member_pwd2").keydown(function(){
+        if($("#member_pwd").val() == $("#member_pwd2").val()){
+            $("#alert_member_pwd2").text("비밀번호가 일치합니다.").css("color", "green")
+        }else{
+            $("#alert_member_pwd2").text("비밀번호가 일치하지 않습니다.").css("color", "red");
+        }
+    });
+
+    // 이메일 유효성 검사
+    $("#member_email").keydown(function(){
+        var email = $("#member_email").val();
+        var alert_email = $("#alert_member_email");
+        var emailregex = /^[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}$/;
+        var emailresult = emailregex.exec(email);
+        
+        if(email == null || email == ""){
+            alert_email.text("이메일을 입력하세요.").css("color", "red");
+            return;
+        }else if(emailresult != null){
+            alert_email.text("")
+        }else{
+            alert_email.text("이메일 양식에 맞게 입력하세요").css("color", "red");
+        }
+    });
+
+    // 닉네임 유효성 검사
+    $("#member_nickname").keydown(function(){
+        var nickname = $("#member_nickname").val();
+        var alert_nickname = $("#alert_member_nickname");
+        var nicknameregex = /^[가-힣]{2,8}$/;
+        var nicknameresult = nicknameregex.exec(nickname);
+        
+        if(nickname == null || nickname == ""){
+            alert_nickname.text("닉네임을 입력하세요.").css("color", "red");
+            return;
+        }else if(nicknameresult != null){
+            alert_nickname.text("")
+        }else{
+            alert_nickname.text("닉네임 양식에 맞게 입력하세요").css("color", "red");
+        }
+    });
+
+    // 입력칸을 공란으로 제출 시 경고 메세지 출력
+    $("#signupbtn").on("click",function(){
+        if($("#member_id").val() == "" || $("#member_id").val() == null){
+            $("#alert_member_id").text("아이디를 입력하세요.").css("color", "red");
+        }
+
+        if($("#member_pwd").val() == "" || $("#member_pwd").val() == null){
+            $("#alert_member_pwd").text("비밀번호를 입력하세요.").css("color", "red");
+        }
+
+        if($("#member_pwd2").val() == "" || $("#member_pwd2").val() == null){
+            $("#alert_member_pwd2").text("비밀번호를 확인하세요.").css("color", "red");
+        }
+
+        if($("#member_email").val() == "" || $("#member_email").val() == null){
+            $("#alert_member_email").text("이메일을 입력하세요.").css("color", "red");
+        }
+
+        if($("#member_nickname").val() == "" || $("#member_nickname").val() == null){
+            $("#alert_member_nickname").text("닉네임을 입력하세요.").css("color", "red");
+        }
+    });
+});
+</script>
+</head>
+<body>
+    <header id ="header"></header>
+    <section class = "signup_section">
+        <div id="container" class="main_container">
+            <div class="signup_container">
+                <div class="signup_form_container">
+                    <form name="signup_form">
+                        <div class="signup_form_title_div">
+                            <h1 class="signup_form_title_h">회원가입</h1>
+                        </div>
+                        <div>
+                            <div>
+                                <input type="text" id="member_id" placeholder="아이디" class="signup_form_input"/>
+                            </div>
+                            <div class="signup_form_text_alert_padding">
+                                <div id="alert_member_id" class="signup_form_text_alert" style="color: gray;">6~12자, 소문자 / 숫자 사용 가능</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <input type="password" id="member_pwd" placeholder="비밀번호" class="signup_form_input" />
+                            </div>
+                            <div class="signup_form_text_alert_padding">
+                                <div id="alert_member_pwd" class="signup_form_text_alert" style="color: gray;">8~16자, 숫자를 포함한 영문자, 특수문자 사용 가능</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <input type="password" id="member_pwd2" placeholder="비밀번호 확인" class="signup_form_input" />
+                            </div>
+                            <div class="signup_form_text_alert_padding">
+                                <div id="alert_member_pwd2" class="signup_form_text_alert" style="color: gray;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div style="height: 45px;">
+                                <input type="email" id="member_email" placeholder="이메일" class="signup_form_input"/>
+                                <input type="button" name="email" id="emailbtn" class="signup_form_submit_email" value = "인증하기">
+                            </div>
+                            <div class="signup_form_text_alert_padding">
+                                <div id="alert_member_email" class="signup_form_text_alert" style="color: gray;">ex) user@kosta.com</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <input type="text" id="member_nickname" placeholder="닉네임" class="signup_form_input"/>
+                            </div>
+                            <div class="signup_form_text_alert_padding">
+                                <div id="alert_member_nickname" class="signup_form_text_alert" style="color: gray;">2~8자, 한글</div>
+                            </div>
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <div>
+                            <input type="button" name="signup" id="signupbtn" class="signup_form_submit_button" value="회원가입">
+                        </div>
+                        <!-- 모달창 -->
+                        <div class = "signup_modal_background">
+                        </div>
+                        <div class = "modal">
+                            <div class = "signup_modal_content">
+                                <p style="margin:auto; height: 10px;">　</p>
+                                <p style="margin:0 auto 10px;">인증번호를 입력하세요</p>
+                                <input type = "text" name = "email_no" style="height: 30px;" id = "email_no" placeholder="6자 입력">
+                                <div id="alert_email_no" class="signup_form_text_alert" style="color: red; font-size: 0.8em; text-align: left; margin-left: 30px;"></div>
+                                <input type = "button" name="email_no" id="emailcon" class = "signup_send_email" value="인증하기">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <footer id ="footer"></footer>
+</body>
+</html>
