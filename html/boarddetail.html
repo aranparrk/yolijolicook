@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang= 'ko'>
+<head>
+    <meta charset="utf-8"/>
+    <title>게시판보기</title>
+    <script src = "http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /*기본스타일*/
+        *{
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding:0;
+            list-style: none;
+            text-decoration: none;
+        }
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }       
+        .boarddetail{
+            width: 800px;
+            margin: 0 auto;
+            margin-top: 150px;
+            padding: 20px;
+        }
+        /*버튼 스타일*/
+        .boarddetail input[type=button], button {
+            font-weight: bold;
+            font-size: 15px;
+            width: 130px;
+            height: 45px;
+            margin: 10px;
+            background: #55A72B;
+            color: white;
+            border-radius: 10px;
+            border: none;
+            outline: 0;
+            cursor: pointer;
+        }
+        .boarddetail button{
+            font-weight: bold;
+            font-size: 15px;
+            width: 130px;
+            height: 45px;
+            margin: 10px;
+            background: #55A72B;
+            color: white;
+            border-radius: 10px;
+            border: none;
+            outline: 0;
+            cursor: pointer;
+        }
+        
+        /* 게시판 헤더정보 스타일 */
+        .boarddetail .infowriterndate{
+            position: relative;
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 20px;
+        }
+        
+        .boarddetail .writer{
+            margin-right: 15px;
+            font-size: 20px;
+        }
+
+        .boarddetail .showcount {
+            position: absolute;
+            right: 30px;
+        }
+
+        .boarddetail .titleline {
+            border:  2px solid #55A72B;
+        }
+        
+        /* 게시판 디테일 스타일 */
+        .boarddetail .showdetail{
+            margin: 20px 0px;
+        }
+
+        /* 수정 삭제버튼 위치 */
+        .boarddetail .userbutton{
+            display: flex;
+            flex-direction: row-reverse;
+        }
+
+        /* 댓글 스타일 */
+        /*댓글*/
+        .boarddetail .boardcomment legend{
+            font-size: 20px;
+            font-weight: bold;
+            padding: 20px;
+        }
+
+        /*댓글상자*/
+        .boarddetail .boardcomment{
+            margin-top: 30px;
+            padding-left: 30px;
+            padding-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border :2px solid #55A72B;
+            border-radius: 20px;
+        }
+
+        /*댓글 테이블*/
+        .boarddetail .boardcomment table{
+            width: 740px;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        .boarddetail .boardcomment table td{
+            padding : 15px 0;
+        }
+
+        .boarddetail .boardcomment table #writer{
+            width: 90px;
+        }
+
+        .boarddetail .boardcomment table #detail{
+            width: 540px;
+        }
+
+        .boarddetail .writecomment{
+            margin : 20px 20px 0 20px;
+            width: 490px; 
+            height: 50px; 
+            border: none;
+            border-bottom: 2px solid #55A72B;
+            padding: 3px;
+            outline: none;
+        }
+        .boarddetail .goboardlist {
+            margin: 30px;
+            text-align: center;
+        }
+
+        .boarddetail .goboardlist .boardlistbtn{
+            width: 300px;
+        }
+        /*모달 내용 틀*/
+        .modalreport{
+            display: none;
+            position:relative;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+        }
+        .modalreport .modalcontent{
+            position : fixed;
+            left:50%;
+            top:50%;
+            transform: translate(-50% , -50%);
+            width: 400px;
+            padding: 20px;
+            margin: 100px auto;
+            padding-bottom: 20px 10px;
+            background: #fff;
+            border: 2px solid #666;
+
+        }
+
+        /*게시글 정보*/
+        .modalreport .infowriterndate{
+            display: flex;
+            font-size: 15px;
+        }        
+        .modalreport p{
+            margin: 20px auto;
+            font-size: 14px;
+        }
+
+        /*내용*/
+        .modalreport .modalcontent .reportdetail{
+            height: 100px;
+            padding: 4px;
+            margin: 6px;
+            width: 95%;
+            border: none;
+            outline: none;
+        }
+
+        /*구분선*/
+        .modalreport .line{
+            margin: auto 3px;
+            border:1px solid #55A72B;
+        }
+        .modalreport .modalbtn{
+            text-align: center;
+        }
+
+
+        /*확인모달*/
+        /*모달 내용 틀*/
+        .modalchk{
+            display: none;
+            position:relative;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+        }
+        .modalchk .modalcontent{
+            position : fixed;
+            left:50%;
+            top:25%;
+            transform: translate(-50% , -50%);
+            width: 400px;
+            padding: 20px;
+            margin: 250px auto;
+            padding-bottom: 20px 10px;
+            background: #fff;
+            border: 2px solid #666;
+            text-align: center;
+
+        }
+
+        /* 모달 레이어 */
+        .modal_layer{
+            position: fixed;
+            top:0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 10;
+            display: none;
+        }
+       
+    </style>
+    <script>
+         $(function(){
+            /*헤더, 푸터로드*/
+            $("header").load("header.html");
+            $("footer").load("footer.html");
+
+            /*삭제버튼*/
+            $(".deletebtn").click(function(event){
+                alert("삭제버튼");
+            });
+
+            /*수정버튼*/
+            $(".modifybtn").click(function(event){
+                location.href=$(this).attr("id") + '.html';
+            });
+
+            /*댓글작성버튼*/
+            $(".writecmtbtn").click(function(event){
+                alert("댓글작성버튼")
+            });
+
+            /*댓글작성버튼*/
+            $(".boardlistbtn").click(function(event){
+                location.href=$(this).attr("id") + '.html';
+            });
+
+            /*신고하기 버튼*/
+            $(".reportbtn").click(function(){
+                $(".modalreport").attr("style", "display:block") ;
+                $(".modal_layer").show();
+            });
+            /*제출버튼*/
+            $(".submitbtn").click(function(){
+                if($('textarea[name=reportdetailtxt]').val().length == 0){
+                    $(".modalreport").attr("style", "display:none") ;
+                    $(".modalchk .modalcontent h4").html("내용을 입력해야합니다");
+                    $(".modalchk").attr("style", "display:block") ;                    
+                }
+                else{
+                    $(".modalreport").attr("style", "display:none") ;
+                    $(".modalchk .modalcontent h4").html("게시물이 정상적으로 신고되었습니다.");
+                    $(".modalchk").attr("style", "display:block") ;                    
+                }
+            });
+            /*취소버튼*/
+            $(".cancelbtn").click(function(){
+                $(".modalreport").attr("style", "display:none") ;
+                $(".modal_layer").hide();
+            }); 
+            /*확인버튼*/
+            $(".checkbtn").click(function(){
+                $(".modalchk").attr("style", "display:none") ;
+                $(".modal_layer").hide();
+            });
+        });
+    </script>
+</head>
+<body>
+    <!--헤더 로드-->
+    <header></header>
+    <!--게시판 디테일-->
+    <div class="boarddetail">
+        <!-- 게시판 정보, 내용-->
+        <div class="boardinfo">
+            <div class="infotitle"><h1>글제목입니다</h1></div>
+            <div class="infowriterndate">
+                <div class="writer">김수망</div>
+                <div class="date">2021-04-02</div>
+                <div class="showcount">
+                    <i class="far fa-eye"></i> 조회 : 32 &nbsp;&nbsp;&nbsp; <i class="far fa-comment"></i> 댓글 : 2
+                </div>
+            </div>            
+        </div>
+
+        <!-- 제목과 내용 구분선-->
+        <div class="titleline"></div>
+
+        <!-- 게시판 내용 -->
+        <div class="showdetail">영락과 부패 뿐이다 낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 크고 작고 간에! 그들의 몸이 얼마나 튼튼하며 그들의 피부가 얼마나 생생하며 그들의 눈에 무엇이 타오르고 있는가? 우리 눈이 그것을 보는 때에 우리의 귀는 생의 찬미를 듣는다 그것은 웅대한 관현악이며 미묘한 교향악이다 뼈 끝에 스며들어예가 되려니와 그와 같지 못하다 할지라도 창공에 반짝이는 뭇 별과 같이 산야에 피어나는 군영과 같이 이상은 실로 인간의 부패를 방지하는 소금이라 할지니 인생에 가치를 주는 원질이 되는 것이다 그들은 앞이 긴지라 착목한는</div>
+        
+        <div class="countnbutton">
+            <div class="userbutton">
+                <input type="button" id="boardwrite" class="modifybtn" value = "수정하기">
+                <input type="button" class="deletebtn" value = "삭제하기">
+                <button class="reportbtn"><i class="fas fa-flag"></i> 신고하기</button>
+            </div>
+            
+        </div>
+        <!-- 게시판 댓글-->
+        <fieldset class="boardcomment">
+            <legend style="color: #55A72B;"><i class="fas fa-comment"></i> Commnet </legend>
+            <table>
+                <tr>
+                    <td id = "writer">옹수잉</td>
+                    <td id = "detail">댓글작성예시입니다</td>
+                    <td id = "date">2021-04-04</td>
+                </tr>
+                <tr>
+                    <td id="writer">박아랑</td>
+                    <td id = "detail">댓글작성예시입니다</td>
+                    <td id = "date">2021-04-03</td>
+                </tr>
+                <tr>
+                    <td id="writer">이소용</td>
+                    <td id = "detail">댓글작성예시입니다</td>
+                    <td id = "date">2021-04-02</td>
+                </tr>
+                <tr>
+                    <td id="writer">NOSSI</td>
+                    <td id = "detail">댓글작성예시입니다</td>
+                    <td id = "date">2021-04-02</td>
+                </tr>
+            </table>
+            <div class="commentwriter">김수망
+                <input type="text" class="writecomment" placeholder="내용을 입력해주세요">
+                <input type="button" class="writecmtbtn" value="댓글쓰기">
+            </div>
+        </fieldset>
+        <div class="goboardlist">
+            <button class="boardlistbtn" id="boardlist">목록으로</button>
+        </div>
+    </div>
+    <div class="modalreport">        
+        <div class="modalcontent">
+            <div class="boardinfo">
+                <h3>글제목입니다</h3>
+                <div class="infowriterndate">
+                    <div class="writer">김수망</div>
+                    <div class="date">2021-04-02</div>
+                </div>
+                <!-- 게시판 내용 -->
+                <p>영락과 부패 뿐이다 낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 크고 작고 간에! 그들의 몸이 얼마나 튼튼하며 그들의 피부가 얼마나 생생하며 그들의 눈에 무엇이 타오르고 있는가? 우리 눈이 그것을 보는 때에 우리의 귀는 생의 찬미를 듣는다 그것은 웅대한 관현악이며 미묘한 교향악이다 뼈 끝에 스며들어예가 되려니와 그와 같지 못하다 할지라도 창공에 반짝이는 뭇 별과 같이 산야에 피어나는 군영과 같이 이상은 실로 인간의 부패를 방지하는 소금이라 할지니 인생에 가치를 주는 원질이 되는 것이다 그들은 앞이 긴지라 착목한는</p>
+        
+            </div>
+            <div class="line"></div>          
+            <textarea class="reportdetail" name= "reportdetailtxt"placeholder="신고 내용을 자세히 작성해주세요."></textarea>         
+            <div class="modalbtn">
+                <button class="submitbtn">SUBMIT</button>
+                <button class="cancelbtn">CANCEL</button>                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal_layer"></div>
+
+    <div class="modalchk">        
+        <div class="modalcontent">
+            <h4>게시물이 정상적으로 신고되었습니다.</h4>
+            <div class="modalbtn">
+                <button class="checkbtn">OK</button>           
+            </div>
+        </div>
+    </div>
+    <footer></footer>
+</body>
+
+</html>

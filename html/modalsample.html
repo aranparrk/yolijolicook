@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+    <meta charset="utf-8" />
+    <title>모달샘플</title>
+    <script src = "http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /*기본스타일*/
+        *{
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding:0;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        /*버튼 스타일*/
+        input[type=button] {
+            font-weight: bold;
+            font-size: 15px;
+            width: 150px;
+            height: 45px;
+            margin: 10px;
+            background: #55A72B;
+            color: white;
+            border-radius: 10px;
+            border: none;
+            outline: 0;
+            cursor: pointer;
+           
+        }
+
+        /*모달 내용 틀*/
+        .modalreport{
+            display: none;
+            position:relative;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+        }
+        .modalreport .modalcontent{
+            width: 400px;
+            padding: 20px;
+            margin: 100px auto;
+            padding-bottom: 20px 10px;
+            background: #fff;
+            border: 2px solid #666;
+
+        }
+
+        /* 모달 레이어 */
+        /* .modalreport .modal_layer{
+            position: fixed;
+            top:0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+
+        } */
+
+        /*게시글 정보*/
+        .modalreport .infowriterndate{
+            display: flex;
+            font-size: 15px;
+        }        
+        .modalreport p{
+            margin: 20px auto;
+            font-size: 14px;
+        }
+
+        /*내용*/
+        .modalreport .modalcontent .reportdetail{
+            height: 100px;
+            padding: 4px;
+            margin: 6px;
+            width: 95%;
+            border: none;
+            outline: none;
+        }
+
+        /*구분선*/
+        .modalreport .line{
+            margin: auto 3px;
+            border:1px solid #55A72B;
+        }
+        .modalreport .modalbtn{
+            text-align: center;
+        }
+        button{
+            font-weight: bold;
+            font-size: 15px;
+            width: 150px;
+            height: 45px;
+            margin: 15px 15px 0 15px;
+            background: #55A72B;
+            color: white;
+            border-radius: 10px;
+            border: none;
+            outline: 0;
+            cursor: pointer;
+        }
+
+        /*확인모달*/
+        /*모달 내용 틀*/
+        .modalchk{
+            display: none;
+            position:relative;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+        }
+        .modalchk .modalcontent{
+            width: 400px;
+            padding: 20px;
+            margin: 250px auto;
+            padding-bottom: 20px 10px;
+            background: #fff;
+            border: 2px solid #666;
+            text-align: center;
+
+        }
+
+        /* 모달 레이어 */
+        .modal_layer{
+            position: fixed;
+            top:0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 10;
+            display: none;
+        }
+
+    </style>
+    <script>
+        $(function(){
+            /*신고하기 버튼*/
+            $(".reportbtn").click(function(){
+                $(".modalreport").attr("style", "display:block") ;
+                $(".modal_layer").show();
+            });
+            /*제출버튼*/
+            $(".submitbtn").click(function(){
+                if($('textarea[name=reportdetailtxt]').val().length == 0){
+                    $(".modalreport").attr("style", "display:none") ;
+                    $(".modalchk .modalcontent h4").html("내용을 입력해야합니다");
+                    $(".modalchk").attr("style", "display:block") ;                    
+                }
+                else{
+                    $(".modalreport").attr("style", "display:none") ;
+                    $(".modalchk .modalcontent h4").html("게시물이 정상적으로 신고되었습니다.");
+                    $(".modalchk").attr("style", "display:block") ;                    
+                }
+            });
+            /*취소버튼*/
+            $(".cancelbtn").click(function(){
+                $(".modalreport").attr("style", "display:none") ;
+                $(".modal_layer").hide();
+            }); 
+            /*확인버튼*/
+            $(".checkbtn").click(function(){
+                $(".modalchk").attr("style", "display:none") ;
+                $(".modal_layer").hide();
+            });           
+        });
+    </script>
+</head>
+<body>
+    <input type="button" class="reportbtn" value="신고하기">
+    <div class="modalreport">        
+        <div class="modalcontent">
+            <div class="boardinfo">
+                <h3>글제목입니다</h3>
+                <div class="infowriterndate">
+                    <div class="writer">김수망</div>
+                    <div class="date">2021-04-02</div>
+                </div>
+                <!-- 게시판 내용 -->
+                <p>영락과 부패 뿐이다 낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 크고 작고 간에! 그들의 몸이 얼마나 튼튼하며 그들의 피부가 얼마나 생생하며 그들의 눈에 무엇이 타오르고 있는가? 우리 눈이 그것을 보는 때에 우리의 귀는 생의 찬미를 듣는다 그것은 웅대한 관현악이며 미묘한 교향악이다 뼈 끝에 스며들어예가 되려니와 그와 같지 못하다 할지라도 창공에 반짝이는 뭇 별과 같이 산야에 피어나는 군영과 같이 이상은 실로 인간의 부패를 방지하는 소금이라 할지니 인생에 가치를 주는 원질이 되는 것이다 그들은 앞이 긴지라 착목한는</p>
+        
+            </div>
+            <div class="line"></div>          
+            <textarea class="reportdetail" name= "reportdetailtxt"placeholder="신고 내용을 자세히 작성해주세요."></textarea>         
+            <div class="modalbtn">
+                <button class="submitbtn">SUBMIT</button>
+                <button class="cancelbtn">CANCEL</button>                
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal_layer"></div>
+
+    <div class="modalchk">        
+        <div class="modalcontent">
+            <h4>게시물이 정상적으로 신고되었습니다.</h4>
+            <div class="modalbtn">
+                <button class="checkbtn">OK</button>           
+            </div>
+        </div>
+    </div>
+</body>
+</html>
