@@ -4,7 +4,7 @@
        <meta charset='utf-8'>
        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-       <title>마이페이지</title>
+       <title>마이페이지 | 요리조리쿡</title>
        <style> 
 
             section{padding-top: 150px;height: auto; font-family: 'Noto Sans KR', sans-serif; width: 90%; margin: 0 auto 200px; color: #363131; font-weight: bold;}
@@ -19,9 +19,13 @@
             section .tabs .main_tab:last-child{border-radius: 0 10px 10px 0;}
             section .tabs .main_tab:hover{background-color: #55A72B; color: #fff;}
 
+
+
+
+
+
             /* my recipe */
 
-            section .content {margin-top: 100px; width: 100%; height: 700px; overflow: hidden; display: none;}
             section .content img{width: 300px;}
 
 
@@ -29,7 +33,7 @@
 
             /* items */
             .my_recipe .contents .items{width: 100%; color: #363131; display:flex;flex-flow: wrap; overflow: hidden; padding: 20px 0;}
-            .my_recipe .contents .items .item{ width: 300px;height: 270px; box-shadow: #ddd 1px 1px 6px 1px; margin: 25px 60px; cursor: pointer;}
+            .my_recipe .contents .items .item{ width: 300px;height: 270px; box-shadow: #ddd 1px 1px 6px 1px; margin: 25px 40px; cursor: pointer;}
 
 
             /* sub tab */
@@ -129,6 +133,11 @@
             /* 문의하기 버튼 */
             section .qna_btn {width: 130px; padding: 8px; background-color: #55A72B; border-radius: 5px; text-align:center; color: #fff; cursor: pointer; float: right; }
 
+
+               
+            section .content{ margin: 0 auto; margin-top: 100px; width: 70%; height: 700px; overflow: hidden; display: none;}
+            section .my_info{width: 100%;}
+
        </style>
           <!-- 폰트 -->
           <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -176,6 +185,48 @@
 
                 <div class="my contents first" data-name="my">
                     <div class="items">
+
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="recipe_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="recipe_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="recipe_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
 
                         <a href="recipedetail.html" class="item">
                             <input type="hidden" value="" class="recipe_no">
@@ -913,6 +964,8 @@
 
                 // 비밀번호 확인
                 $(".last_pwd").focusout(function(){
+
+                    
                     if($(".last_pwd").val() == $(".first_pwd").val()){
                         $(".ck_pwd2").text("비밀번호가 일치합니다.").css("color", "green")
                     }else{
