@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang='ko'>
+   <head>
+       <meta charset='utf-8'>
+       <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+       <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+       <title>마이페이지</title>
+       <style> 
+
+            section{padding-top: 150px;height: auto; font-family: 'Noto Sans KR', sans-serif; width: 90%; margin: 0 auto 200px; color: #363131; font-weight: bold;}
+
+            section span {text-overflow: ellipsis;white-space: nowrap; overflow: hidden;}
+
+            section a{text-decoration: none; display: inline-block; color: #363131;}
+
+            section .tabs{width: 80%; margin: 0 auto; display: flex; align-items: center; justify-content: space-around;border-radius: 10px; box-shadow: #ddd 1px 1px 6px 1px ;}
+            section .tabs .main_tab{width: 25%; padding: 15px; text-align: center; background-color: #ffffff; color: rgb(0, 0, 0);}
+            section .tabs .main_tab:first-child{border-radius: 10px 0 0 10px;}
+            section .tabs .main_tab:last-child{border-radius: 0 10px 10px 0;}
+            section .tabs .main_tab:hover{background-color: #55A72B; color: #fff;}
+
+            /* my recipe */
+
+            section .content {margin-top: 100px; width: 100%; height: 700px; overflow: hidden; display: none;}
+            section .content img{width: 300px;}
+
+
+            section .content .cnts img{width: 20px;height: 20px; vertical-align: top;}
+
+            /* items */
+            .my_recipe .contents .items{width: 100%; color: #363131; display:flex;flex-flow: wrap; overflow: hidden; padding: 20px 0;}
+            .my_recipe .contents .items .item{ width: 300px;height: 270px; box-shadow: #ddd 1px 1px 6px 1px; margin: 25px 60px; cursor: pointer;}
+
+
+            /* sub tab */
+            .sub_tabs{width: 500px; display: flex; align-items: center; border-radius: 5px 5px 0 0 ;}
+            .sub_tabs .sub_tab{width: 33.3333%; padding: 15px; text-align: center; border-radius: 5px 5px 0 0 ;}
+            .sub_tabs .sub_tab:hover{background-color: #55A72B; color: #fff;}
+
+
+            /* item txt */
+            .my_recipe .contents .items .item .txt{display: flex; flex-flow: column; padding: 5px 10px;}
+            .my_recipe .contents .recipe_title{ font-size: 18px;}
+            .my_recipe .contents .recipe_dt{margin: 8px 0; font-size: 14px;}
+            .my_recipe .contents .cnts{display: flex; align-items: center; color: rgb(145, 145, 145); font-size: 14px;}
+            .my_recipe .contents .cnts .recipe_scrap_cnt{margin-right: 20px; display: flex; align-items: center; justify-content:space-between; padding: 0;}
+            .my_recipe .contents .cnts img{margin-right: 10px;}
+
+
+            /* status */
+            .recipe_status{font-size: 20px; color: rgb(100, 100, 97);}
+
+
+            /* 더보기 */
+            section .my_recipe.act{height: auto;}
+
+
+
+            /* my board */
+            section .scroll .contents{ width: 70%; height: 700px; margin: 60px auto; font-weight: normal;}
+
+            /* list */
+            section .scroll .list{width: 100%; border-radius: 5px 5px  0 0; background-color: #55A72B; display: flex; color: #fff; }
+            section .scroll .list span{padding: 10px; box-sizing: border-box; text-align: center;}
+            section .scroll .title{width: 45%;}
+            section .scroll .dt{width: 25%; }
+            section .scroll .etc{width: 25%;}
+
+
+            /* my cmt */
+            section .my_cmt .title{width: 25%;}
+            section .my_cmt .etc{width: 45%;}
+            section .my_cmt .dt{width: 25%; }
+            
+
+
+            /* item */
+            section .scroll .items{width: 100%; height: 500px; overflow: scroll;}
+            section .scroll .item{width: 100%; display: flex; text-align: center;}
+            section .scroll .item span{ padding: 10px; box-sizing: border-box;border: 1px solid #ddd; border-top: none; cursor: pointer; }
+
+
+
+            /* 스크롤바*/
+            .items::-webkit-scrollbar{ width: 5px; }
+            .items::-webkit-scrollbar-thumb {background-color:#54a72b7c;border-radius: 10px;}
+
+
+
+            /* 삭제 버튼 */
+            .delete_box{position: absolute; right: 100px; top: 310px; display: flex; align-items: center; justify-content: space-around;width: 360px;}
+            .all,.delete{ width: 130px; padding: 12px; background-color: #55A72B; border-radius: 5px; text-align: center;color: #fff; margin: 0 5px; cursor: pointer;}
+
+
+
+            /* 리스트 체크박스 */
+            section .scroll .ck_box{width: 5%; display: flex; align-items: center; justify-content: center;}
+            .list_ck{width: 15px; height: 15px; display: block; cursor: pointer;}
+
+            /* 이미지 체크박스 */
+            section .my_recipe .item{position: relative;}
+            section .img_ck{position: absolute; top: 10px; left: 10px; width: 20px; height: 20px;}
+
+
+
+            /* 정보수정 */
+            section .info{width: 1600px; margin: 0 auto;height: 600px; display: flex; align-items: center; justify-content: space-between;}
+
+            section .info form{width: 500px;height: 500px; box-shadow: #ddd 1px 1px 6px 1px ;}
+            section .info form span{display: block;}
+            section .info form *{box-sizing: border-box;}
+            section .info form input{width: 300px; padding: 10px; margin: 10px auto; display: block; font-size: 14px; outline: none; border: 1px solid rgb(124, 124, 124); border-radius: 0;}
+
+            section .put {width: 300px; height: 300px; margin: 0 auto; display: flex; flex-flow: column; justify-content: center;}
+
+            section .ck_nick{font-size: 14px; color: red;}
+            section .ck_pwd{font-size: 14px; color: red;}
+
+            section .info form .box1{ padding: 20px 30px;}
+            section .info form h5 {font-size: 12px; font-weight: normal;  color: rgb(138, 138, 138);}
+            .nickname .box1{display: flex; align-items: center; justify-content: space-between;}
+
+
+            section .info .btn{margin: 0 auto;display: block; width: 300px; padding: 6px; background-color:  #55A72B; text-align: center; color: #fff; border-radius: 5px;}
+            section .info .last{display: block; margin: 10px auto; width: 300px; font-size: 12px; color: rgb(138, 138, 138);}
+
+
+
+            /* 문의하기 버튼 */
+            section .qna_btn {width: 130px; padding: 8px; background-color: #55A72B; border-radius: 5px; text-align:center; color: #fff; cursor: pointer; float: right; }
+
+       </style>
+          <!-- 폰트 -->
+          <link rel="preconnect" href="https://fonts.gstatic.com">
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+          <link rel="preconnect" href="https://fonts.gstatic.com">
+          <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">        
+
+
+         <script src='https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js'></script>
+
+         <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+   </head>
+   <body>
+        <header></header>
+
+        <section>
+            <div class="tabs"  role="tablist">
+                <a href="#" role="tab" data-tab="my_recipe" class="jq_tab main_tab my_recipe_tab" >레시피</a>
+                <a href="#" role="tab" data-tab="my_board" class="jq_tab  main_tab my_board_tab" >내가 쓴 게시글</a>
+                <a href="#" role="tab" data-tab="my_cmt" class="jq_tab  main_tab my_cmt_tab" >내가 쓴 댓글</a>
+                <a href="#" role="tab" data-tab="my_info" class="jq_tab  main_tab my_info_tab" >정보수정</a>
+            </div>
+
+
+
+            <div class="delete_box">
+                <label>
+                    <div class="all">
+                        전체선택
+                    </div>
+                    <input type="checkbox" class="allck" name="ck" style="display: none;">
+                </label>
+                 <a href="#" class="delete alt_btn" data-btn="삭제">삭제하기</a>
+            </div>
+
+            <div class="content my_recipe " data-tab="my_recipe">
+
+                <div class="recipe_tabs sub_tabs"  role="tablist">
+                    <a href="#" role="tab" data-tab="my" class="jq_tab sub_tab my_tab" >나의 레시피</a>
+                    <a href="#" role="tab" data-tab="scrap" class="jq_tab sub_tab scrap_tab" >스크랩</a>
+                    <a href="#" role="tab" data-tab="rqt" class="jq_tab sub_tab rqt_tab" >요청현황</a>
+                </div>
+
+                
+
+                <div class="my contents first" data-name="my">
+                    <div class="items">
+
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="recipe_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+         
+
+                   
+                
+
+                    </div>
+                </div>
+        
+               
+                <div class="scrap contents" data-name="scrap">
+                    <div class="items">
+                      
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="scrap_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="scrap_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="scrap_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="scrap_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="scrap_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="scrap_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="scrap_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="scrap_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="scrap_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="scrap_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="scrap_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="scrap_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="recipedetail.html" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck" value="scrap_no">
+                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                                <div class="cnts">
+                                    <span class="recipe_scrap_cnt"><img src="../images/web/mypage_clip.png" alt="스크랩"> 300</span>
+                                    <span class="recipe_cnt"><strong style="font-weight: normal;">조회수</strong> 1500</span>
+                                </div>
+                            </div>
+                        </a>
+
+                    
+
+
+
+
+                    </div>
+                </div>
+
+
+
+                <div class="rqt contents" data-name="rqt">
+                    <div class="items">
+                        
+                        <a href="#" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck">
+                            <img src="../images/upload/recipe_img1.png" alt="" class="recipe_img">
+                            <div class="txt">    
+                                <span class="recipe_status">승인대기</span>
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                            </div>
+                        </a>
+
+                        <a href="#" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck">
+                            <img src="../images/upload/recipe_img1.png" alt="" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_status" style="color: rgb(18, 165, 48);">승인완료</span>
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                            </div>
+                        </a>
+
+                        <a href="#" class="item">
+                            <input type="hidden" value="" class="recipe_no">
+                            <input type="checkbox" class="ck img_ck">
+                            <img src="../images/upload/recipe_img1.png" alt="" class="recipe_img">
+                            <div class="txt">
+                                <span class="recipe_status" style="color: red;">승인불가</span>
+                                <span class="recipe_title">라면</span>
+                                <span class="recipe_dt">21-03-22</span>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+
+                
+            </div>
+
+
+
+
+            <div class="content my_board scroll" data-tab="my_board">
+
+                <div class="board_tabs sub_tabs"  role="tablist">
+                    <a href="#" role="tab" data-tab="board" class="jq_tab sub_tab board_tab" >내가 쓴 게시글</a>
+                    <a href="#" role="tab" data-tab="report" class="jq_tab sub_tab report_tab" >내가 쓴 신고 보기</a>
+                    <a href="#" role="tab" data-tab="qna" class="jq_tab sub_tab qna_tab" >내가 쓴 문의 보기</a>
+                </div>
+
+                <div class="contents board first" data-name="board">
+                    <div class="kind">
+                        <div class="list">
+                            <span class="title">글제목</span>
+                            <span class="dt">작성일</span>
+                            <span class="etc">조회수</span>
+                        </div>
+                    </div>
+                    <div class="items">
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                        <a href="boarddetail.html" class="item">
+                            <input type="hidden" value="" class="board_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_dt dt">20-03-01</span>
+                            <span class="board_cnt etc">300</span>
+                        </a>
+                  
+                    </div>
+
+                </div>
+
+
+
+                <div class="contents report" data-name="report">
+                    <div class="kind">
+                        <div class="list">
+                            <span class="title">신고제목</span>
+                            <span class="dt">작성일</span>
+                            <span class="etc">신고상태</span>
+                        </div>
+                    </div>
+                    <div class="items">
+                        <a href="#" class="item">
+                            <input type="hidden" value="" class="report_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="report_title title">신고글입니다. 우와오아오아오아옹오오와</span>
+                            <span class="report_dt dt">21-10-09</span>
+                            <span class="report_status etc">처리중</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contents qna"  data-name="qna">
+                    <div class="kind">
+                        <div class="list">
+                            <span class="title">문의제목</span>
+                            <span class="dt">작성일</span>
+                            <span class="etc">문의상태</span>
+                        </div>
+                    </div>
+                    <div class="items">
+                        <a href="memberqnadetail.html" class="item">
+                            <input type="hidden" value="" class="question_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="qna_title title">문의글입니다. 우와오아오아오아옹오오와</span>
+                            <span class="qna_dt dt">21-03-15</span>
+                            <span class="qna_status etc">답변대기</span>
+                        </a>
+                    </div>
+                    <a href="#" class="qna_btn">문의하기</a>
+                </div>
+
+
+            </div>
+
+            <div class="content my_cmt scroll" data-tab="my_cmt">
+                <div class="cmt_tabs sub_tabs"  role="tablist">
+                    <a href="#" role="tab" data-tab="board_cmt" class="jq_tab sub_tab board_cmt_tab" >내가 쓴 게시글 댓글</a>
+                    <a href="#" role="tab" data-tab="recipe_cmt" class="jq_tab sub_tab recipe_cmt_tab" >내가 쓴 레시피 댓글</a>
+                </div>
+
+                <div class="contents board_cmt first" data-name="board_cmt">
+                    <div class="kind">
+                        <div class="list">
+                            <span class="title">글제목</span>
+                            <span class="etc">댓글내용</span>
+                            <span class="dt">작성일자</span>
+                        </div>
+                    </div>
+                    <div class="items">
+                        <a href="#" class="item">
+                            <input type="hidden" value="" class="boardcmt_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="board_title title" data-no="board_no">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="boardcmt_detail etc">댓글 내용이다~!~!~!~!~ddddddddddddddddddddddddddddddd</span>
+                            <span class="boardcmt_dt dt">21-05-05</span>
+                        </a>
+                      
+                       
+                    </div>
+
+
+                </div>
+                <div class="contents recipe_cmt" data-name="recipe_cmt">
+
+                    <div class="kind">
+                        <div class="list">
+                            <span class="title">레시피명</span>
+                            <span class="etc">댓글내용</span>
+                            <span class="dt">작성일자</span>
+                        </div>
+                    </div>
+                    <div class="items">
+                        <a href="#" class="item">
+                            <input type="hidden" value="" class="recipecmt_no">
+                            <span class="ck_box"><input type="checkbox" class="ck list_ck"></span>
+                            <span class="recipe_title title" data-no="recipe_no">레시피 명이다</span>
+                            <span class="recipecmt_detail etc">댓글 내용이다~!~!~!~!~dddddddddddddddddd44444444444dddddddddㄷㄷㄷㄷㄷㄷㄷㄷdddd</span>
+                            <span class="recipecmt_dt dt">21-10-05</span>
+                        </a>
+                    </div>
+                </div>
+
+            
+            </div>
+
+            <div class="content my_info"  data-tab="my_info">
+                <div class="info">
+
+                    <form class="nickname">
+                        <div class="box1">
+                            <span>요리왕비룡</span><span>닉네임 수정</span>
+                        </div>
+                        <div class="put">
+                            <h5>2~8자, 한글 </h5>
+                            <input type="text" value="">
+                            <span class="ck_nick"></span>
+                        </div>
+
+
+                        <a href="#" class="btn alt_btn" data-btn="변경">변경</a>
+                    </form>
+
+                    <form class="pwd">
+                            <span  class="box1">비밀번호 수정</span>
+                            <div class="put">
+                                <h5>8~16자, 숫자를 포함한 영문자, 특수문자 사용 가능</h5>
+                                <input type="password" value="" placeholder="현재 비밀번호">
+                                <input type="password" class="in_pwd first_pwd" value="" placeholder="새로운 비밀번호">
+                                <span class="ck_pwd ck_pwd1"></span>
+                                <input type="password" class="in_pwd last_pwd" value="" placeholder="새 비밀번호 확인">
+                                <span class="ck_pwd ck_pwd2"></span>
+                            </div>
+                            <a href="#" class="btn alt_btn" data-btn="변경">변경</a>
+                    </form>
+
+                    <form class="bye">
+                        <span  class="box1">회원 탈퇴</span>
+                        <div class="put">
+                            <input type="text" value="shtjdqhd" style="background-color: #ddd;" readonly>
+                            <input type="password" value="" placeholder="비밀번호">
+                        </div>
+
+                        <a href="#" class="btn alt_btn" data-btn="탈퇴">탈퇴 하기</a>
+                        <span class="last" style="font-weight: normal;">탈퇴 시 모든 관련 정보는 삭제됩니다.</span>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="more" style="width: 100%; padding: 10px; color: #fff;text-align: center;font-size: 18px; margin-top: 30px; border-radius: 5px; background-color: #55A72B; cursor: pointer;">더보기</div>
+        </section>
+
+        <footer></footer>
+
+        <script>
+             $("header").load("./header.html");
+             $("footer").load("./footer.html"); 
+
+            $(function(){
+                var now = "my";
+
+                $(".content").hide();
+                $(".my_recipe").show();
+
+                $(".my_recipe_tab").css({"background-color":"#55A72B","color":"#fff"});
+                $(".sub_tab:nth-of-type(1)").css({"background-color":"#55A72B","color":"#fff"});
+
+
+
+                // 더보기 
+                $(".more").hide();
+                var size = $(".my > .items > .item").length;
+
+                
+                if(size > 8){
+                    $(".more").show();
+                }
+
+                $(".more").click(function(){
+                    $(".my_recipe").toggleClass("act");
+                    var text = $(".more").text();
+                    if(text == "더보기"){
+                        $(".more").text("줄이기");
+                    }else{
+                        $(".more").text("더보기");
+                    }
+                });
+
+
+
+
+
+                // tab 기능
+                $(".jq_tab").click(function(){
+                    $(this).css({"background-color":"#55A72B","color":"#fff"});
+                    $(this).siblings(".jq_tab").css({"background-color":"#fff","color":"#363131"});
+                });
+
+                // main tab 기능
+                $(".main_tab").click(function(){
+                    var tabData =  $(this).attr('data-tab');
+
+                    $(".content").hide();
+                    $(".contents").hide();
+                    $("." + tabData).show();
+
+                    var start = $("." + tabData).children(".first");
+                    start.show();
+                    now = start.attr('data-name');
+
+                    if(tabData == 'my_info'){
+                        $(".delete_box").hide();
+                    }else{
+                        $(".delete_box").show();
+                    }
+
+
+                    $(".sub_tab").css({"background-color":"#fff","color":"#363131"});
+                    $(".sub_tab:nth-of-type(1)").css({"background-color":"#55A72B","color":"#fff"});
+
+                    if(tabData == 'my_recipe'){
+                        if(size > 8){
+                            $(".more").show();
+                        }else{
+                            $(".more").hide();
+                        }
+                    }else{
+                        $(".more").hide();
+                    }
+
+
+                    off();
+                });
+
+
+
+                // sub tab 기능
+                $(".contents").hide();
+                $(".my , .board , .board_cmt").show();     
+                $(".sub_tab").click(function(){
+                    // my_recipe 
+                    $(".more").hide();
+                    $(".my_recipe").removeClass("act");
+                    var tabData =  $(this).attr('data-tab');
+                    $(".contents").hide();
+                    $("." + tabData).show();
+
+                    var size2 = $(".my_recipe "  + "."+ tabData + " > .items > .item").length;
+
+                    if(size2 > 8 ){
+                        $(".more").show();
+                    }
+
+                    now = tabData;
+
+                    
+
+                    off();
+                });
+
+                //삭제기능
+                $(".delete").hide();
+                $('.all').click(function(){
+                    if($(".content .ck").is(":checked") == true){
+                        off();
+                    }else{
+                        on();
+                        
+                    }
+      
+                });
+
+                $(".ck").change(function(){
+                    if($(".ck").is(":checked")){
+                        $('.all').text("전체해제");
+                        $(".delete").show();
+                    }else{
+                        $('.all').text("전체선택");
+                        $(".delete").hide();
+                    }
+                });
+
+                function on(){
+                    $('.all').text("전체해제");
+                    $('.' + now + " .ck").prop('checked',true);
+                    $(".delete").show();
+                }
+
+                function off(){
+                    $('.all').text("전체선택");
+                    $("input[type='checkbox']").prop('checked',false);
+                    $(".delete").hide();
+                }
+
+
+
+                //정보수정
+
+
+
+                // 비밀번호 유효성 검사
+                $(".in_pwd").keydown(function(){
+                    var pwd = $(".in_pwd").val();
+                    var alert_pwd = $(".ck_pwd1");
+                    var pwdregex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{7,15}$/;
+                    var pwdresult = pwdregex.exec(pwd);
+                    
+                    if(pwd == null || pwd == ""){
+                        alert_pwd.text("비밀번호를 입력하세요.").css("color", "red");
+                        return;
+                    }else if(pwdresult != null){
+                        alert_pwd.text("")
+                    }else{
+                        alert_pwd.text("비밀번호 양식에 맞게 입력하세요").css("color", "red");
+                    }
+                });
+
+
+                // 비밀번호 확인
+                $(".last_pwd").focusout(function(){
+                    if($(".last_pwd").val() == $(".first_pwd").val()){
+                        $(".ck_pwd2").text("비밀번호가 일치합니다.").css("color", "green")
+                    }else{
+                        $(".ck_pwd2").text("비밀번호가 일치하지 않습니다.").css("color", "red");
+                    }
+                });
+
+
+                // 닉네임 유효성 검사
+                var nickIp =  $(".nickname input");
+                nickIp.keyup(function(){
+                    var nickname = nickIp.val();
+                    var alert_nickname = $(".ck_nick");
+                    var nicknameregex = /^[가-힣]{2,8}$/;
+                    var nicknameresult = nicknameregex.exec(nickname);
+                    
+                    if(nickname == null || nickname == ""){
+                        alert_nickname.text("닉네임을 입력하세요.").css("color", "red");
+                        return;
+                    }else if(nicknameresult != null){
+                        alert_nickname.text("")
+                    }else{
+                        alert_nickname.text("닉네임 양식에 맞게 입력하세요").css("color", "red");
+                    }
+                });
+
+
+                //알럿
+
+                $(".alt_btn").click(function(){
+                    var btn = $(this).attr('data-btn');
+                    if(confirm(btn+"하시겠습니까?")){
+                        alert(btn +"완료");
+                        window.location.reload();
+                    }else{
+
+                    }
+
+                });
+                
+
+            });
+
+        </script>
+   </body>
+</html>
