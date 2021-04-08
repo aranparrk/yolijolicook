@@ -135,6 +135,10 @@
             border: solid 2px #36313138;
             outline: none;
         }
+        input{
+            cursor: pointer; 
+            font-family: 'Noto Sans KR', sans-serif;
+        }
     
 </style>
 <script>
@@ -151,27 +155,26 @@
                 <div class="title" style=" font-family: 'Noto Sans KR', sans-serif;">레시피 리스트</div>
                     <!-- 카테고리 : 한식, 양식, 일식, 중식 -->
                     <div style="margin-top: 27px; margin-left:460px;" >
-                        <input type="button" value="한식" class="category" id="1"  style=" font-family: 'Noto Sans KR', sans-serif;">  
-                        <input type="button" value="양식" class="category" id="2"  style=" font-family: 'Noto Sans KR', sans-serif;">  
-                        <input type="button" value="중식" class="category" id="3"  style=" font-family: 'Noto Sans KR', sans-serif;">  
-                        <input type="button" value="일식" class="category" id="4"  style=" font-family: 'Noto Sans KR', sans-serif;">
-                        <input type="button" value="퓨전" class="category" id="5"  style=" font-family: 'Noto Sans KR', sans-serif;"> <br>
+                        <input type="button" value="한식" class="category" id="1" >  
+                        <input type="button" value="양식" class="category" id="2"  >  
+                        <input type="button" value="중식" class="category" id="3">  
+                        <input type="button" value="일식" class="category" id="4">
+                        <input type="button" value="퓨전" class="category" id="5"> <br>
                     </div>
 
                     <!-- 선택 : 재료/요리명, 부재료, 주재료, 양념 -->
                     <div>
-                    <select id ="recipe_ingre" style="margin-top: 22px; height: 32px; margin-left:440px;margin-bottom: 50px;font-family: 'Noto Sans KR', sans-serif;" class="box">
+                    <select id ="recipe_ingre" style=" margin-top: 22px; height: 37px; margin-left:440px;margin-bottom: 50px;font-family: 'Noto Sans KR', sans-serif;" class="box">
                         <option class="op" selected>재료/요리명</option>
                         <option class="op" >부재료</option>
                         <option class="op" >주재료</option>
-                        <option class="op" >양념</option>
                     </select>
 
                     <!-- 재료 및 부재료 입력 -->
-                    <input type="text" value="입력하여 주세요" id="text" class="box" style="height: 32px;font-family: 'Noto Sans KR', sans-serif;">
+                    <input type="text" placeholder="입력하여 주세요" id="text" class="box" style=" text-align: left; height: 37px;">
 
                     <!-- 검색버튼 -->
-                    <input type="button" value="검색" id="submit" style="cursor: pointer;" class="button">
+                    <input type="button" value="검색" id="submit" style="cursor: pointer;height: 36px;" class="button">
                     </div>
             </div>
         </article>
@@ -183,71 +186,92 @@
                 <!--검색결과 조회-->
                 <div id="search">검색결과 : ** 개 조회</div>
 
-                <div>
 
-                    <!--검색리스트-->
-                    <div id="searchlist" style="margin-left: 53px;">
-                        <!--사진-->
-                        <div><img src="../images/web/1.jpeg" alt="레시피 이미지사진" width="250px"height="200px"></div>
+                    <div class="my contents first" data-name="my">
+                        <div class="items">
 
-                        <!--#30분 #양식-->
-                        <div class="ex">#30분&nbsp;&nbsp; </div>
-                        <div class="ex">#양식&nbsp;&nbsp;  </div>
-                        <div class="ex">#초보환영&nbsp;<img src="../images/web/mypage_clip.png" width="25px"></div> <br>
-                        <!--레시피 제목-->
-                        <div class="ex">미트볼스파게티</div> 
+                            
+                            <div style="display: inline-block;  box-shadow: #ddd 1px 1px 6px 1px;margin: 25px 10px;">
+                                <div>
+                                    <a href="recipedetail.html" class="item">
+                                    <input type="hidden" value="" class="recipe_no">
+                                    <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img" width="300px">
+                                    </a>    
+                                </div>    
+                                    <!--#30분 #양식-->
+                                <div style="display: inline">
+                                    <div class="ex">#30분&nbsp;&nbsp; </div>
+                                    <div class="ex">#양식&nbsp;&nbsp;  </div>
+                                    <div class="ex">#초보환영&nbsp; <img src="../images/web/mypage_clip.png" width="25px"></div> <br>
+                                    <!--레시피 제목-->
+                                    <div class="ex">미트볼스파게티</div><br>  
+                                 </div>
+                            </div>
+    
+                                <div style="display: inline-block;  box-shadow: #ddd 1px 1px 6px 1px;margin: 25px 10px;">
+                                    <div>
+                                        <a href="recipedetail.html" class="item">
+                                        <input type="hidden" value="" class="recipe_no">
+                                        <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img" width="300px">
+                                        </a>    
+                                    </div>    
+                                        <!--#30분 #양식-->
+                                    <div style="display: inline">
+                                        <div class="ex">#30분&nbsp;&nbsp; </div>
+                                        <div class="ex">#양식&nbsp;&nbsp;  </div>
+                                        <div class="ex">#초보환영&nbsp; <img src="../images/web/mypage_clip.png" width="25px"></div> <br>
+                                        <!--레시피 제목-->
+                                        <div class="ex">미트볼스파게티</div><br>  
+                                     </div>
+                                </div>
+      
+                                <div style="display: inline-block;  box-shadow: #ddd 1px 1px 6px 1px;margin: 25px 10px;">
+                                    <div>
+                                        <a href="recipedetail.html" class="item">
+                                        <input type="hidden" value="" class="recipe_no">
+                                        <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img" width="300px">
+                                        </a>    
+                                    </div>    
+                                        <!--#30분 #양식-->
+                                    <div style="display: inline">
+                                        <div class="ex">#30분&nbsp;&nbsp; </div>
+                                        <div class="ex">#양식&nbsp;&nbsp;  </div>
+                                        <div class="ex">#초보환영&nbsp; <img src="../images/web/mypage_clip.png" width="25px"></div> <br>
+                                        <!--레시피 제목-->
+                                        <div class="ex">미트볼스파게티</div><br>  
+                                     </div>
+                                </div>
 
-
-                    </div>
-
+                                <div style="display: inline-block;  box-shadow: #ddd 1px 1px 6px 1px;margin: 25px 10px;">
+                                    <div>
+                                        <a href="recipedetail.html" class="item">
+                                        <input type="hidden" value="" class="recipe_no">
+                                        <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img" width="300px">
+                                        </a>    
+                                    </div>    
+                                        <!--#30분 #양식-->
+                                    <div style="display: inline">
+                                        <div class="ex">#30분&nbsp;&nbsp; </div>
+                                        <div class="ex">#양식&nbsp;&nbsp;  </div>
+                                        <div class="ex">#초보환영&nbsp; <img src="../images/web/mypage_clip.png" width="25px"></div> <br>
+                                        <!--레시피 제목-->
+                                        <div class="ex">미트볼스파게티</div><br>  
+                                     </div>
+                                </div>
+            
+             
+    
+                       
                     
-                    <!--검색리스트-->
-                    <div id="searchlist">
-                        <!--사진-->
-                        <div><img src="../images/web/1.jpeg" alt="레시피 이미지사진" width="250px"height="200px"></div>
-
-                        <!--#30분 #양식-->
-                        <div class="ex">#30분&nbsp;&nbsp; </div>
-                        <div class="ex">#양식&nbsp;&nbsp;  </div>
-                        <div class="ex">#초보환영&nbsp;<img src="../images/web/mypage_clip.png" width="25px"></div> <br>
-                        <!--레시피 제목-->
-                        <div class="ex">미트볼스파게티</div> 
-
+            
+                        </div>
                     </div>
 
-                    
-                    <!--검색리스트-->
-                    <div id="searchlist" >
-                        <!--사진-->
-                        <div><img src="../images/web/1.jpeg" alt="레시피 이미지사진" width="250px"height="200px"></div>
 
-                        <!--#30분 #양식-->
-                        <div class="ex">#30분&nbsp;&nbsp; </div>
-                        <div class="ex">#양식&nbsp;&nbsp;  </div>
-                        <div class="ex">#초보환영&nbsp;<img src="../images/web/mypage_clip.png" width="25px"></div> <br>
-                        <!--레시피 제목-->
-                        <div class="ex">미트볼스파게티</div>  
-
-                    </div>
-
-                    
-                    <!--검색리스트-->
-                    <div id="searchlist">
-                        <!--사진-->
-                        <div><img src="../images/web/1.jpeg" alt="레시피 이미지사진" width="250px"height="200px"></div>
-
-                        <!--#30분 #양식-->
-                        <div class="ex">#30분&nbsp;&nbsp; </div>
-                        <div class="ex">#양식&nbsp;&nbsp;  </div>
-                        <div class="ex">#초보환영&nbsp;<img src="../images/web/mypage_clip.png" width="25px"></div> <br>
-                        <!--레시피 제목-->
-                        <div class="ex">미트볼스파게티</div>  
-
-                    </div>
      
                     <!--페이징-->
                     <div>
-                        <div class="paging" style="text-align: center; margin-top: 20px;">
+                        <div class="paging" style="text-align: center; margin-top: 20px; cursor: pointer;">
                             <i class="fas fa-angle-double-left"></i> &nbsp;<i class="fas fa-angle-left"></i>
                             &nbsp; 1 &nbsp 2 &nbsp 3 &nbsp 4 &nbsp 5 &nbsp 6 &nbsp 7 &nbsp 8  &nbsp
                             <i class="fas fa-angle-right"></i> &nbsp;<i class="fas fa-angle-double-right"></i>
@@ -255,8 +279,7 @@
                     </div>
                     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>                   
                     
-                </div>
-            </div>
+     
         </article>
     </section>
 
