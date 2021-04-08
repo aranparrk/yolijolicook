@@ -34,10 +34,10 @@
             
             
         } */
-        section{
+        article{
             width: 900px;
             margin: 0 auto;
-            
+            padding-top:150px;
         }
         h1{
             font-family: 'Wemakeprice-Bold';
@@ -148,23 +148,23 @@
             font-size: 24px;
             display: inline;
         }
-        body > section > div.process > div{
+        body > section > article > div.process > div{
             display: flex;
             
         }
-        body > section > div.process > div > div{
+        body > section > article > div.process > div > div{
             padding: 50px;
             width: 60%;
             text-align: center;
             flex: 1;
          
         }
-        body > section > div.process > div > img{
+        body > section > article > div.process > div > img{
             width:40%;
         }
 
         /* 완성된 음식 사진 */
-        body > section > div.completeArea{
+        body > section > article > div.completeArea{
             margin: 65px;
             margin-top: 100px;
             padding: 5px;
@@ -179,7 +179,7 @@
             margin-top: 30px;
             margin-bottom: 100px;
         }
-        body > section > div > div.completeImg > img{
+        body > section > article > div > div.completeImg > img{
             border: solid 10px #fc67364f;
             border-radius: 10px;
             margin: auto;
@@ -275,7 +275,7 @@
     border-radius: 0 0 6px 0;
 }
  
-body > section > table > tbody > tr > td.cmtContent.recipeCmt_detail{
+body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
     text-align: left;
 }
 
@@ -349,10 +349,13 @@ body > section > table > tbody > tr > td.cmtContent.recipeCmt_detail{
     crossorigin="anonymous"></script>
 <!-- 스크립트 -->
     <script>
-        // header, footer 연결
-        $("#header").load("header.html");
-        $("#footer").load("footer.html");
+        $(function(){
+             // header, footer 연결
+            $("#header").load("header.html");
+            $("#footer").load("footer.html");
 
+        });
+       
 
         // 스크랩 모달
         $(function(){ 
@@ -407,6 +410,7 @@ body > section > table > tbody > tr > td.cmtContent.recipeCmt_detail{
 <body>
     <header id="header"></header>
     <section>
+        <article>
         <!-- 레시피 article -->
         <div class="title">
             <div class="titleName">레시피 이름</div>
@@ -550,7 +554,7 @@ body > section > table > tbody > tr > td.cmtContent.recipeCmt_detail{
                 <a href="#"><input class="button" type="button" value="댓글" style="cursor:pointer"></a> 
             </form>
         </div>
-        
+    </article>
     </section>
     <footer id="footer"></footer>
 </body>
