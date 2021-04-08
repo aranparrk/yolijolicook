@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+    <meta charset="utf-8" />
+    <title>게시판</title>
+    <script src = "http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /*기본스타일*/
+        *{
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding:0;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        body{
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .boardlist{
+            margin-top: 150px;
+            width: 900px;
+        }
+
+        /* 게시판 글씨*/
+        .boardlist h1{
+            height: 120px;
+            font-size: 40px;
+            text-align :center
+        }
+
+         /*버튼 스타일*/
+         .boardlist input[type=button] {
+            font-weight: bold;
+            font-size: 15px;
+            width: 150px;
+            height: 45px;
+            margin: 10px;
+            background: #55A72B;
+            color: white;
+            border-radius: 10px;
+            border: none;
+            outline: 0;
+            cursor: pointer;
+        }
+        
+        /* 게시판 */
+        .boardlist .tableheader th{
+            height: 50px;
+            width: 200px;
+            padding: 0px;
+        }
+
+        .boardlist .boardtable {
+            text-align: center;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #55A72B;
+        }
+
+        .boardlist .boardtable td{
+            padding : 10px;
+        }
+        
+        
+        .boardlist .container{
+            position: relative;
+        }
+
+        .boardlist .writebox {
+            position: absolute;
+            left: 10px;
+        }
+        
+        /* 페이징모양*/
+        .boardlist .paging{
+            position: relative;
+            align-items: center;
+            top:50px;
+        }
+        
+        /* 찾기버튼*/
+        .boardlist .search{
+            display: flex;
+            flex-direction: row-reverse;
+            position : absolute;
+            top: 10px;
+            right : 10px;
+        }
+        
+        .boardlist .searchtext{
+            margin: 0 9px;
+            padding: 4px;
+            height: 20px;
+            border: none;
+            outline: 0;
+            border-bottom: 1px solid;
+        }
+        
+        .boardlist .selectsort{
+            width: 80px;
+            border:none;
+            outline: 0;
+        }
+
+        .boardlist .searchbtn{
+            cursor: pointer;
+        }
+
+    </style>
+    <script>
+        $(function(){
+            /*헤더, 푸터로드*/
+            $("header").load("header.html");
+            $("footer").load("footer.html");
+
+            /*게시글 작성*/
+            $("#boardwrite").click(function(event){
+                location.href=$(this).attr("id") + '.html';
+            });
+
+            /*게시글 선택*/
+            $(".boardtable tr").click(function(event){
+                var trNum = $(this).closest('tr').prevAll().length; 
+                console.log('trNum : ' + trNum);
+            });
+            /* 검색 */
+            $(".searchbtn").click(function(event){
+                alert("검색이 눌림")
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <!--헤더로드-->
+    <header></header>
+    <div class="boardlist">
+        <h1> 게시판</h1>
+        
+        <!--게시판 테이블-->
+        <table class = "boardtable">
+            <tr class= "tableheader" style="background-color: #55A72B; color: white" >
+                <th style="width: 100px;">No.</th>
+                <th style="width: 800px;">글제목</th>
+                <th>닉네임</th>
+                <th>작성일</th>
+                <th>조회수</th>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td id ="boardtitle">글제목입니다</td>
+                <td>김수망</td>
+                <td>2021-04-06</td>
+                <td>23</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td id ="boardtitle">글제목입니다</td>
+                <td>이소용</td>
+                <td>2021-04-04</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td id ="boardtitle">글제목입니다</td>
+                <td>김수망</td>
+                <td>2021-04-04</td>
+                <td>13</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td id ="boardtitle">글제목입니다</td>
+                <td>박아랑</td>
+                <td>2021-04-03</td>
+                <td>33</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td id ="boardtitle">글제목입니다</td>
+                <td>김수망</td>
+                <td>2021-04-03</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td id ="boardtitle">글제목입니다</td>
+                <td>김수망</td>
+                <td>2021-04-01</td>
+                <td>42</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td id ="boardtitle">글제목입니다</td>
+                <td>옹수잉</td>
+                <td>2021-03-29</td>
+                <td>54</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td id ="boardtitle">글제목입니다</td>
+                <td>김수망</td>
+                <td>2021-03-28</td>
+                <td>23</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td id ="boardtitle">글제목입니다</td>
+                <td>노씨</td>
+                <td>2021-03-26</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td id ="boardtitle">글제목입니다</td>
+                <td>김수망</td>
+                <td>2021-03-26</td>
+                <td>33</td>
+            </tr>
+        </table>
+        <!-- 게시판 아랫단. 작성버튼, 찾기버튼, 페이징-->
+        <div class="container">
+            <!-- 작성버튼 -->
+            <div class="writebox">
+                <input id = "boardwrite" type="button" value="게시글 작성">
+            </div>  
+            <!-- 찾기버튼 -->
+            <div class="search">
+                <div class="searchbtn">
+                    <i class="fas fa-search"></i>
+                </div>
+                <input type="text" class="searchtext">
+                <select name="sort" class ="selectsort">
+                    <option value = "sorttitle">글 제목</option>
+                    <option value = "sortdetail">글 내용</option>
+                    <option value = "sortnickname">닉네임</option>
+                </select>            
+            </div>
+        </div>
+        <!-- 페이징 -->
+        <div class="paging" style="text-align: center; margin-top: 20px;">
+            <i class="fas fa-angle-double-left"></i>&nbsp;<i class="fas fa-angle-left"></i>
+            &nbsp; 1 &nbsp 2 &nbsp 3 &nbsp 4 &nbsp 5 &nbsp 6 &nbsp 7 &nbsp 8  &nbsp
+            <i class="fas fa-angle-right"></i>&nbsp;<i class="fas fa-angle-double-right"></i>
+        </div>
+    </div>
+    <!-- 푸터로드-->
+    <footer></footer>
+</body>
+</html>
