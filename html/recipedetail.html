@@ -349,17 +349,9 @@ body > section > table > tbody > tr > td.cmtContent.recipeCmt_detail{
     crossorigin="anonymous"></script>
 <!-- 스크립트 -->
     <script>
-        // $(function(){
-        // // 레시피 info 불러오기
-        //     var 
-            
-        // // 레시피 재료 불러오기
-
-        // // 레시피 과정 불러오기
-
-        // //레시피 댓글 불러오기
-        // });
-        
+        // header, footer 연결
+        $("#header").load("header.html");
+        $("#footer").load("footer.html");
 
 
         // 스크랩 모달
@@ -413,7 +405,7 @@ body > section > table > tbody > tr > td.cmtContent.recipeCmt_detail{
 
 </head>
 <body>
-    <header></header>
+    <header id="header"></header>
     <section>
         <!-- 레시피 article -->
         <div class="title">
@@ -558,7 +550,8 @@ body > section > table > tbody > tr > td.cmtContent.recipeCmt_detail{
                 <a href="#"><input class="button" type="button" value="댓글" style="cursor:pointer"></a> 
             </form>
         </div>
+        
     </section>
-    <article></article>
+    <footer id="footer"></footer>
 </body>
 </html>
