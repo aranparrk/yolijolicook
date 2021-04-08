@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang='ko'>
+   <head>
+       <meta charset='utf-8'>
+       <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+       <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+       <title>main</title>
+
+       <style>
+
+            @font-face {
+                font-family: 'Wemakeprice-Bold';
+                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Wemakeprice-Bold.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+            }
+
+            @font-face {
+                font-family: 'Wemakeprice-Regular';
+                src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Wemakeprice-Regular.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+            }
+            *,body,html{
+                margin: 0;
+                padding: 0;
+            }
+           body{
+                font-family: 'Noto Sans KR', sans-serif;
+                color: #363131;
+           }
+
+           ::selection {
+				background-color: #FC6636 ;
+                color: #fff;
+			}
+            section h1, section h2{font-family:'Wemakeprice-Bold' ; }
+
+
+
+           section .banner{width: 100%; height: 600px; overflow: hidden; position: relative;}
+           section .banner .banner_items{
+               width: 100%; height: 600px;
+                background: url(../images/web/main_banner1.png)no-repeat center; 
+                color: #fff; 
+                display: flex; 
+                flex-flow: column; 
+                align-items: center; 
+                justify-content: center; 
+                transition: 1s; 
+                opacity: 0;
+                position: absolute;
+                top: 0;
+                left: 0;
+
+                }
+
+
+                section h2, section p{text-align: center; font-size: 46px;}
+                section p{font-size: 22px; margin-top: 50px;}
+
+
+                header.act{background-color: inherit; border-bottom: none; transition: 0.1s;}
+                header a.act,header .login_name.act{color: #fff; transition: 0.1s;}
+                
+
+                .content{ width: 450px; margin: 150px auto;}
+                .content .ex {color: rgb(179, 179, 179);}
+
+
+                .content label{display: flex; align-self: center; width: 450px; margin: 20px auto;}
+                .content label input[name=recipe_search]{width: 400px; height: 50px;padding: 0 10px; border: none; border-radius: 5px;box-shadow: rgb(181, 181, 181) 2px 2px 4px 1px;  outline: none; font-size: 22px;}
+                .content label button{width: 50px; height: 50px;outline: none; border: none; border-left: none;  box-shadow: rgb(181, 181, 181) 2px 2px 4px 1px; border-radius: 5px; background-color: #55A72B ; cursor: pointer; margin-left: 10px;}
+                .content label img{width: 25px; height: 25px;}
+           
+       </style>
+
+        <!-- 폰트 -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+       <script src='https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js'></script>
+   </head>
+   <body>
+       <header></header>
+        <section>
+            <div class="banner">
+                <div class="banner_items banner_item1" style="opacity: 1;">
+                    <h2>YOLYJOLY <br>COOK</h2>
+                    <br>
+                    <p>나의 냉장고 속 재료로 만들 수 있는 음식은 무엇이 있을까? <br> 재료와 요리명으로 레시피를 찾아주는 요리조리쿡 입니다. </p>
+                </div>
+                <div class="banner_items banner_item2" style="background-image: url(../images/web/main_banner2.png);">
+                    <h2>CATEGORY</h2>
+                    <br>
+                    <p>한식,양식,중식,일식등 <br>다양한 음식들을 확인하실 수 있습니다.</p>
+                </div>
+                <div class="banner_items banner_item3"style="background-image: url(../images/web/main_banner3.png);">
+                    <h2>TOGETHER</h2>
+                    <br>
+                    <p>다른 사람들의 레시피와 노하우를 공유하며 요리실력을 키워보세요.</p>
+                </div>
+            </div>
+
+
+            <div class="content">
+                <div class="ex">원하는 레시피를 입력하세요. ex) 요리명, 재료명</div>
+                <label><input type="search" name="recipe_search" placeholder="Search"><button><img src="../images/web/main_search.png" alt="돋보기"></button></label>
+            </div>
+        </section>
+
+        <footer></footer>
+        <script>
+
+                $("header").load("./header.html");
+                $("footer").load("./footer.html"); 
+            
+           $(function(){
+
+            $(".logo img").attr("src","../images/web/header_logo2.png");
+            $(".bell img").attr("src","../images/web/header_bell2.png");
+
+            var $text = $('header a,header .login_name');
+            var $header = $('header');
+
+            function move(){
+                $header.removeClass('act');
+                $text.removeClass('act');
+                $(".logo img").attr("src","../images/web/header_logo1.png");
+                $(".bell img").attr("src","../images/web/header_bell1.png");
+            };
+
+            function top(){
+                $header.addClass('act');
+                $text.addClass('act');
+                $(".logo img").attr("src","../images/web/header_logo2.png");
+                $(".bell img").attr("src","../images/web/header_bell2.png");
+            };
+
+            $header.hover(function(){move()},function(){top()});
+
+            $header.addClass('act');
+            $text.addClass('act');
+           
+
+
+
+            
+            //배너
+            setInterval(function(){
+                $(".banner_items").first().appendTo(".banner",{css:{ opacity:0 } }).animate({opacity:1});
+                $(".banner_items").css("opacity","0.5");
+            },5000);
+
+
+            
+
+
+            $(window).scroll(function(){
+                var navbar = $(this).scrollTop();
+                if(navbar < 50){
+                    top();
+                    $header.hover(function(){move()},function(){top()});
+                }else{
+                    move();
+                    $header.unbind('mouseenter mouseleave');
+                }
+            });
+
+
+        });
+
+
+           
+        </script>
+   </body>
+</html>
