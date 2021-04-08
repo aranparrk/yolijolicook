@@ -28,7 +28,7 @@
 .signupconfirm_form{border: 1px solid rgba(128, 128, 128, 0.603); margin: 0 auto; position: relative;}
 .chk{line-height: 33px; margin: 10px; position: absolute; right: 0px;}
 textarea{color: #363131;width: 476px; height: 200px; resize: none; margin: 0 10px 8px; font-size: 0.9em; background-color: rgba(128, 128, 128, 0.068); border:0.5px solid rgba(196, 195, 195, 0.603); padding: 0 10px; box-sizing: border-box; font-family: 'Noto Sans KR', sans-serif;}
-.form_next_button{font-family: 'Noto Sans KR', sans-serif; cursor:pointer; width: 100%; height: 44px; background-color: rgba(128, 128, 128, 0.623); border: 1px; border-radius: 3px; color: white; font-size: 17px; font-weight: 400; margin-top: 20px; }
+.form_next_button{font-family: 'Noto Sans KR', sans-serif; width: 100%; height: 44px; background-color: rgba(128, 128, 128, 0.623); border: 1px; border-radius: 3px; color: white; font-size: 17px; font-weight: 400; margin-top: 20px; }
 .hr:first-child{border-bottom: 1px solid rgba(128, 128, 128, 0.603);}
 .hr:last-child{border-top: 1px solid rgba(128, 128, 128, 0.603);}
 .form_text_alert_padding{padding-bottom: 15px;}
@@ -57,6 +57,7 @@ textarea{color: #363131;width: 476px; height: 200px; resize: none; margin: 0 10p
                 $(".form_next_button").css("background-color", "#55a72b");
                 $(".checkboxall").prop("checked", true);
                 $('.form_next_button').removeAttr('disabled');
+                $('.form_next_button').css('cursor', 'pointer');
             }else{
                 $(".form_next_button").css("background-color", "rgba(128, 128, 128, 0.603)");
                 $(".checkboxall").prop("checked", false);
