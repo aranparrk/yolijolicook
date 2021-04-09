@@ -118,6 +118,7 @@
         #boardtitle{
             text-align: left;
             padding-left: 25px;
+            cursor: pointer;
         }
 
         .boardlist input[type=text], textarea{
@@ -136,16 +137,38 @@
             $("header").load("header.html");
             $("footer").load("footer.html");
 
+            
+            /*게시글 목록*/
+            $.ajax({
+            	url : '../board/list',
+            	method: 'post',
+            	success:function(data){
+            		let listboard = $('.tablebody');
+            		
+            		for(let i =0; i<data.length; i++){
+            			listboard += '<tr><td>'+data[i].board_no+'</td>';
+            			listboard += '<td id ="boardtitle">'+data[i].board_title+'</td>';
+            			listboard += '<td>'+data[i].member_id+'</td>';
+            			listboard += '<td>'+data[i].board_dt+'</td>';
+            			listboard += '<td>'+data[i].board_cnt+'</td></tr>';
+            		}
+            		$('.tablebody').html(listboard);
+            		
+            		/*게시글 선택*/
+                    $(".tablebody tr").click(function(event){
+                        var trNum = $(this).closest('tr').prevAll().length; 
+                        console.log('trNum : ' + trNum);
+                        location.href='boarddetail.html';
+                    });
+            	}
+            });
+            
             /*게시글 작성*/
             $("#boardwrite").click(function(event){
                 location.href=$(this).attr("id") + '.html';
             });
 
-            /*게시글 선택*/
-            $(".boardtable tr").click(function(event){
-                var trNum = $(this).closest('tr').prevAll().length; 
-                console.log('trNum : ' + trNum);
-            });
+            
             /* 검색 */
             $(".searchbtn").click(function(event){
                 alert("검색이 눌림")
@@ -171,7 +194,7 @@
                 </tr>
             </thead>
             <tbody class ="tablebody">
-                <tr>
+               <!--  <tr>
                     <td>10</td>
                     <td id ="boardtitle">글제목입니다</td>
                     <td>김수망</td>
@@ -240,9 +263,10 @@
                     <td>김수망</td>
                     <td>2021-03-26</td>
                     <td>33</td>
-                </tr>
+                </tr> -->
             </tbody>
         </table>
+        
         <!-- 게시판 아랫단. 작성버튼, 찾기버튼, 페이징-->
         <div class="container">
             <!-- 작성버튼 -->

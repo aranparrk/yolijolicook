@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+   PUBLIC "=//mybatis.org//DTD Mapper 3.0..EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.BoardMapper">
+	<resultMap id = "boardMap" type="com.my.vo.Board" autoMapping="true">
+		<id property="board_no" column="board_no"/>
+		<association property="member" javaType="com.my.vo.Member" autoMapping="true">
+			<id property = "member_id" column="member_id"/>
+		</association>
+	</resultMap>
+	<select id ="selectAllBoard" resultMap="boardMap">
+		SELECT * FROM BOARD ORDER BY board_no DESC
+	</select>
+	
+	<select id = "selectByBoard_no" resultType="Board">
+		SELECT * FROM BOARD WHERE board_no=#{board_no};
+	</select>
+	
+	<update id="updateBoardCnt" parameterType="int">
+	  UPDATE repboard SET board_cnt = board_cnt+1
+	  WHERE board_no = #{board_no}
+	</update>
+</mapper>
