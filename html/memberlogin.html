@@ -70,47 +70,49 @@
                 $("#alert_member_pwd").text("");
             }
         });
-
+	
+        
         let idValue = localStorage.getItem("member_id");
         if(idValue != null && idValue != ""){
             $("input[name=member_id").val(idValue);
         }
+        
 
         // 아이디 저장
         let $chkObj = $("input[type=checkbox]");
         let $formObj = $("form");
         $formObj.submit(function(event){
             if($chkObj.prop("checked")){
-                let $idObj = $("input[name=id]");
+                let $idObj = $("#member_id");
                 localStorage.setItem("member_id", $idObj.val());
             }else{
                 localStorage.removeItem("member_id");
             }
 
-            var idValue = $("input[name=member_id]").val();
-            var pwdValue = $("input[name=member_pwd]").val();
+            var idValue = $("#member_id").val();
+            var pwdValue = $("#member_pwd").val();
 
             //로그인
             $.ajax({
-                url: "/login",
+                url: "../member/login",
                 method: "post",
                 data: {"member_id" : idValue, "member_pwd" : pwdValue},
                 success : function(responseObj){
                     console.log(responseObj.status);
                     if(responseObj.status == 1){
                         alert("로그인성공");
-                        location.href="../main.html"
-                    }else if(responseObj.status==0){
-                        alert("등록된 정보가 없습니다. 회원가입 해주세요.");
-                    }else if(responseObj.status==-1){
-                        alert("비밀번호가 틀렸습니다. 다시 확인해주세요");
+                        sessionStorage.setItem("member_id", idValue);
+                        location.href="main.html"
+                    }else if(responseObj.status== -1){
+                        alert("로그인 실패");
                     }
                 },
                 error : function(jqueryXHR){
                     alert(jQueryXHR);
                 }
-            })
-        })
+            });
+            return false;
+        });
     });
 </script>
 </head>
@@ -142,7 +144,7 @@
                         </div>
                         <div style="height: 10px;"></div>
                         <div>
-                            <input type="button" name="login" id="loginbtn" class="login_form_submit_button" value="로그인">
+                            <input type="submit" name="login" id="loginbtn" class="login_form_submit_button" value="로그인">
                         </div>
                         <div class = "logincheckbox">
                             <input type = "checkbox" name = "login_perma" value = "1" style="padding-top: 5px;">
