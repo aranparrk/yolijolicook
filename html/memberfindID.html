@@ -72,6 +72,7 @@ $(function(){
             alert_email.text("이메일 양식에 맞게 입력하세요").css("color", "red");
         }
 
+        location.href="../member/findid";
     });
 
 });
@@ -89,7 +90,7 @@ $(function(){
                         </div>
                         <div>
                             <div>
-                                <input type="email" id="member_email" placeholder="이메일" class="findid_form_input" />
+                                <input type="email" id="member_email" name="member_email" placeholder="이메일" class="findid_form_input" />
                             </div>
                             <div class="findid_form_text_alert_padding">
                                 <div id="alert_member_email" class="findid_form_text_alert"></div>

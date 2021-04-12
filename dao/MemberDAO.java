@@ -36,7 +36,7 @@ public interface MemberDAO {
 	 * @return true or false
 	 * @throws FindException
 	 */
-	public boolean selectByNickname(String member_nickname) throws FindException;
+	public String selectByNickname(String member_nickname) throws FindException;
 	
 	/**
 	 * 이메일 중복 확인
@@ -44,7 +44,7 @@ public interface MemberDAO {
 	 * @return true or false
 	 * @throws FindException
 	 */
-	public boolean selectByEmail(String member_email) throws FindException;
+	public String selectByEmail(String member_email) throws FindException;
 	
 	/**
 	 * 로그인

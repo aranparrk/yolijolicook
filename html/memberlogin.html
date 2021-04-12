@@ -56,32 +56,30 @@
             }
         });
 
-        // 입력칸을 공란으로 제출 시 경고 메세지 출력
-        $(".login_form_submit_button").on("click",function(){
-            if($("#member_id").val() == "" || $("#member_id").val() == null){
-                $("#alert_member_id").text("아이디를 입력하세요.");
-            }else{
-                $("#alert_member_id").text("");
-            }
+        // // 입력칸을 공란으로 제출 시 경고 메세지 출력
+        // $(".login_form_submit_button").on("click",function(){
+        //     if($("#member_id").val() == "" || $("#member_id").val() == null){
+        //         $("#alert_member_id").text("아이디를 입력하세요.");
+        //     }else{
+        //         $("#alert_member_id").text("");
+        //     }
 
-            if($("#member_pwd").val() == "" || $("#member_pwd").val() == null){
-                $("#alert_member_pwd").text("비밀번호를 입력하세요.");
-            }else{
-                $("#alert_member_pwd").text("");
-            }
-        });
-	
-        
+        //     if($("#member_pwd").val() == "" || $("#member_pwd").val() == null){
+        //         $("#alert_member_pwd").text("비밀번호를 입력하세요.");
+        //     }else{
+        //         $("#alert_member_pwd").text("");
+        //     }
+        // });
+   
         let idValue = localStorage.getItem("member_id");
         if(idValue != null && idValue != ""){
             $("input[name=member_id").val(idValue);
         }
         
-
-        // 아이디 저장
         let $chkObj = $("input[type=checkbox]");
         let $formObj = $("form");
         $formObj.submit(function(event){
+            // 아이디 저장
             if($chkObj.prop("checked")){
                 let $idObj = $("#member_id");
                 localStorage.setItem("member_id", $idObj.val());
@@ -91,7 +89,7 @@
 
             var idValue = $("#member_id").val();
             var pwdValue = $("#member_pwd").val();
-
+            var remember_id = $chkObj.is(':checked');
             //로그인
             $.ajax({
                 url: "../member/login",
@@ -100,15 +98,16 @@
                 success : function(responseObj){
                     console.log(responseObj.status);
                     if(responseObj.status == 1){
-                        alert("로그인성공");
+                        //alert("로그인성공");
                         sessionStorage.setItem("member_id", idValue);
                         location.href="main.html"
                     }else if(responseObj.status== -1){
-                        alert("로그인 실패");
+                        //alert("로그인 실패");
+                        $("#alert_member_pwd").text("로그인에 실패했습니다. 다시 시도 해주세요.");
                     }
                 },
                 error : function(jqueryXHR){
-                    alert(jQueryXHR);
+                    alert(jQueryXHR); 
                 }
             });
             return false;
