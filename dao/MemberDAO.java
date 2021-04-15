@@ -72,14 +72,7 @@ public interface MemberDAO {
 	
 //	정보수정
 	
-	/**
-	 * 비밀번호 확인
-	 * @param member_id
-	 * @param member_pwd
-	 * @return true or false
-	 * @throws FindException
-	 */
-	public boolean selectByPwd(String member_id,String member_pwd) throws FindException;
+
 	/**
 	 * 닉네임 변경
 	 * @param member_id
@@ -87,6 +80,16 @@ public interface MemberDAO {
 	 * @throws ModifyException
 	 */
 	public void updateNickname(String member_id,String member_nickname) throws ModifyException;
+	
+	
+	/**
+	 * 비밀번호 변경
+	 * @param member_id
+	 * @param member_pwd
+	 * @throws ModifyException
+	 */
+	public void updatePwd(String member_id,String member_pwd) throws ModifyException;
+	
 	/**
 	 * 회원탈퇴
 	 * @param member_id
@@ -122,7 +125,6 @@ public interface MemberDAO {
 	 * @param scrap_no
 	 * @throws RemoveException
 	 */
-	public void deleteScrapRecipe(int scrap_no) throws RemoveException;
 	
 	
 //	내가 쓴 게시글
@@ -148,26 +150,8 @@ public interface MemberDAO {
 	 */
 	public List<QNA> selectMyQNA(String member_id) throws FindException;
 	
-//	문의하기
-	/**
-	 * 문의하기
-	 * @param qna
-	 * @throws AddException
-	 */
-	public void insertQNA(QNA qna) throws AddException;
-	/**
-	 * 문의 디테일
-	 * @param question_no
-	 * @return QNA
-	 * @throws FindException
-	 */
-	public QNA selectQNA(int question_no) throws FindException;
-	/**
-	 * 문의 디테일 삭제
-	 * @param question_no
-	 * @throws RemoveException
-	 */
-	public void deleteQNA(int question_no) throws RemoveException;
+
+
 	
 //	내가 쓴 댓글
 	/**
@@ -185,5 +169,62 @@ public interface MemberDAO {
 	 * @throws FindException
 	 */
 	public List<RecipeComment> selectMyRecipeCmt(String member_id) throws FindException;
+	
+	
+	
+	
+	//삭제기능
+	
+	/**
+	 * 레시피 삭제
+	 * @param recipe_no
+	 * @throws RemoveException
+	 */
+	public void recipeDelete(int recipe_no) throws RemoveException;
+	
+	
+	/**
+	 * 스크랩 해제
+	 * @param scrap_no
+	 * @throws RemoveException
+	 */
+	public void scrapDelete(int scrap_no) throws RemoveException;
+	
+	
+	/**
+	 * 내가 쓴 게시글 삭제
+	 * @param board_no
+	 * @throws RemoveException
+	 */
+	public void boardDelete(int board_no) throws RemoveException;
+	
+	/**
+	 * 내가 쓴 신고글 삭제
+	 * @param report_no
+	 * @throws RemoveException
+	 */
+	public void reportDelete(int report_no) throws RemoveException;
+	
+	/**
+	 * 내가 쓴 문의글 삭제
+	 * @param question_no
+	 * @throws RemoveException
+	 */
+	public void qnaDelete(int question_no) throws RemoveException;
+	
+	/**
+	 * 내가 쓴 게시글 댓글 삭제
+	 * @param boardcmt_no
+	 * @throws RemoveException
+	 */
+	public void boardCmtDelete(int boardcmt_no) throws RemoveException;
+	
+	/**
+	 * 내가 쓴 레시피 댓글 삭제
+	 * @param recipecmt_no
+	 * @throws RemoveException
+	 */
+	public void recipeCmtDelete(int recipecmt_no) throws RemoveException;
+	
 	
 }

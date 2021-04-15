@@ -1,9 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "=//mybatis.org//DTD Mapper 3.0..EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper    PUBLIC "=//mybatis.org//DTD Mapper 3.0..EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="yolijolicook.MemberMapper">
+<mapper namespace="yolijolicook.MemberMapper" >
 
-   <!-- 회원가입 -->
+
+	<!--
+	<resultMap id="memberMap" type="com.my.vo.Member" autoMapping="true">
+	    <result column="MEMBER_ID" property="member_id"/>
+	    <result column="MEMBER_PWD" property="member_pwd"/>
+	    <result column="MEMBER_EMAIL" property="member_email"/>
+	    <result column="MEMBER_NICKNAME" property="member_nickname"/>
+	    <result column="MEMBER_STATUS" property="member_status"/>
+	    <result column="MEMBER_DT" property="member_dt"/>
+	    <collection property="recipe_no" resultMap="recipeMap"/>
+	</resultMap>
+	  -->
+	 
+	<resultMap  id="recipeMap" type="RecipeInfo" >
+		<id property = "recipe_no" column="recipe_no"/>
+<!-- 		<collection>
+		</collection> -->
+	</resultMap>
+	
+	
+	
+	<resultMap  id="scrapMap" type="Scrap" autoMapping="true">
+		<id property = "scrap_no" column="scrap_no"/>
+		<association property="member" javaType="com.my.vo.Member" autoMapping="true"/>
+		<association property="recipeinfo" javaType="com.my.vo.RecipeInfo" autoMapping="true"/>
+	</resultMap>
+	
+	<resultMap  id="boardCmtMap" type="BoardComment" autoMapping="true">
+		<id property = "boardcmt_no" column="boardcmt_no"/>
+		<association property="member" javaType="com.my.vo.Member" autoMapping="true"/>
+		<association property="board" javaType="com.my.vo.Board" autoMapping="true"/>
+	</resultMap> 
+	
+	<resultMap  id="recipeCmtMap" type="RecipeComment" autoMapping="true">
+		<id property = "recipecmt_no" column="recipecmt_no"/>
+		<association property="member" javaType="com.my.vo.Member" autoMapping="true"/>
+		<association property="recipe" javaType="com.my.vo.RecipeInfo" autoMapping="true"/>
+	</resultMap>
+	
+	
+ 	<!-- 회원가입 -->
    <insert id="insertMember" parameterType="Member">
       INSERT INTO member(member_id, member_pwd, member_email, member_nickname, member_dt)
       VALUES(#{member_id}, #{member_pwd}, #{member_email}, #{member_nickname}, SYSDATE)
@@ -38,11 +78,15 @@
    <select id="selectFindPwd" parameterType="string" resultType="Member">
       SELECT member_pwd FROM member WHERE member_id = #{member_id} AND member_email = #{member_email}
    </select>
+
    
-   <!-- 현재 비밀번호 확인 -->
-   <select id="selectByPwd" parameterType="string" resultType="Member">
-      SELECT member_id FROM member WHERE member_id = #{member_id} and member_pwd = #{member_email}
-   </select>
+
+   
+   
+   
+   <!-- 마이레시피 -->
+   
+   
    
    <!-- 닉네임 수정 -->
    <update id="updateNickname" parameterType="string">
@@ -60,60 +104,99 @@
    </delete>
    
    <!-- 나의 레시피 보기 -->
-   <select id="selectMyRecipe" parameterType="string" resultType="Member">
-      SELECT info.recipe_no,info.recipe_name, info.recipe_img, info.recipe_scrap_cnt, info.recipe_cnt, info.recipe_dt
-      FROM recipe_info info JOIN member mem ON info.member_id = mem.member_id WHERE mem.member_id = #{mem.member_id} AND info.recipe_status = 1
+   <select id="selectMyRecipe" parameterType="string" resultMap="recipeMap" >
+      SELECT info.recipe_no,info.recipe_name,mem.member_nickname, info.recipe_img, info.recipe_scrap_cnt, info.recipe_cnt, info.recipe_dt
+      FROM recipe_info info JOIN member mem ON info.member_id = mem.member_id WHERE info.member_id = #{mem.member_id} AND info.recipe_status = 1
       ORDER BY info.recipe_dt desc
    </select>
    
    <!-- 나의 레시피 요청사항 -->
-   <select id="selectRequestRecipe" parameterType="string" resultType="Member">
+   <select id="selectRequestRecipe" parameterType="string" resultMap="recipeMap">
       SELECT info.recipe_no,info.recipe_name, info.recipe_img, info.recipe_dt, info.recipe_status                   
       FROM recipe_info info JOIN member mem ON info.member_id = mem.member_id                   
       WHERE mem.member_id = #{mem.member_id} AND (info.recipe_status = 0 OR info.recipe_status = -1)  ORDER BY info.recipe_dt desc                  
    </select>
    
    <!-- 내가 찜한 레시피 -->
-   <select id="selectScrapRecipe" parameterType="string" resultType="Member">
-      SELECT info.recipe_no,sc.scrap_no,info.recipe_name, info.recipe_img,mem.member_nickname
+   <select id="selectScrapRecipe" parameterType="string" resultMap="scrapMap">
+      SELECT info.recipe_no,sc.scrap_no,info.recipe_name, info.recipe_img,mem.member_nickname,sc.scrap_dt
       FROM recipe_info info JOIN scrap sc ON info.recipe_no = sc.recipe_no JOIN member mem ON info.member_id = mem.member_id
-      WHERE sc.member_id = #{sc.member_id} ORDER BY info.recipe_dt desc
+      WHERE sc.member_id = #{sc.member_id} ORDER BY sc.scrap_dt desc
    </select>
    
-   <!-- 찜한 레시피 해제 -->
-   <delete id="deleteScrapRecipe" parameterType="Member">
-      DELETE FROM scrap sc WHERE sc.scrap_no = #{sc.scrap_no}
-   </delete>
    
    <!-- 내가 쓴 게시글 보기 -->
-   <select id="selectMyBoard" parameterType="string" resultType="Member">
-      SELECT board_title,board_dt,board_cnt FROM BOARD WHERE member_id = #{member_id} ORDER BY board_dt desc
+   <select id="selectMyBoard" parameterType="string" resultType="Board">
+      SELECT board_no,board_title,board_dt,board_cnt FROM BOARD WHERE member_id = #{member_id} ORDER BY board_dt desc
    </select>
    
    <!-- 내가 쓴 신고 보기 -->
-   <select id="selectMyReport" parameterType="string" resultType="Member">
-      SELECT report_title, report_dt, report_status FROM report  WHERE member_id = #{member_id} ORDER BY report_dt desc
+   <select id="selectMyReport" parameterType="string" resultType="Report">
+      SELECT report_no,report_title, report_dt, report_status FROM report  WHERE member_id = #{member_id} ORDER BY report_dt desc
    </select>
    
    <!-- 내가 쓴 문의 보기 -->
-   <select id="selectMyQNA" parameterType="string" resultType="Member">
-      SELECT question_title, question_dt, question_ans_detail, question_ans_dt
+   <select id="selectMyQNA" parameterType="string" resultType="QNA">
+      SELECT question_no,question_title, question_dt, question_ans_detail
       FROM QNA
       WHERE member_id = #{member_id} ORDER BY question_dt desc
    </select>
    
+
    <!-- 내가 쓴 게시글 댓글 -->
-   <select id="selectMyBoardCmt" parameterType="string" resultType="Member">
-      SELECT bd.board_title,cmt.boardcmt_detail,cmt.boardcmt_dt
+   <select id="selectMyBoardCmt" parameterType="string" resultMap="boardCmtMap">
+      SELECT cmt.boardcmt_no,bd.board_no,bd.board_title,cmt.boardcmt_detail,cmt.boardcmt_dt
       FROM board bd JOIN board_comment cmt ON bd.board_no =  cmt.board_no
       WHERE cmt.member_id = #{cmt.member_id} ORDER BY cmt.boardcmt_dt desc
    </select>
    
    <!-- 내가 쓴 레시피 댓글 -->
-   <select id="selectMyRecipeCmt" parameterType="string" resultType="Member">
-      SELECT info.recipe_img, info.recipe_name, cmt.recipecmt_detail, cmt.recipecmt_dt, mem.member_nickname
+   <select id="selectMyRecipeCmt" parameterType="string" resultMap="recipeCmtMap">
+      SELECT cmt.recipecmt_no,info.recipe_no, info.recipe_name, cmt.recipecmt_detail, cmt.recipecmt_dt
       FROM recipe_info info JOIN recipe_comment cmt ON info.recipe_no = cmt.recipe_no JOIN member mem ON mem.member_id = info.member_id
       WHERE cmt.member_id = #{cmt.member_id} ORDER BY cmt.recipecmt_dt desc
    </select>
+   
+   
+   <!-- 삭제@@@@@@@@@@@@@ -->
+   
+   
+   <!-- 나의 레시피 삭제 -->
+    <delete id="deleteRecipe" parameterType="int">
+      DELETE FROM recipe_info  WHERE recipe_no = #{recipe_no}
+   </delete>
+   
+   
+   <!-- 찜한 레시피 해제 -->
+   <delete id="deleteScrapRecipe" parameterType="int">
+      DELETE FROM scrap sc WHERE sc.scrap_no = #{sc.scrap_no}
+   </delete>
+   
+   <!-- 내가 쓴 게시글 삭제 -->
+   <delete id="deleteBoard" parameterType="int">
+      DELETE FROM board WHERE board_no = #{board_no}
+   </delete>
+   
+   <!-- 내가 쓴 신고글 삭제 -->
+   <delete id="deleteReport" parameterType="int">
+      DELETE FROM report WHERE report_no = #{report_no}
+   </delete>
+   
+   <!-- 내가 쓴 문의글 삭제 -->
+   <delete id="deleteQNA" parameterType="int">
+      DELETE FROM QNA WHERE question_no = #{question_no}
+   </delete>
+   
+   
+   
+    <!-- 내가 쓴 게시글 댓글 삭제 -->
+   <delete id="deleteBoardCmt" parameterType="int">
+      DELETE FROM board_comment WHERE boardcmt_no = #{boardcmt_no}
+   </delete>
+   
+       <!-- 내가 쓴 레시피 댓글 삭제 -->
+   <delete id="deleteRecipeCmt" parameterType="int">
+      DELETE FROM recipe_comment WHERE recipecmt_no = #{recipecmt_no}
+   </delete>
    
 </mapper>

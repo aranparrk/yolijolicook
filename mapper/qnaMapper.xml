@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "=//mybatis.org//DTD Mapper 3.0..EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="yolijolicook.QnaMapper">
+	<!-- 문의하기 -->
+	<insert id="insertQNA" parameterType="QNA">
+		INSERT INTO qna (question_no, question_title, question_detail, member_id, question_dt)
+		VALUES(SEQ_QNA.NEXTVAL, #{question_title}, #{question_detail}, #{member.member_id}, SYSDATE)
+	</insert>
+
+	<!-- 문의 디테일 -->
+	<select id="selectQNA" parameterType="int" resultType="QNA">
+		SELECT question_title,question_detail,member_id, question_dt,
+		question_ans_dt, question_ans_detail
+		FROM QNA WHERE question_no = #{question_no}
+	</select>
+
+	<!-- 문의 삭제하기 -->
+	<delete id="deleteQNA" parameterType="QNA">
+		DELETE FROM QNA WHERE question_no = #{question_no}
+	</delete>
+</mapper>

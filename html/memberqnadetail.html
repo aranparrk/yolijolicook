@@ -28,17 +28,58 @@
             $("#header").load("header.html");
             $("#footer").load("footer.html");
 
+            $writeArea = $("body > section > div.a_write")
+            $answerArea = $("body > section > div.a_answer")
+            
+            $(document).ready(function(){
+	            $.ajax({
+	            	url:"../qna/a_write",
+	            	method:"get",
+	            	data : {"question_no" : 1},
+	            	success:function(data){
+	            		if(data.status==1){
+	            			console.log(data.qna);
+	            			$writeArea.find("p.a_title").html(data.qna.question_title);
+	            			$writeArea.find("textarea.a_detail").html(data.qna.question_detail);
+	            			$writeArea.find("div.a_questiondate").html(data.qna.question_dt.substr(0, 10));
+	            			$answerArea.find("textarea.a_answer_detail").html(data.qna.question_ans_detail)
+	            			$answerArea.find("div.a_answerdate").html(data.qna.question_ans_dt.substr(0, 10))
+	            		}
+	            	},
+	            	error: function(jqXHR){
+						alert("오류:" + jqXHR.status);
+					}
+	            });
+	            return false;
+            });
+            	
             // 목록버튼
             $(".qnalistbtn").click(function(event){
-                alert("목록버튼");
-                location.href=$(this).attr("id") + '.html';
+                location.href='membermypage.html';
             });
 
             // 삭제버튼
-            $(".qnadeletebtn").click(function(event){
-                alert("삭제버튼");
-                location.href=$(this).attr("id") + '.html';
-            });
+             $(".qnadeletebtn").click(function(event){
+            	 if(confirm("삭제하시겠습니까?")){
+          			$.ajax({
+          				url: "../qna/deleteQNA",
+          				method: "post",
+          				data : {"question_no" : 1},
+          				success:function(data){
+          					if(data.status == 1){
+          						alert("삭제완료가 완료되었습니다");
+          					}else{
+          						alert(responseObj.msg);
+          					}
+          				},
+          				error:function(jqXHR){
+          					alert("에러:" + jqXHR.status);
+
+          				}
+            		});
+                location.href='main.html';
+            	 }
+            })
         })
     </script>
 </head> 
@@ -48,10 +89,10 @@
         <div class="a_write">
             <h1>답변보기</h1>
             <p style="margin-bottom: 20px;">　</p>
-            <p class="a_title">이 사이트 왜 먹통이에여?</p>
+            <p class="a_title" name="question_title"></p>
             <div class="a_line"></div>
-            <textarea class="a_detail">아무 것도 안 먹히잖아여 ㅋㅋ</textarea>
-            <div class="a_questiondate">2021-04-05</div>
+            <textarea class="a_detail" name="question_detail"></textarea>
+            <div class="a_questiondate" name="question_dt"></div>
             <div class="a_btn">
                 <input type="button" class="qnadeletebtn" id="main" value="삭제하기">
                 <input type="button" class="qnalistbtn" id="main" value="목록보기">
@@ -59,10 +100,9 @@
         </div>
         <div class = "a_answer">
             <legend class = "a_icon"style="color: #55A72B;"><i class="fas fa-comment"></i> Answer </legend>
-            <textarea class="a_answer_detail">조금 마상이지만 불편을 드려 죄송합니다. 업데이트 준비 중이오니 인내를 갖고 기다려주시면 감사하겠습니다
-언제나 열심히 하는 요리조리쿡 되겠습니다
+            <textarea class="a_answer_detail" name="question_ans_detail">
 </textarea>
-            <div class="a_answerdate">2021-04-07</div>
+            <div class="a_answerdate" name="question_ans_dt"></div>
         </div>
     </section>
     <footer id ="footer"></footer>

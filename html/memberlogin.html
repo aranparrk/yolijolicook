@@ -53,6 +53,7 @@
                 $("#login_alert_help_block").text("개인정보 보호를 위해, 개인 PC에서만 사용해 주세요").css("color", "#363131");
             }else{
                 $("#login_alert_help_block").text("");
+                $("#member_id").val("");
             }
         });
 
@@ -70,10 +71,13 @@
         //         $("#alert_member_pwd").text("");
         //     }
         // });
-   
+
+        // 아이디 저장시 입력란에 localStorage에 저장된 값을 보여줌
         let idValue = localStorage.getItem("member_id");
         if(idValue != null && idValue != ""){
-            $("input[name=member_id").val(idValue);
+            $("#member_id").val(idValue);
+            $("input[type=checkbox]").prop('checked', true);
+            $("#login_alert_help_block").text("개인정보 보호를 위해, 개인 PC에서만 사용해 주세요").css("color", "#363131");
         }
         
         let $chkObj = $("input[type=checkbox]");
@@ -100,6 +104,7 @@
                     if(responseObj.status == 1){
                         //alert("로그인성공");
                         sessionStorage.setItem("member_id", idValue);
+                        sessionStorage.setItem("member_nickname", responseObj.member_nickname);
                         location.href="main.html"
                     }else if(responseObj.status== -1){
                         //alert("로그인 실패");
