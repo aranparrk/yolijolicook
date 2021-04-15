@@ -1,6 +1,8 @@
 package com.my.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -21,12 +23,13 @@ import com.my.vo.BoardComment;
 @Qualifier(value = "oracle")
 public class BoardDAOOracle implements BoardDAO {
 	@Autowired
-   private DataSource ds;
+    private DataSource ds;
 
-   @Autowired
-   private SqlSessionFactory sqlSessionFactory;
+    @Autowired
+    private SqlSessionFactory sqlSessionFactory;
+   
 	public List<Board> selectBoardList() throws FindException {
-		 SqlSession session=null;
+		 SqlSession session = null;
 	      try {
 	         session = sqlSessionFactory.openSession();
 	         List<Board> list = session.selectList("mybatis.BoardMapper.selectAllBoard");
@@ -43,19 +46,56 @@ public class BoardDAOOracle implements BoardDAO {
 	      }
 	}
 
-	public List<Board> selectBoardByWord(String word) throws FindException {
-		
-		return null;
+	public List<Board> selectBoardByWord(String keyword) throws FindException {
+		SqlSession session = null;
+		HashMap<String, String> map = new HashMap<>();
+		map.put("o", "board_no DESC");
+		try {
+			session =sqlSessionFactory.openSession();
+			List<Board> list = session.selectList("mybatis.BoardMapper.selectAllBoard", map);
+			if(list.size() == 0) {
+				throw new FindException("게시글이 없습니다");
+			}
+			return list;
+		} catch(Exception e) {
+			throw new FindException(e.getMessage());
+		}
 	}
-
-	public List<Board> selectBoardList(int currentPage, int cnt_per_page) throws FindException {
-		// TODO Auto-generated method stub
-		return null;
+	
+	@Override
+	public List<Board> selectBoardList(String searchopt, String keyword, int currentPage, int cnt_per_page) throws FindException {
+		 SqlSession session = null;
+	      try {
+	         session = sqlSessionFactory.openSession();
+	         Map<String, Object> map = new HashMap<>();
+	         map.put("searchopt", searchopt);
+	         map.put("keyword", keyword);
+	         map.put("currentPage", currentPage);
+	         map.put("cnt_per_page", cnt_per_page);	         
+	         List<Board> list = session.selectList("mybatis.BoardMapper.selectAllBoard", map);
+	         if (list.size() == 0) {
+	            throw new FindException("게시글이 없습니다.");
+	         }
+	         return list;
+	      } catch (Exception e) {
+	         throw new FindException(e.getMessage());
+	      } finally {
+	         if (session != null)
+	            session.close();
+	      }
 	}
 
 	public int selectCount() throws FindException {
-		// TODO Auto-generated method stub
-		return 0;
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			int count = session.selectOne("mybatis.BoardMapper.selectCount");
+			return count;
+		}catch(Exception e) {
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null) session.close();
+		}
 	}
 
 	public void updateBoardCnt(int board_no) throws ModifyException {
@@ -92,9 +132,22 @@ public class BoardDAOOracle implements BoardDAO {
 	      }
 	}
 
-	public List<BoardComment> selectBoardComment(String board_no) throws FindException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BoardComment> selectBoardComment(int board_no) throws FindException {
+		SqlSession session = null;
+	      try {
+	         session = sqlSessionFactory.openSession();
+	         List<BoardComment> list = session.selectList("mybatis.BoardMapper.selectCommentByBoard_no", board_no);
+	         if (list.size() == 0) {
+	            throw new FindException("댓글이 없습니다.");
+	         }
+	         return list;
+	      } catch (Exception e) {
+	         throw new FindException(e.getMessage());
+	      } finally {
+	         if (session != null)
+	            session.close();
+	      }
+	      
 	}
 
 	public void InsertComment(BoardComment boardcomment) throws AddException {
@@ -103,7 +156,20 @@ public class BoardDAOOracle implements BoardDAO {
 	}
 
 	public void insertBoard(Board board) throws AddException {
-		// TODO Auto-generated method stub
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			Map<String,Object> map = new HashMap<String, Object>();
+            map.put("board_title",board.getBoard_title());
+            map.put("board_detail",board.getBoard_detail());
+            map.put("member_id",board.getMember().getMember_id());            
+			session.insert("mybatis.BoardMapper.insertBoard", map);
+			
+		} catch(Exception e) {
+			throw new AddException(e.getMessage());
+		} finally {
+			if(session != null) session.close();
+		}
 
 	}
 
@@ -112,8 +178,20 @@ public class BoardDAOOracle implements BoardDAO {
 
 	}
 
-	public void deleteBoard(Board board) throws RemoveException {
-		// TODO Auto-generated method stub
+	public void deleteBoard(int board_no) throws RemoveException {
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			int rowcnt = session.delete("mybatis.BoardMapper.deleteBoard", board_no);
+			if(rowcnt ==0) {
+				throw new RemoveException("해당 게시물이 존재하지 않습니다");
+			}
+			session.commit();
+		} catch(Exception e) {
+			throw new RemoveException(e.getMessage());
+		} finally {
+			if(session != null) session.close();
+		}
 
 	}
 

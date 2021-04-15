@@ -83,10 +83,14 @@
         /* 페이징모양*/
         .boardlist .paging{
             position: relative;
-            align-items: center;
+            width: fit-content;
+        	margin : 0 auto;
             top:50px;
         }
         
+        .prevDouble, .prev{
+        	display :none;
+        }
         /* 찾기버튼*/
         .boardlist .search{
             display: flex;
@@ -115,7 +119,7 @@
             cursor: pointer;
         }
 
-        #boardtitle{
+        .boardtitle{
             text-align: left;
             padding-left: 25px;
             cursor: pointer;
@@ -124,7 +128,7 @@
         .boardlist input[type=text], textarea{
             font-family: 'Noto Sans KR', sans-serif;
         }
-
+        
         body footer{background-color: #fff; margin-top: 60px;}
         footer > .footer_wrap{background-color: rgb(243, 243, 243);}
         footer > .footer_copyrights{background-color: rgb(243, 243, 243);}
@@ -137,38 +141,79 @@
             $("header").load("header.html");
             $("footer").load("footer.html");
 
+         	/*세션 로그인 아이디*/
+            let loginid = sessionStorage.getItem('member_id');
+            if(loginid == null){
+            	loginid = 0;
+            }
+         	
+         	// 내용
+            let temp = location.href.split("?currentPage=");
+            let currentPage=temp[1];
             
             /*게시글 목록*/
             $.ajax({
-            	url : '../board/list',
+            	url : '../board/list',           
             	method: 'post',
+            	data : {"currentPage" : currentPage},
             	success:function(data){
             		let listboard = $('.tablebody');
+            		console.log(data.pgb);
             		
-            		for(let i =0; i<data.length; i++){
-            			listboard += '<tr><td>'+data[i].board_no+'</td>';
-            			listboard += '<td id ="boardtitle">'+data[i].board_title+'</td>';
-            			listboard += '<td>'+data[i].member_id+'</td>';
-            			listboard += '<td>'+data[i].board_dt+'</td>';
-            			listboard += '<td>'+data[i].board_cnt+'</td></tr>';
+            		for(let i =0; i<data.pgb.list.length; i++){
+            			listboard += '<tr><td>'+data.pgb.list[i].board_no+'</td>';
+            			listboard += '<td class ="boardtitle" id="'+data.pgb.list[i].board_no+'">'+data.pgb.list[i].board_title+'</td>';
+            			listboard += '<td>'+data.pgb.list[i].member.member_id+'</td>';
+            			listboard += '<td>'+data.pgb.list[i].board_dt.substr(0,10)+'</td>';
+            			listboard += '<td>'+data.pgb.list[i].board_cnt+'</td></tr>';
             		}
             		$('.tablebody').html(listboard);
             		
             		/*게시글 선택*/
-                    $(".tablebody tr").click(function(event){
-                        var trNum = $(this).closest('tr').prevAll().length; 
-                        console.log('trNum : ' + trNum);
-                        location.href='boarddetail.html';
+                    $(".tablebody .boardtitle").click(function(event){
+                        var board_no = $(this).attr("id");
+                        location.href="boarddetail.html?board_no="+board_no;
                     });
+            		
+            		/* 페이징 */
+                    /* 첫번째 li < */
+                    if(data.pgb.startPage > 1){
+            			$('.paging li:first-child').html('<span class="'+(data.pgb.startPage-1)+'""><i class="fas fa-angle-left"></i>&nbsp;&nbsp;&nbsp;</span>');
+                    }
+            		
+            		
+                    for(let i= data.pgb.startPage; i<=data.pgb.endPage; i++){
+            			$('.paging li:nth-child(2)').append('<span class ="'+i+'">'+i+'</span>&nbsp;&nbsp;&nbsp;</li>');            			
+            			let pageNum = $('.paging li:nth-child(2) span:nth-child('+i+')').attr("class");
+            			$('.'+pageNum).css("cursor", "pointer");
+            			if(pageNum == data.pgb.currentPage){
+            				$('.'+pageNum).css("font-weight", "bold");
+            			}
+                    }
+                    
+                    /* 두번째 li > */
+            		if(data.pgb.endPage < data.pgb.totalPage){
+            			$('.paging li:last-child').html('<span class="'+(data.pgb.endPage+1)+'""><i class="fas fa-angle-right"></i>&nbsp;&nbsp;&nbsp;</span>');
+            		}
+            		
+                    /* 페이징 이동 */
+            		$("ul>li>span").click(function(event){
+            			var classValue = $(event.target).attr("class");
+            			location.href = "/yolijolicook/html"+data.pgb.targetURL+".html?currentPage="+classValue;
+            		});
             	}
             });
             
             /*게시글 작성*/
             $("#boardwrite").click(function(event){
-                location.href=$(this).attr("id") + '.html';
+            	if(loginid == 0){
+            		alert("로그인부터 해주세요");
+            	} else {
+            		location.href=$(this).attr("id") + '.html';
+            	}
+                
             });
 
-            
             /* 검색 */
             $(".searchbtn").click(function(event){
                 alert("검색이 눌림")
@@ -193,78 +238,7 @@
                     <th>조회수</th>
                 </tr>
             </thead>
-            <tbody class ="tablebody">
-               <!--  <tr>
-                    <td>10</td>
-                    <td id ="boardtitle">글제목입니다</td>
-                    <td>김수망</td>
-                    <td>2021-04-06</td>
-                    <td>23</td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td id ="boardtitle">글제목입니다</td>
-                    <td>이소용</td>
-                    <td>2021-04-04</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td id ="boardtitle">글제목입니다</td>
-                    <td>김수망</td>
-                    <td>2021-04-04</td>
-                    <td>13</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td id ="boardtitle">글제목입니다</td>
-                    <td>박아랑</td>
-                    <td>2021-04-03</td>
-                    <td>33</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td id ="boardtitle">글제목입니다</td>
-                    <td>김수망</td>
-                    <td>2021-04-03</td>
-                    <td>6</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td id ="boardtitle">글제목입니다</td>
-                    <td>김수망</td>
-                    <td>2021-04-01</td>
-                    <td>42</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td id ="boardtitle">글제목입니다</td>
-                    <td>옹수잉</td>
-                    <td>2021-03-29</td>
-                    <td>54</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td id ="boardtitle">글제목입니다</td>
-                    <td>김수망</td>
-                    <td>2021-03-28</td>
-                    <td>23</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td id ="boardtitle">글제목입니다</td>
-                    <td>노씨</td>
-                    <td>2021-03-26</td>
-                    <td>12</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td id ="boardtitle">글제목입니다</td>
-                    <td>김수망</td>
-                    <td>2021-03-26</td>
-                    <td>33</td>
-                </tr> -->
-            </tbody>
+            <tbody class ="tablebody"></tbody>
         </table>
         
         <!-- 게시판 아랫단. 작성버튼, 찾기버튼, 페이징-->
@@ -279,19 +253,26 @@
                     <i class="fas fa-search"></i>
                 </div>
                 <input type="text" class="searchtext">
-                <select name="sort" class ="selectsort">
-                    <option value = "sorttitle">글 제목</option>
-                    <option value = "sortdetail">글 내용</option>
-                    <option value = "sortnickname">닉네임</option>
+                <select name="sort" class ="selectsort" style="width:130px">
+                    <option value = "t">제목</option>
+                    <option value = "d">글 내용</option>
+                    <option value = "m">작성자</option>
                 </select>            
             </div>
         </div>
         <!-- 페이징 -->
-        <div class="paging" style="text-align: center; margin-top: 20px;">
-            <i class="fas fa-angle-double-left"></i>&nbsp;<i class="fas fa-angle-left"></i>
-            &nbsp; 1 &nbsp 2 &nbsp 3 &nbsp 4 &nbsp 5 &nbsp 6 &nbsp 7 &nbsp 8  &nbsp
-            <i class="fas fa-angle-right"></i>&nbsp;<i class="fas fa-angle-double-right"></i>
-        </div>
+        <ul style="list-style-type:none; padding: 0px" class ="paging">
+        	<li style="display:inline-block;"></li>
+        	<li style="display:inline-block;"></li>
+        	<li style="display:inline-block;"></li>
+        </ul>
+        <!-- <div class="paging" style="text-align: center; margin-top: 20px;">
+            <div class = "prevDouble"><i class="fas fa-angle-double-left"></i>&nbsp;</div>
+            <div class = "prev"><i class="fas fa-angle-left"></i></div>
+            <span class = "paging_number"></span>
+            <div class = "next"><i class="fas fa-angle-right"></i>&nbsp;</div>
+            <div class="nextDouble"><i class="fas fa-angle-double-right"></i></div>
+        </div> -->
     </div>
     <!-- 푸터로드-->
     <footer></footer>

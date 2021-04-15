@@ -74,15 +74,36 @@
             $("header").load("header.html");
             $("footer").load("footer.html");
 
+          	//세션 로그인 아이디
+            let loginid = sessionStorage.getItem('member_id');
+          	
             /*작성버튼*/
             $(".writebtn").click(function(event){
-                alert("작성버튼");
-                location.href=$(this).attr("id") + '.html';
+                let $titleObj = $(".writetitle").val();
+                let $detailObj = $(".writedetail").val();
+                if(loginid && $titleObj && $detailObj !=""){             
+                	$.ajax({
+                		url:"../board/write",
+                		method: "post",
+                		data : {"board_title" : $titleObj, "board_detail" : $detailObj},
+                		success: function(responseObj){
+                			location.href='boardlist.html';
+                			return false;
+                		},
+                		error: function (jqXHR) {
+                            console.log(jqXHR.status);
+                        }
+                	});
+                	return false;
+                } else if($titleObj && $detailObj == ""){
+                	alert("내용 혹은 제목이 입력되었는지 확인하십시오.");
+                } else {
+                	alert("로그인부터 하세요");
+                }
             });
 
             /*취소버튼*/
             $(".cancelbtn").click(function(event){
-                alert("취소버튼");
                 location.href=$(this).attr("id") + '.html';
             });
         })

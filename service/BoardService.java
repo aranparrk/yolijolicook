@@ -9,8 +9,9 @@ import org.springframework.stereotype.Service;
 import com.my.dao.BoardDAO;
 import com.my.exception.*;
 import com.my.vo.Board;
+import com.my.vo.BoardComment;
 
-@Service("service")
+@Service
 public class BoardService {
 	@Autowired
 	@Qualifier("oracle")
@@ -21,8 +22,14 @@ public class BoardService {
 	 * @return 게시물 리스트
 	 * @throws FindException 게시물이 없을 때 예외가 발생한다
 	 */
-	public List<Board> selectAll() throws FindException{
+	public List<Board> findAll() throws FindException{
 		return boardDAO.selectBoardList();
+	}
+	public List<Board> findAll(String searchopt, String keyword, int currentPage, int cnt_per_page) throws FindException{
+		return boardDAO.selectBoardList(searchopt, keyword, currentPage, cnt_per_page);
+	}
+	public int findCount() throws FindException {
+		return boardDAO.selectCount();
 	}
 	
 	//boarddetail.html
@@ -41,5 +48,26 @@ public class BoardService {
 			throw new FindException(e.getMessage());
 		}
 		return board;
+	}
+	/**
+	 * 게시물을 삭제
+	 * @param board_no 삭제할 게시물 번호
+	 * @throws RemoveException
+	 */
+	public void removeByBoard_no(int board_no) throws RemoveException{
+		boardDAO.deleteBoard(board_no);
+	}
+	
+	public List<BoardComment> findCommentByBoard_no(int board_no) throws FindException{
+		return boardDAO.selectBoardComment(board_no);
+	}
+	//boardwrite.html
+	/**
+	 * 게시물 추가
+	 * @param board 추가할 게시물
+	 * @throws AddException
+	 */
+	public void writeBoard(Board board) throws AddException{
+		boardDAO.insertBoard(board);
 	}
 }

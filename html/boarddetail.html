@@ -70,6 +70,7 @@
         .boarddetail .showcount {
             position: absolute;
             right: 30px;
+            color : gray;
         }
 
         .boarddetail .titleline {
@@ -246,9 +247,65 @@
             $("header").load("header.html");
             $("footer").load("footer.html");
 
+            //세션 로그인 아이디
+            let loginid = sessionStorage.getItem('member_id');
+            
+            // 내용
+            let temp = location.href.split("?board_no=");
+            board_no=temp[1];
+            
+            $.ajax({
+            	url: "../board/detail",
+            	method: "post",
+            	data : {"board_no" : board_no},
+            	success : function(data){
+            		$(".infotitle h1").html(data.board_title);
+            		$(".writer").html(data.member_id);
+            		$(".date").html(data.board_dt.substr(0,10));            		
+            		$(".showdetail").html(data.board_detail);
+            		$(".viewcnt").html("<i class=\"far fa-eye\"></i> " + data.board_cnt + " 읽음");
+            		
+            		if(data.member_id == loginid){
+                    	$(".reportbtn").attr("style", "display:none");
+                    } else {
+                    	$(".deletebtn").attr("style", "display:none");
+                    	$(".modifybtn").attr("style", "display:none");
+                    }
+            	}
+            });
+            
+            // 댓글
+            $.ajax({
+            	url: "../board/commnetlist",
+            	method: "post",
+            	data : {"board_no" : board_no},
+            	success : function(data){            	
+           			let listcomment = $('.boardcomment table');
+            		for(let i =0; i<data.length; i++){
+            			listcomment += '<tr><td id = "writer">' + data[i].member_id +'</td>';
+            			listcomment += '<td id = "detail">' + data[i].boardcmt_detail +'</td>';
+            			listcomment += '<td id = "date">' + data[i].boardcmt_dt.substr(0,10) +'</td></tr>';
+            		}
+            		$('.boardcomment table').html(listcomment);            	
+            	}
+            });
+            
+            
+            
             /*삭제버튼*/
             $(".deletebtn").click(function(event){
-                alert("삭제버튼");
+            	$.ajax({
+                	url: "../board/delete",
+                	method: "post",
+                	data : {"board_no" : board_no},
+                	success : function(data){            	
+                		location.href='boardlist.html';         	
+                	},
+                	error : function(jqXHR){
+                		console.log(jqXHR.status);
+                	}
+                });
+            	return false;
             });
 
             /*수정버튼*/
@@ -309,7 +366,7 @@
                 <div class="writer">김수망</div>
                 <div class="date">2021-04-02</div>
                 <div class="showcount">
-                    <i class="far fa-eye"></i> 조회 : 32 &nbsp;&nbsp;&nbsp; <i class="far fa-comment"></i> 댓글 : 2
+                    <p class = "viewcnt">조회 : 32</p>
                 </div>
             </div>            
         </div>
@@ -332,7 +389,7 @@
         <fieldset class="boardcomment">
             <legend style="color: #55A72B;"><i class="fas fa-comment"></i> Commnet </legend>
             <table>
-                <tr>
+                <!-- <tr>
                     <td id = "writer">옹수잉</td>
                     <td id = "detail">댓글작성예시입니다</td>
                     <td id = "date">2021-04-04</td>
@@ -351,6 +408,9 @@
                     <td id="writer">NOSSI</td>
                     <td id = "detail">댓글작성예시입니다</td>
                     <td id = "date">2021-04-02</td>
+                </tr> -->
+                <tr>
+                	<td>아직 댓글이 없습니다</td>
                 </tr>
             </table>
             <div class="commentwriter">김수망
@@ -367,12 +427,11 @@
             <div class="boardinfo">
                 <h3>글제목입니다</h3>
                 <div class="infowriterndate">
-                    <div class="writer">김수망</div>
-                    <div class="date">2021-04-02</div>
+                    <div class="writer"></div>
+                    <div class="date"></div>
                 </div>
                 <!-- 게시판 내용 -->
-                <p>영락과 부패 뿐이다 낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 크고 작고 간에! 그들의 몸이 얼마나 튼튼하며 그들의 피부가 얼마나 생생하며 그들의 눈에 무엇이 타오르고 있는가? 우리 눈이 그것을 보는 때에 우리의 귀는 생의 찬미를 듣는다 그것은 웅대한 관현악이며 미묘한 교향악이다 뼈 끝에 스며들어예가 되려니와 그와 같지 못하다 할지라도 창공에 반짝이는 뭇 별과 같이 산야에 피어나는 군영과 같이 이상은 실로 인간의 부패를 방지하는 소금이라 할지니 인생에 가치를 주는 원질이 되는 것이다 그들은 앞이 긴지라 착목한는</p>
-        
+                <!-- <p>영락과 부패 뿐이다 낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 크고 작고 간에! 그들의 몸이 얼마나 튼튼하며 그들의 피부가 얼마나 생생하며 그들의 눈에 무엇이 타오르고 있는가? 우리 눈이 그것을 보는 때에 우리의 귀는 생의 찬미를 듣는다 그것은 웅대한 관현악이며 미묘한 교향악이다 뼈 끝에 스며들어예가 되려니와 그와 같지 못하다 할지라도 창공에 반짝이는 뭇 별과 같이 산야에 피어나는 군영과 같이 이상은 실로 인간의 부패를 방지하는 소금이라 할지니 인생에 가치를 주는 원질이 되는 것이다 그들은 앞이 긴지라 착목한는</p>-->
             </div>
             <div class="line"></div>          
             <textarea class="reportdetail" name= "reportdetailtxt"placeholder="신고 내용을 자세히 작성해주세요."></textarea>         

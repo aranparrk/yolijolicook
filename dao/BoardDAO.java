@@ -28,15 +28,17 @@ public interface BoardDAO {
 	 * @return 게시물 리스트
 	 * @throws FindException 게시물이 없을 때 예외 발생
 	 */
-	public List<Board> selectBoardByWord(String word) throws FindException;
+	public List<Board> selectBoardByWord(String keyword) throws FindException;
 	/**
-	 * 게시물 페이징 검색
-	 * @param currentPage
-	 * @param cnt_per_page
-	 * @return 게시물
+	 * 게시물 전체 검색
+	 * @param searchopt 검색옵션
+	 * @param keyword 검색어
+	 * @param currentPage 현재 페이지
+	 * @param cnt_per_page 페이지별 게시물 수
+	 * @return
 	 * @throws FindException
 	 */
-	public List<Board> selectBoardList(int currentPage, int cnt_per_page) throws FindException;
+	public List<Board> selectBoardList(String searchopt, String keyword, int currentPage, int cnt_per_page) throws FindException;
 	/**
 	 * 게시물 수 검색
 	 * @return 게시물 수
@@ -67,7 +69,7 @@ public interface BoardDAO {
 	 * @return 게시물 댓글
 	 * @throws FindException
 	 */
-	public List<BoardComment> selectBoardComment(String board_no) throws FindException;
+	public List<BoardComment> selectBoardComment(int board_no) throws FindException;
 	/**
 	 * 댓글 추가
 	 * @param boardcomment 댓글
@@ -96,10 +98,10 @@ public interface BoardDAO {
 	public void updateBoard(Board board) throws ModifyException;
 	/**
 	 * 게시판 삭제
-	 * @param board 삭제할 게시물
+	 * @param board_no 삭제할 게시물의 번호
 	 * @throws RemoveException
 	 */
-	public void deleteBoard(Board board) throws RemoveException;
+	public void deleteBoard(int board_no) throws RemoveException;
 	/**
 	 * 게시물 여러개 삭제
 	 * @param board 삭제할 게시물

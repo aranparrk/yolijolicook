@@ -3,22 +3,66 @@
    PUBLIC "=//mybatis.org//DTD Mapper 3.0..EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mybatis.BoardMapper">
-	<resultMap id = "boardMap" type="com.my.vo.Board" autoMapping="true">
+	<resultMap id = "boardMap" type="Board" autoMapping="true">
 		<id property="board_no" column="board_no"/>
-		<association property="member" javaType="com.my.vo.Member" autoMapping="true">
+		<association property="member" javaType="Member" autoMapping="true">
+			<id property = "member_id" column="member_id"/>
+		</association>		
+	</resultMap>
+	<resultMap id="boardcmtMap" type="BoardComment" autoMapping="true">		
+		<association property="member" javaType="Member" autoMapping="true">
 			<id property = "member_id" column="member_id"/>
 		</association>
+		<association property="board" javaType="Board" autoMapping="true">
+			<id property="board_no" column="board_no"/>
+		</association>
 	</resultMap>
-	<select id ="selectAllBoard" resultMap="boardMap">
-		SELECT * FROM BOARD ORDER BY board_no DESC
+	<!-- 게시물 리스트 페이징 처리 -->
+	<select id ="selectAllBoard" parameterType="map" resultMap="boardMap">
+		SELECT *
+		FROM ( SELECT rownum r, BOARD.*
+                FROM BOARD
+                <include refid="search"></include>
+                ORDER BY board_no DESC)
+        WHERE r BETWEEN  FUN_START_ROW(#{currentPage}, #{cnt_per_page}) 
+		             AND FUN_END_ROW(#{currentPage}, #{cnt_per_page})
 	</select>
+	<select id ="selectCount" resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM BOARD
+	  	<include refid="search"></include>
+	</select>
+	<sql id="search">
+		<if test ="searchType != null">
+			<if test="searchType == 't'.toString()">WHERE board_title like '%'||#{keyword}||'%'</if>
+			<if test="searchType == 'd'.toString()">WHERE board_detail like '%'||#{keyword}||'%'</if>
+			<if test="searchType == 'm'.toString()">WHERE board_member like '%'||#{keyword}||'%'</if>
+		</if>
+	</sql>
 	
-	<select id = "selectByBoard_no" resultType="Board">
-		SELECT * FROM BOARD WHERE board_no=#{board_no};
+	
+	<!-- 게시물 작성 -->
+	<insert id = "insertBoard" parameterType="map">
+		INSERT INTO BOARD(board_no, board_title, member_id, board_detail, board_dt)
+		VALUES (seq_board.NEXTVAL, #{board_title}, #{member_id}, #{board_detail}, SYSDATE)
+	</insert>
+	
+	
+	<!-- 게시물 선택 -->
+	<select id = "selectByBoard_no" resultMap="boardMap">
+		SELECT * FROM BOARD WHERE board_no=#{board_no}
+	</select>
+	<select id="selectCommentByBoard_no" resultMap="boardcmtMap">
+		SELECT * FROM BOARD_COMMENT WHERE board_no=#{board_no} ORDER BY boardcmt_no DESC
 	</select>
 	
 	<update id="updateBoardCnt" parameterType="int">
-	  UPDATE repboard SET board_cnt = board_cnt+1
+	  UPDATE BOARD SET board_cnt = board_cnt+1
 	  WHERE board_no = #{board_no}
 	</update>
+	
+	<!-- 게시물 삭제 -->
+	<delete id="deleteBoard">
+		DELETE BOARD WHERE board_no = #{board_no}
+	</delete>
 </mapper>
