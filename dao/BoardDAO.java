@@ -8,6 +8,7 @@ import java.util.List;
 import com.my.exception.*;
 import com.my.vo.Board;
 import com.my.vo.BoardComment;
+import com.my.vo.Report;
 
 /**
  * @author sumin
@@ -75,7 +76,7 @@ public interface BoardDAO {
 	 * @param boardcomment 댓글
 	 * @throws AddException 
 	 */
-	public void InsertComment(BoardComment boardcomment) throws AddException;
+	public void insertComment(BoardComment boardcomment) throws AddException;
 	
 	
 	
@@ -103,11 +104,16 @@ public interface BoardDAO {
 	 */
 	public void deleteBoard(int board_no) throws RemoveException;
 	/**
+	 * 게시물 신고
+	 * @param report 신고
+	 * @throws AddException
+	 */
+	public void insertReport(Report report) throws AddException;
+	/**
 	 * 게시물 여러개 삭제
 	 * @param board 삭제할 게시물
 	 * @throws RemoveException
 	 */
 	public void deleteBoardList(Board board) throws RemoveException;
-	
 
 }

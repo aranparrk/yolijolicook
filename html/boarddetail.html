@@ -126,6 +126,12 @@
         .boarddetail .boardcomment table #detail{
             width: 540px;
         }
+        
+        .boarddetail .commentwriter{
+        	display : flex;
+        	flex-direction : row;
+        	align-items: baseline
+        }
 
         .boarddetail .writecomment{
             margin : 20px 20px 0 20px;
@@ -275,6 +281,7 @@
             });
             
             // 댓글
+            $('.cwriter').html(loginid);
             $.ajax({
             	url: "../board/commnetlist",
             	method: "post",
@@ -315,10 +322,29 @@
 
             /*댓글작성버튼*/
             $(".writecmtbtn").click(function(event){
-                alert("댓글작성버튼")
+                let $detailObj = $('.writecomment').val();
+                if(loginid && $detailObj !=""){             
+                	$.ajax({
+                		url:"../board/writecomment",
+                		method: "post",
+                		data : {"board_no" : board_no, "boardcmt_detail" : $detailObj},
+                		success: function(responseObj){
+                			location.reload();
+                			return false;
+                		},
+                		error: function (jqXHR) {
+                            console.log(jqXHR.status);
+                        }
+                	});
+                	return false;
+                } else if($detailObj == ""){
+                	alert("내용이 입력되었는지 확인하십시오.");
+                } else {
+                	alert("로그인부터 하세요");
+                }
             });
 
-            /*댓글작성버튼*/
+            /*목록으로 가기 버튼*/
             $(".boardlistbtn").click(function(event){
                 location.href=$(this).attr("id") + '.html';
             });
@@ -413,7 +439,7 @@
                 	<td>아직 댓글이 없습니다</td>
                 </tr>
             </table>
-            <div class="commentwriter">김수망
+            <div class="commentwriter"><p class ="cwriter">김수망</p>
                 <input type="text" class="writecomment" placeholder="내용을 입력해주세요">
                 <input type="button" class="writecmtbtn" value="댓글쓰기">
             </div>

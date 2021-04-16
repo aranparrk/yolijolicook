@@ -10,6 +10,7 @@ import com.my.dao.BoardDAO;
 import com.my.exception.*;
 import com.my.vo.Board;
 import com.my.vo.BoardComment;
+import com.my.vo.Report;
 
 @Service
 public class BoardService {
@@ -69,5 +70,30 @@ public class BoardService {
 	 */
 	public void writeBoard(Board board) throws AddException{
 		boardDAO.insertBoard(board);
+	}
+	/**
+	 * 게시물 댓글 추가
+	 * @param boardcomment 추가할 댓글
+	 * @throws AddException
+	 */
+	public void writeBoardComment(BoardComment boardcomment) throws AddException{
+		boardDAO.insertComment(boardcomment);
+	}
+	/* 추가요소 */
+	/**
+	 * 게시판 수정
+	 * @param board 수정할 게시물
+	 * @throws ModifyException
+	 */
+	public void updateBoard(Board board) throws ModifyException{
+		
+	}
+	/**
+	 * 게시물 신고
+	 * @param report 추가할 신고
+	 * @throws AddException
+	 */
+	public void writeReport(Report report) throws AddException{
+		boardDAO.insertReport(report);
 	}
 }

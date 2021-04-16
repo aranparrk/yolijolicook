@@ -22,6 +22,7 @@ import com.my.vo.Board;
 import com.my.vo.BoardComment;
 import com.my.vo.Member;
 import com.my.vo.PageGroupBean;
+import com.my.vo.Report;
 
 import lombok.extern.log4j.Log4j;
 
@@ -122,7 +123,6 @@ public class BoardController {
 		HttpSession session = request.getSession();
 		
 		String login_id = (String) session.getAttribute("loginInfo");
-		
 		Member member = new Member();
 		member.setMember_id(login_id);
 		
@@ -133,9 +133,58 @@ public class BoardController {
 		
 		
 		service.writeBoard(board);
-		jacksonMap.put("member_id", login_id);
 		jacksonMap.put("status", 1);
 		
+		return jacksonMap;
+	}
+	@RequestMapping("/writecomment")
+	public Map<String, Object> boardcmtWrite(@RequestParam(value="boardcmt_detail") String boardcmt_detail,
+											 @RequestParam(value="board_no") int board_no,
+											HttpServletRequest request) throws AddException{
+		Map<String, Object> jacksonMap = new HashMap<>();
+		HttpSession session = request.getSession();
+		
+		String login_id = (String) session.getAttribute("loginInfo");
+		
+		Member member = new Member();
+		member.setMember_id(login_id);
+		
+		Board board = new Board();
+		board.setBoard_no(board_no);
+		
+		BoardComment boardcomment = new BoardComment();
+		boardcomment.setMember(member);
+		boardcomment.setBoardcmt_detail(boardcmt_detail);
+		boardcomment.setBoard(board);
+		
+		service.writeBoardComment(boardcomment);
+		jacksonMap.put("status", 1);
+		return jacksonMap;
+	}
+	@RequestMapping("/writereport")
+	public Map<String, Object> reportWrite(@RequestParam(value="report_title") String report_title,
+										   @RequestParam(value="report_detail") String report_detail,
+										   @RequestParam(value="board_no") int board_no,
+										   HttpServletRequest request) throws AddException{
+		Map<String, Object> jacksonMap = new HashMap<>();
+		HttpSession session = request.getSession();
+		
+		String login_id = (String) session.getAttribute("loginInfo");
+		
+		Member member = new Member();
+		member.setMember_id(login_id);
+		
+		Board board = new Board();
+		board.setBoard_no(board_no);
+		
+		Report report = new Report();
+		report.setBoard(board);
+		report.setMember(member);
+		report.setReport_title(report_title);
+		report.setReport_detail(report_detail);
+		
+		service.writeReport(report);
+		jacksonMap.put("status", 1);
 		return jacksonMap;
 	}
 }

@@ -18,6 +18,7 @@ import com.my.exception.ModifyException;
 import com.my.exception.RemoveException;
 import com.my.vo.Board;
 import com.my.vo.BoardComment;
+import com.my.vo.Report;
 
 @Repository
 @Qualifier(value = "oracle")
@@ -150,8 +151,21 @@ public class BoardDAOOracle implements BoardDAO {
 	      
 	}
 
-	public void InsertComment(BoardComment boardcomment) throws AddException {
-		// TODO Auto-generated method stub
+	public void insertComment(BoardComment boardcomment) throws AddException {
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			Map<String,Object> map = new HashMap<String, Object>();
+            map.put("board_no",boardcomment.getBoard().getBoard_no());
+            map.put("boardcmt_detail",boardcomment.getBoardcmt_detail());
+            map.put("member_id",boardcomment.getMember().getMember_id());            
+			session.insert("mybatis.BoardMapper.insertBoardComment", boardcomment);
+			
+		} catch(Exception e) {
+			throw new AddException(e.getMessage());
+		} finally {
+			if(session != null) session.close();
+		}
 
 	}
 
@@ -160,11 +174,10 @@ public class BoardDAOOracle implements BoardDAO {
 		try {
 			session = sqlSessionFactory.openSession();
 			Map<String,Object> map = new HashMap<String, Object>();
-            map.put("board_title",board.getBoard_title());
-            map.put("board_detail",board.getBoard_detail());
-            map.put("member_id",board.getMember().getMember_id());            
-			session.insert("mybatis.BoardMapper.insertBoard", map);
-			
+			map.put("board_title", board.getBoard_title());
+			map.put("board_detail", board.getBoard_detail());
+			map.put("member_id", board.getMember().getMember_id());
+			session.insert("mybatis.BoardMapper.insertBoard", board);			
 		} catch(Exception e) {
 			throw new AddException(e.getMessage());
 		} finally {
@@ -195,6 +208,26 @@ public class BoardDAOOracle implements BoardDAO {
 
 	}
 
+	@Override
+	public void insertReport(Report report) throws AddException {
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			Map<String,Object> map = new HashMap<String, Object>();
+            map.put("report_title",report.getReport_title());
+            map.put("report_detail",report.getReport_detail());
+            map.put("member_id",report.getMember().getMember_id());
+            map.put("board_no", report.getBoard().getBoard_no());
+			session.insert("mybatis.BoardMapper.insertReport", report);			
+		} catch(Exception e) {
+			throw new AddException(e.getMessage());
+		} finally {
+			if(session != null) session.close();
+		}
+
+		
+	}
+	
 	public void deleteBoardList(Board board) throws RemoveException {
 		// TODO Auto-generated method stub
 
