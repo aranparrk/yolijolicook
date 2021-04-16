@@ -115,6 +115,24 @@ public class BoardController {
         return jacksonList;
 	}
 	
+	@RequestMapping("/modify")
+	public Map<String, Object> boardModify(@RequestParam(value = "board_title") String board_title,
+										   @RequestParam(value="board_detail") String board_detail,
+										   @RequestParam(value = "board_no") int board_no) throws ModifyException{
+		Board board = new Board();
+		board.setBoard_title(board_title);
+		board.setBoard_detail(board_detail);
+		board.setBoard_no(board_no);
+		service.updateBoard(board);
+		
+		Map<String, Object> jacksonMap = new HashMap<>();
+		jacksonMap.put("board_title", board_title);
+		jacksonMap.put("board_detail", board_detail);
+		jacksonMap.put("board_no", board_no);
+		
+		return jacksonMap;
+	}
+	
 	@RequestMapping("/write")
 	public Map<String, Object> boardWrite(@RequestParam(value = "board_title") String board_title,
 										  @RequestParam(value="board_detail") String board_detail,

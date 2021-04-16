@@ -86,7 +86,7 @@ public class BoardService {
 	 * @throws ModifyException
 	 */
 	public void updateBoard(Board board) throws ModifyException{
-		
+		boardDAO.updateBoard(board);
 	}
 	/**
 	 * 게시물 신고

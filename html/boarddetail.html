@@ -188,6 +188,7 @@
 
         /*내용*/
         .modalreport .modalcontent .reportdetail{
+        	font-size :13px;
             height: 100px;
             padding: 4px;
             margin: 6px;
@@ -195,10 +196,20 @@
             border: none;
             outline: none;
         }
-
+        
+        /* 제목 */
+        .modalreport .modalcontent .reporttitle {
+		    font-size: 18px;
+		    font-weight: bold;
+		    margin: 6px;
+		    padding: 4px;
+		    width: 95%;
+		    border: none;
+		    outline: none;
+		}
         /*구분선*/
         .modalreport .line{
-            margin: auto 3px;
+            margin: 15px 3px;
             border:1px solid #55A72B;
         }
         .modalreport .modalbtn{
@@ -265,6 +276,7 @@
             	method: "post",
             	data : {"board_no" : board_no},
             	success : function(data){
+            		$(".modalcontent .infotitle h3").html(data.board_no+" - 신고하실 게시물 : "+ data.board_title);
             		$(".infotitle h1").html(data.board_title);
             		$(".writer").html(data.member_id);
             		$(".date").html(data.board_dt.substr(0,10));            		
@@ -317,7 +329,7 @@
 
             /*수정버튼*/
             $(".modifybtn").click(function(event){
-                location.href=$(this).attr("id") + '.html';
+                location.href=$(this).attr("id") + '.html?board_no='+board_no;
             });
 
             /*댓글작성버튼*/
@@ -352,7 +364,7 @@
             /*신고하기 버튼*/
             $(".reportbtn").click(function(){
                 $(".modalreport").attr("style", "display:block") ;
-                $(".modal_layer").show();
+                $(".modal_layer").show();                
             });
             /*제출버튼*/
             $(".submitbtn").click(function(){
@@ -362,9 +374,23 @@
                     $(".modalchk").attr("style", "display:block") ;                    
                 }
                 else{
-                    $(".modalreport").attr("style", "display:none") ;
-                    $(".modalchk .modalcontent h4").html("게시물이 정상적으로 신고되었습니다.");
-                    $(".modalchk").attr("style", "display:block") ;                    
+                	let $rpttitleObj = $('.reporttitle').val();
+                    let $rptdetailObj = $('.reportdetail').val();
+                    $.ajax({
+                		url:"../board/writereport",
+                		method: "post",
+                		data : {"board_no" : board_no, "report_title" : $rpttitleObj, "report_detail" : $rptdetailObj},
+                		success: function(responseObj){
+                			 $(".modalreport").attr("style", "display:none") ;
+                             $(".modalchk .modalcontent h4").html("게시물이 정상적으로 신고되었습니다.");
+                             $(".modalchk").attr("style", "display:block") ;
+                			return false;
+                		},
+                		error: function (jqXHR) {
+                            console.log(jqXHR.status);
+                        }
+                	});
+                                      
                 }
             });
             /*취소버튼*/
@@ -451,15 +477,16 @@
     <div class="modalreport">        
         <div class="modalcontent">
             <div class="boardinfo">
-                <h3>글제목입니다</h3>
+                <div class="infotitle"><h3>글제목입니다</h3></div>
                 <div class="infowriterndate">
-                    <div class="writer"></div>
+                    <div class="writer"></div>&nbsp;&nbsp;&nbsp;
                     <div class="date"></div>
                 </div>
                 <!-- 게시판 내용 -->
                 <!-- <p>영락과 부패 뿐이다 낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 크고 작고 간에! 그들의 몸이 얼마나 튼튼하며 그들의 피부가 얼마나 생생하며 그들의 눈에 무엇이 타오르고 있는가? 우리 눈이 그것을 보는 때에 우리의 귀는 생의 찬미를 듣는다 그것은 웅대한 관현악이며 미묘한 교향악이다 뼈 끝에 스며들어예가 되려니와 그와 같지 못하다 할지라도 창공에 반짝이는 뭇 별과 같이 산야에 피어나는 군영과 같이 이상은 실로 인간의 부패를 방지하는 소금이라 할지니 인생에 가치를 주는 원질이 되는 것이다 그들은 앞이 긴지라 착목한는</p>-->
             </div>
-            <div class="line"></div>          
+            <div class="line"></div>
+            <input type ="text" class="reporttitle" naem ="reporttitletxt" placeholder ="신고하실 제목을 간략히 작성해주세요."/>
             <textarea class="reportdetail" name= "reportdetailtxt"placeholder="신고 내용을 자세히 작성해주세요."></textarea>         
             <div class="modalbtn">
                 <button class="submitbtn">SUBMIT</button>

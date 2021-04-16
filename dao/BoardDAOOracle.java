@@ -187,7 +187,19 @@ public class BoardDAOOracle implements BoardDAO {
 	}
 
 	public void updateBoard(Board board) throws ModifyException {
-		// TODO Auto-generated method stub
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			Map<String,Object> map = new HashMap<String, Object>();
+			map.put("board_title", board.getBoard_title());
+			map.put("board_detail", board.getBoard_detail());
+			map.put("board_no", board.getBoard_no());
+			session.insert("mybatis.BoardMapper.updateBoard", board);			
+		} catch(Exception e) {
+			throw new ModifyException(e.getMessage());
+		} finally {
+			if(session != null) session.close();
+		}
 
 	}
 

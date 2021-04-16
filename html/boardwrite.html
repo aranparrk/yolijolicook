@@ -74,24 +74,57 @@
             $("header").load("header.html");
             $("footer").load("footer.html");
 
-            /*작성버튼*/
-            $(".writebtn").click(function(event){
-                let $titleObj = $(".writetitle").val();
-                let $detailObj = $(".writedetail").val();             
-               	$.ajax({
-               		url:"../board/write",
-               		method: "post",
-               		data : {"board_title" : $titleObj, "board_detail" : $detailObj},
-               		success: function(responseObj){
-               			location.href='boardlist.html';
-               			return false;
-               		},
-               		error: function (jqXHR) {
-                           console.log(jqXHR.status);
-                       }
-               	});
-               	return false;
-            });
+         	// 내용
+            let temp = location.href.split("?board_no=");
+            board_no=temp[1];
+            if(board_no !=0){
+            	$.ajax({
+                	url: "../board/detail",
+                	method: "post",
+                	data : {"board_no" : board_no},
+                	success : function(data){
+                		$(".writetitle").val(data.board_title);
+                		$(".writedetail").val(data.board_detail);
+                		
+                	}
+                });
+            	$(".writebtn").click(function(event){
+                    let $titleObj = $(".writetitle").val();
+                    let $detailObj = $(".writedetail").val(); 
+                    $.ajax({
+                   		url:"../board/modify",
+                   		method: "post",
+                   		data : {"board_title" : $titleObj, "board_detail" : $detailObj, "board_no":board_no},
+                   		success: function(responseObj){
+                   			location.href='boardlist.html';
+                   			return false;
+                   		},
+                   		error: function (jqXHR) {
+                               console.log(jqXHR.status);
+                           }
+                   	});
+            	});
+            	
+            } else {            
+	            /*작성버튼*/
+	            $(".writebtn").click(function(event){
+	                let $titleObj = $(".writetitle").val();
+	                let $detailObj = $(".writedetail").val();             
+	               	$.ajax({
+	               		url:"../board/write",
+	               		method: "post",
+	               		data : {"board_title" : $titleObj, "board_detail" : $detailObj},
+	               		success: function(responseObj){
+	               			location.href='boardlist.html';
+	               			return false;
+	               		},
+	               		error: function (jqXHR) {
+	                           console.log(jqXHR.status);
+	                       }
+	               	});
+	               	return false;
+	            });
+            }
 
             /*취소버튼*/
             $(".cancelbtn").click(function(event){
