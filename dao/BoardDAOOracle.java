@@ -69,8 +69,8 @@ public class BoardDAOOracle implements BoardDAO {
 	      try {
 	         session = sqlSessionFactory.openSession();
 	         Map<String, Object> map = new HashMap<>();
-	         map.put("searchopt", searchopt);
 	         map.put("keyword", keyword);
+	         map.put("searchopt", searchopt);
 	         map.put("currentPage", currentPage);
 	         map.put("cnt_per_page", cnt_per_page);	         
 	         List<Board> list = session.selectList("mybatis.BoardMapper.selectAllBoard", map);
@@ -86,11 +86,17 @@ public class BoardDAOOracle implements BoardDAO {
 	      }
 	}
 
-	public int selectCount() throws FindException {
+	public int selectCount(String searchopt, String keyword) throws FindException {
 		SqlSession session = null;
 		try {
 			session = sqlSessionFactory.openSession();
-			int count = session.selectOne("mybatis.BoardMapper.selectCount");
+			Map<String, Object> map = new HashMap<>();
+	         map.put("keyword", keyword);
+	         map.put("searchopt", searchopt);
+			int count = session.selectOne("mybatis.BoardMapper.selectCount", map);
+			if(count == 0) {
+				throw new FindException("해당 게시물이 없습니다");
+			}
 			return count;
 		}catch(Exception e) {
 			throw new FindException(e.getMessage());

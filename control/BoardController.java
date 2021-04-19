@@ -54,21 +54,23 @@ public class BoardController {
 //	}
 	
 	@RequestMapping("/list")
-	public Map<String,Object> boardList(@RequestParam(defaultValue="t") String searchopt,
-										@RequestParam(defaultValue="") String keyword,
+	public Map<String,Object> boardList(@RequestParam(value="searchopt", defaultValue="t") String searchopt,
+										@RequestParam(value="keyword", defaultValue ="") String keyword,
 										@RequestParam(value="currentPage", 
 												      required = false, 
 												      defaultValue = "1") int currentPage) throws FindException {		
+		
 		int cnt_per_page = 10;
 		List<Board> boards = service.findAll(searchopt, keyword, currentPage, cnt_per_page);
-		int totalCnt = service.findCount();
+		int totalCnt = service.findCount(searchopt, keyword);
 		String targetURL = "/boardlist";
 		PageGroupBean<Board> pgb = 
 				new PageGroupBean<>(totalCnt, currentPage, boards, targetURL);
 		
 	
 		Map<String,Object> jacksonMap = new HashMap<>();
-		jacksonMap.put("pgb", pgb);
+		jacksonMap.put("pgb", pgb);		
+		
         return jacksonMap;
 	}
 	

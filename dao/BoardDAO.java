@@ -45,7 +45,7 @@ public interface BoardDAO {
 	 * @return 게시물 수
 	 * @throws FindException
 	 */
-	public int selectCount() throws FindException;
+	public int selectCount(String searchopt, String keyword) throws FindException;
 	/**
 	 * 조회수 1 증가
 	 * @param board_no 게시물 번호

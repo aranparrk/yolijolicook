@@ -136,12 +136,12 @@
         header .board_list{color: #FC6636; font-weight: bold;}
     </style>
     <script>
-		   function pageList(currentPage){
+		   function pageList(currentPage, searchopt, keyword){
 		   	   /*게시글 목록*/
 		       $.ajax({
 		       	url : '../board/list',           
 		       	method: 'post',
-		       	data : {"currentPage" : currentPage},
+		       	data : {"currentPage" : currentPage, "searchopt" : searchopt, "keyword" : keyword},
 		       	success:function(data){
 		       		let listboard = $('.tablebody');
 		       		
@@ -157,13 +157,13 @@
 		       		/* 페이징 */
 		       		$('.paging li').empty();
 		               if(data.pgb.startPage > 1){
-		       			$('.paging li:first-child').html('<span class="'+(data.pgb.startPage-1)+'">&#10094;&nbsp;&nbsp;&nbsp;</span>');
+		       			$('.paging li:first-child').html('<span id="'+(data.pgb.startPage-1)+'">&#10094;&nbsp;&nbsp;&nbsp;</span>');
 		               }
 		       		
 		               $('.paging li:nth-child(2)').empty();        		
 		               for(let i= data.pgb.startPage; i<=data.pgb.endPage; i++){
-		       			$('.paging li:nth-child(2)').append('<span class ="'+i+'">'+i+'</span>&nbsp;&nbsp;&nbsp;</li>');            			
-		       			let pageNum = $('.paging li:nth-child(2) span:nth-child('+i+')').attr("class");
+		       			$('.paging li:nth-child(2)').append('<span id ="'+i+'">'+i+'</span>&nbsp;&nbsp;&nbsp;</li>');            			
+		       			let pageNum = $('.paging li:nth-child(2) span:nth-child('+i+')').attr("id");
 		       			if(pageNum == data.pgb.currentPage){
 		       				$('.'+pageNum).css("font-weight", "bold");
 		       				$('.'+pageNum).css("cursor", "default");
@@ -171,24 +171,23 @@
 		               }
 		               
 		       		if(data.pgb.endPage < data.pgb.totalPage){
-		       			$('.paging li:last-child').html('<span class="'+(data.pgb.endPage+1)+'">&#10095;&nbsp;&nbsp;&nbsp;</span>');
+		       			$('.paging li:last-child').html('<span id="'+(data.pgb.endPage+1)+'">&#10095;&nbsp;&nbsp;&nbsp;</span>');
 		       			
 		       		}
 		       		
-		               /* 페이징 이동 */
+		       		/* 페이징 이동 */
 		       		$("ul>li>span").click(function(event){
-		       			var classValue = $(event.target).attr("class");
-		       			pageList(classValue);
+		       			var classValue = $(event.target).attr("id");
+		       			pageList(classValue, searchopt, keyword);
 		       			$('.paging li').empty(); 
 		       		});
-		               
-		       		/* 검색 */
-		               $(".searchbtn").click(function(event){
-		               	alert("검색 버튼");
-		               });
-		       	}
-		       });
-		   }
+		       		
+		      
+	       		}, error : function(jqXHR){
+	       			alert("해당하는 게시물이 없습니다");
+	       		}
+	       });
+	   }
     
         $(function(){
             /*헤더, 푸터로드*/
@@ -217,6 +216,7 @@
             $("#boardwrite").click(function(event){
             	if(loginid == 0){
             		alert("로그인부터 해주세요");
+            		location.href="memberlogin.html";
             	} else {
             		location.href=$(this).attr("id") + '.html?board_no=0';
             	}
@@ -224,6 +224,17 @@
             });
 
             
+               
+       		/* 검색 */
+           $(".searchbtn").click(function(event){
+        	   let searchopt = $(".selectsort option:selected").val();
+        	   let keyword = $(".searchtext").val();
+        	   
+        	   console.log(searchopt);
+        	   console.log(keyword);
+        	   var classValue = $(event.target).attr("id");
+        	   pageList(classValue, searchopt, keyword);
+           });
 
         });
     </script>

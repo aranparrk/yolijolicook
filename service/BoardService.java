@@ -29,8 +29,8 @@ public class BoardService {
 	public List<Board> findAll(String searchopt, String keyword, int currentPage, int cnt_per_page) throws FindException{
 		return boardDAO.selectBoardList(searchopt, keyword, currentPage, cnt_per_page);
 	}
-	public int findCount() throws FindException {
-		return boardDAO.selectCount();
+	public int findCount(String searchopt, String keyword) throws FindException {
+		return boardDAO.selectCount(searchopt, keyword);
 	}
 	
 	//boarddetail.html
