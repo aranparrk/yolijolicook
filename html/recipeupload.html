@@ -33,21 +33,24 @@
             font-family: 'Noto Sans KR', sans-serif;
             color: #363131;
             font-size: 18px;
+           	width:100%;
+           	
         }
        /* 공통 */
-
+		section{
+			margin-top:150px;
+			width:100%;
+			
+		}
        section form{
             width: 800px;
-            margin: 0 auto ;
+           	margin: 0 auto;
             
         }
         #header{
             position: relative;
         }
-        section form{
-            margin: 70px auto 100px auto;
-
-        }
+     
         section article{
             margin-bottom: 150px;
             width: 100%;
@@ -80,11 +83,18 @@
             color: white;
             border-radius: 10px;
             border: none;
+            cursor:pointer;
         }
         section .box {
-            border-radius: 8px;
+            border-radius: 2px;
             border: solid 2px #36313138;
+            padding:5px;
         }
+        
+        /* input 클릭시 생기는 테두리 없애기 */
+		section input:focus, textarea:focus, button:focus{
+		outline:none;
+		}
 
        /* .infoArea{
            margin-top: 150px;
@@ -101,21 +111,65 @@
             font-size: 35px;
             font-weight: 500;
         }
+        
+        /* 대표사진 예시 */
+        section .mainPhotoInner{
+        	display: flex;
+        	text-align: center; 
+        }
+        
+     	section div.exPhoto > div{
+     		margin-right : 70px;
+     	}
+        
+        /* 레시피 제목 */
+        section .infoTitle{
+        	width:400px;
+        	
+        }
+        
+        section .infoIntro{
+       		width:400px;
+        	height:200px;
+        }
+        section .recipeTimeLevelCategory{
+        	display:inline-flex;
+        }
+        
+        #mainPhoto > div > div{
+        	padding-right:50px;
+        }
+        
+        
         /* 재료추가 */
         section #ingre2{
             margin : 20px 0px;
         }
         section .svg-inline--fa{
             display : none;
+            margin-left:2px;
+            font-size:12px;
         }
         /* 주의 */
         section .warn{
-            padding-left: 420px ;
-            font-size: 14px;
+            padding-left: 300px ;
+            font-size: 12px;
             display: block;
             color: #CB1C19;
+            padding-bottom:10px;
         }
 
+		/* step box */
+		section .stepbox{
+			width:500px;
+			height:150px;
+		}
+		section .step> p {
+			text-align : left;
+			margin-left: 150px;
+			font-size:22px;	
+		}
+		
         /* 저장 취소 버튼 */
         section .submitBtn{
             text-align: right;
@@ -154,12 +208,88 @@
          });
 
 
+         <!-- 재료추가 script -->
+             $(function(){
+             	var i=1;
+                 //추가버튼 클릭시
+                 
+	             $(".ingreButton").click(function(){ 
+	           
+	                 var $ingreArea = $('.ingreArea');
+	             	
+	                 var ingreBox ="<div id=\"ingre\"><label class=\"ingreBox\"><select class=\"box\" name=\"recipe_ingre_type\"><option class=\"op\" selected value=\"주재료\">주재료</option><option class=\"op\" value=\"부재료\">부재료</option><option class=\"op\" value=\"양념\"\>양념</option></select>&nbsp<input class=\"box recipeIngreName\" name=\"recipe_ingre_name\" type=\"text\" placeholder=\"예) 닭고기\">&nbsp<span>계량</span>&nbsp<input class=\"box recipeIngreMetering\" name=\"recipe_ingre_metering[]\" type=\"text\" placeholder=\"예) 300g\"><i class=\"fas fa-times\"></i></label></div><br>";
+	                  $ingreArea.append(ingreBox);
+	             });
+	
+	           
+	             $(".ingreArea").on("mouseover",".ingreBox",function(){
+	                 $(this).find(".svg-inline--fa").css("display","inline-block");
+	             });
+	
+	             $(".ingreArea").on("mouseout",".ingreBox",function(){
+	                 $(".svg-inline--fa").css("display","none");
+	             });
+	             $(".ingreBox").on("mouseout",".svg-inline--fa",function(){
+	                 $(".svg-inline--fa").css("display","none");
+	             });
+	             
+	             
+	             
+	             //재료추가 x 클릭
+	             $(".ingreArea").on("click","svg",function(){
+	                 alert("클릭~");
+	                 
+	                 $(this).parents().remove("#ingre");
+	             });
+	             
+             });
+       
+         
+             /* 과정입력 추가 */
+             $(function(){
+             	var j=3;
+                 //추가버튼 클릭시
+             	$(".addStep").click(function(){ 
+             		j++
+             		var $stepAreaBlock = $(".stepAreaBlock");
+             		var stepBox = "<div class=\"divStepArea\"><div><div class=\"step\"><p><b>Step&nbsp;<span name=\"recipe_step_no\">"+j+"</span></b></p><br><div><textarea name=\"recipe_step_text\"class=\"box stepbox\" placeholder=\"입력해주세요\"></textarea><i class=\"fas fa-times\"></i></div></div></div><div ><input type='file' id=\"upload_file\" name=\"recipe_step_img\"></div></div><br>"
+             		
+             		$stepAreaBlock.append(stepBox);
+             		
+             	});
+                 
+                 
+             	 $(".stepAreaBlock").on("mouseover",".divStepArea",function(){
+             		 $(this).find("svg").css("margin-bottom","135px");
+             		 $(this).find("svg").css("font-size","17px");
+	                 $(this).find("svg").css("display","inline-block");
+	                 
+	             });
+		
+             	$(".stepAreaBlock").on("mouseout",".divStepArea",function(){            		
+	                 $(this).find("svg").css("display","none");
+	             });
+             	
+             	
+             	
+             	$(".stepAreaBlock").on("click","svg",function(){
+             		alert("클릭!");
+             		$(this).parents().remove(".divStepArea");
+             		
+             		
+             		var num = 
+             		alert($(this).parents().find(".recipe_step_no").val());
+             		
+             		if(j>$(this).parents().next().find("recipe_step_no").val());
+             	});
+             	 
+             });
+         
+         
 
     </script>
 
 </head>
-
-
 
 <body>
     <header id="header">
@@ -175,16 +305,17 @@
             <div class="infoArea">
                
                 <div id="mainPhoto"> 
-                    <div  class="mainPhoto" style="display: inline-flex;">
-                        <div>
-                        <p class="title2" style=" margin-top: 70px;"> 대표사진등록</p>
-                        <img id="preview" src=""  width="300px" height="300px" style="margin-top: 15px;">
-                        <input type='file' id="upload_file" name="recipe_img" style="margin-left: 60px;" >
-
-                        </div>
-                        <div style="display: inline; float: right;margin:95px 50px 0px 0px;">
-                            <p style="margin-right: 80px;"> 최소 사이즈 : 300PX<br> 최대 사이즈 : 600PX</p>
-                             <img src="../images/web/ex.PNG" width="300px" height="300px">
+                    <div  class="mainPhoto">
+                    <p class="title"> 대표사진등록</p>
+                    	<div class="mainPhotoInner">
+	                        <div class="realPhoto">	                     
+	                        <img id="preview" src="" width="300px" height="300px">
+	                        <input type='file' id="upload_file" name="recipe_img" >
+	                        </div>
+	                        <div class="exPhoto">
+	                            <div> 최소 사이즈 : 300PX <br>최대 사이즈 : 600PX</div>
+	                             <img src="../images/web/ex.PNG" width="300px" height="300px">
+	                         </div>
                          </div>
                     </div>
                 </div>
@@ -192,34 +323,34 @@
 
 
                 <div>
-                    <p class="title2" style="margin-top: 60px;">레시피 제목</p>
-                    <input type="text" name="recipe_name" class="box infoTitle" placeholder="예) 소고기 미역국 끓이기" style="width:610px; ">
+                    <p class="title2">레시피 제목</p>
+                    <input type="text" name="recipe_name" class="box infoTitle" placeholder="예) 소고기 미역국 끓이기">
                 </div>
                 <div>
                     <p class="title2">요리소개</p>
-                    <textarea name="recipe_intro" class="box infoIntro" placeholder="이 레시피의 탄생배경을 적어주세요. 예) 어머니로부터 배운 미역국 레시피를 남편의 입맛에 맞게 고안했습니다." style="height:100px; width:610px; resize:none;"></textarea>
+                    <textarea name="recipe_intro" class="box infoIntro" placeholder="이 레시피의 탄생배경을 적어주세요. &#13;&#10;예) 어머니로부터 배운 미역국 레시피를 남편의 입맛에 맞게 고안했습니다."></textarea>
                 </div>
-
-                <div style="display: inline-block; margin: 40px 16px 16px 0px;">
-                    <span>소요시간</span>
-                    <div style="display: inline-block;">
+				<br>
+                <div class="recipeTimeLevelCategory">
+                    <span>소요시간</span>&nbsp;
+                    <div>
                         <input class="box" type="text" placeholder="예)30분 이상" name="recipe_time">
                     </div>
 
-                    <div style="display: inline-block; margin-left: 20px;">
-                        <span>난이도</span>
-                            <select class="box">
+                    <div>&nbsp;&nbsp;
+                        <span>난이도</span>&nbsp;
+                            <select class="box" name="recipe_level">
                                 <option class="op" selected value="1">초보환영</option>
                                 <option class="op" value="2">보통</option>
                                 <option class="op" value="3">어려움</option>
                             </select>
-                    </div>
+                    </div>&nbsp;&nbsp;&nbsp;
 
                                 
                     <!-- 선택 : 한식 양식 중식 일식 퓨전 -->
-                    <div style="display: inline-block;margin-left:20px;">
-                        <span>카테고리 선택</span>
-                        <select class="box">
+                    <div >
+                        <span>카테고리 선택</span>&nbsp;
+                        <select class="box" name="recipe_category">
                             <option class="op" selected value="1">한식</option>
                             <option class="op" value="2">양식</option>
                             <option class="op" value="3">일식</option>
@@ -235,10 +366,11 @@
        <article>
         <div class="ingreArea">
         
-            <div class="title2 ingre">재료</div>
+            <div class="title ingre">재료</div>
 
             <div id="ingre">
-                <select class="box" name="recipe_ingre_type" style="display: inline-block;">
+                
+                <select class="box" name="recipe_ingre_type" ><!-- style="display: inline-block;" -->
                     <option class="op" selected value="1">주재료</option>
                     <option class="op" value="2">부재료</option>
                     <option class="op" value="3">양념</option>
@@ -249,9 +381,9 @@
                     <span class="warn"> &#9888; 계량 단위를 정확히 적어주세요</span>
                 </div>
 
-            <div id="ingre2">
+            <div id="ingre">
                 <label class="ingreBox">
-                <select class="box" name="recipe_ingre_type" style="display: inline-block;">
+                <select class="box" name="recipe_ingre_type">
                     <option class="op" selected value="1">주재료</option>
                     <option class="op" value="2">부재료</option>
                     <option class="op" value="3">양념</option>
@@ -259,108 +391,87 @@
                     <input class="box recipeIngreName" name="recipe_ingre_name" type="text" placeholder="예) 닭고기">
                     <span>계량</span>
                     <input class="box recipeIngreMetering" name="recipe_ingre_metering" type="text" placeholder="예) 300g">
-                    <i class="fas fa-times" style=" padding: 2px;cursor:pointer;"></i>
+                    <i class="fas fa-times"></i>
                 </label>
             </div>
-
+			<br>
 
             
 
 
         </div>
         <div>
-            <input class="button plusIntre ingreButton" type="button" value="추가" style="margin-top: 40px;margin-bottom: 16px;">
+            <input class="button plusIntre ingreButton" type="button" value="추가">
         </div>
 
 
-<!-- 재료추가 script -->
-        <script>
-            $(function(){
-                //추가버튼 클릭시
-            $(".ingreButton").click(function(){ 
-                var $ingreArea = $('.ingreArea');
-                var ingreBox = '<div id="ingre2"><label class="ingreBox"><select class="box" name="recipe_ingre_type" style="display: inline-block;"><option class="op" selected value="1">주재료</option><option class="op" value="2">부재료</option><option class="op" value="3">양념</option></select><input class="box recipeIngreName" name="recipe_ingre_name" type="text" placeholder="예) 닭고기"><span>계량</span><input class="box recipeIngreMetering" name="recipe_ingre_metering" type="text" placeholder="예) 300g"><i class="fas fa-times" style=" padding: 2px;cursor:pointer; display:none;"></i></label></div>'
-                console.log(ingreBox);
-                $ingreArea.append(ingreBox);
 
-            });
-
-            $(".ingreBox").mouseover(function(){
-                $(".svg-inline--fa").css("display","inline-block")
-            });
-
-            $(".ingreBox").mouseout(function(){
-                $(".svg-inline--fa").css("display","none")
-            });
-            $(".svg-inline--fa").mouseout(function(){
-                $(".svg-inline--fa").css("display","none")
-            });
-
-            });
-        </script>
     </article>
 
     <!--조리과정-->
     <article>
         <!-- </div>/cont_box -->
         <div class="processArea">
-
-            <input type="file" name="file" id="recipe_img" file_gubun="step" style="display:none;" multiple=""> <!-- 파일업로드 -->
-            <p class="title2">요리순서</p>
-            <span class="recipeStepText" style="width: 100%;" >
+		  <p class="title">요리순서</p>
+            <span class="recipeStepText" >
                 <b> <span style="color:#CB1C19 ;">&#9888;&nbsp;&nbsp;요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.</span> </b><br><br>
-                <div style="text-align: left; margin-left: 150px; margin-bottom: 30px;">
+                <div>
                 예)    &nbsp;10분간 익혀주세요 ▷ 10분간 약한불로 익혀주세요.<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;마늘편은 익혀주세요 ▷ 마늘편을 충분히 익혀주셔야 매운 맛이 사라집니다.<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;꿀을 조금 넣어주세요 ▷ 꿀이 없는 경우, 설탕 1스푼으로 대체 가능합니다.
                 </div>
             </span> 
+            <br>
+            
+            <div class="stepAreaBlock">
             <!--step1-->
-            <div  id="divStepArea" style="display: inline; margin:0 20px;">
+            <div  class="divStepArea">
             <div>
-                <div style="display:inline;" class="step">
-                    <p style="margin-right: 380px;"><b>Step1</b></p><br>
+                <div class="step">
+                    <p ><b>Step&nbsp;<span class="recipe_step_no">1</span></b></p><br>
                     <div>
-                        <textarea name="recipe_step_text[]"class="box" placeholder="예) 소고기는 기름기를 떼어내고 적당한 크기로 썰어주세요." style="height:160px; width:430px; resize:none;"></textarea>
+                        <textarea name="recipe_step_text"class="box stepbox" placeholder="예) 소고기는 기름기를 떼어내고 적당한 크기로 썰어주세요."></textarea>
                     </div>
                 </div>
             </div>
             <div >
-                <input type='file' id="upload_file" name="recipe_img" style="float: right; margin-right: 60px;" >
+                <input type='file' id="upload_file" name="recipe_img" >
             </div>
         </div>
         <br>
             <!--step2-->
-            <div  id="divStepArea" style="display: inline; margin:0 20px;">
+            <div  class="divStepArea">
                 <div>
-                    <div style="display:inline;" class="step">
-                        <p style="margin-right: 380px;"><b>Step2</b></p><br>
-                        <div style="display: inline-block;">
-                            <textarea name="recipe_step_text[]"class="box" placeholder="입력해주세요" style="height:160px; width:430px; resize:none;"></textarea>
+                    <div  class="step">
+                        <p><b>Step&nbsp;<span class="recipe_step_no">2</span></b></p><br>
+                        <div>
+                            <textarea name="recipe_step_text"class="box stepbox" placeholder="입력해주세요" ></textarea>
+                        	<i class="fas fa-times"></i>
                         </div>
-                        <i class="fas fa-times" style="margin-bottom: 145px; padding: 2px;cursor:pointer; display: none;"></i>
                     </div>
                 </div>
-                <div >
-                    <input type='file' id="upload_file" name="recipe_img" style="float: right; margin-right: 60px;" >
+                <div>
+                    <input type='file' id="upload_file" name="recipe_img">
                 </div>
             </div>
             <br>
-                        <!--step3-->
-                        <div  id="divStepArea" style="display: inline; margin:0 20px;">
-                            <div>
-                                <div style="display:inline;" class="step">
-                                    <p style="margin-right: 380px;"><b>Step3</b></p><br>
-                                    <div>
-                                        <textarea name="recipe_step_text[]"class="box" placeholder="입력해주세요" style="height:160px; width:430px; resize:none;"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div >
-                                <input type='file' id="upload_file" name="recipe_img" style="float: right; margin-right: 60px;" >
-                            </div>
+            <!--step3-->
+            <div  class="divStepArea">
+                <div>
+                    <div class="step">
+                       <p><b>Step&nbsp;<span class="recipe_step_no">3</span></b></p><br>
+                        <div>
+                            <textarea name="recipe_step_text"class="box stepbox" placeholder="입력해주세요"></textarea>
+                        	<i class="fas fa-times"></i>
                         </div>
-                        <br>
+                    </div>
+                </div>
+                <div >
+                    <input type='file' id="upload_file" name="recipe_img" >
+                </div>
+            </div>
+            <br>
+            
 
         </div>
         <!-- </div> -->
@@ -369,8 +480,8 @@
         <!-- step template -->
 
         <br><br>
-        <div class="btn_add mag_b_25" style="padding:0 0 20px 180px; width:820px;">
-            <button type="button" onclick="addStep()" class="button btn btn-default">
+        <div class="btn_add mag_b_25">
+            <button type="button" class="addStep button btn btn-default">
                 <span class="glyphicon glyphicon-plus-sign"></span>추가
             </button>
         </div>

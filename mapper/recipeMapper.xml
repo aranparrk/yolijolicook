@@ -3,7 +3,40 @@
    PUBLIC "=//mybatis.org//DTD Mapper 3.0..EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    <mapper namespace="mybatis.RecipeMapper">
-   
+ <!-- ******레시피 디테일 ******* -->  
+<!-- 레시피 디테일 -->
+<resultMap  id="detailinfo" type="RecipeInfo" autoMapping="true">
+      <id property = "recipe_no" column="recipe_no"/>
+      
+      <association property="member" javaType="com.my.vo.Member" autoMapping="true">
+         <id property = "member_id" column="member_id"/>
+      </association>
+    
+      <collection property="recipeingre" ofType="RecipeIngre" autoMapping="true">
+      	<id property="recipe_ingre_no" column="recipe_ingre_no"/>
+      	<result property="recipe_ingre_name" column="recipe_ingre_name"/>
+      	<result property="recipe_ingre_metering" column="recipe_ingre_metering"/>
+      	<result property="recipe_ingre_type" column="recipe_ingre_type"/>
+      	
+      </collection>
+
+	  <collection property="recipeprocess" ofType="RecipeProcess" autoMapping="true">
+		<id property="recipe_step_no" column="recipe_step_no"/>
+		<result property="recipe_step_text" column="recipe_step_text"/>
+		<result property="recipe_step_img" column="recipe_step_img"/>
+    </collection>
+	
+	<collection property="recipecomment" ofType="RecipeComment" autoMapping="true">
+		<id property="recipecmt_no" column="recipecmt_no"/>
+		<result property="recipeinfo.recipe_no" column="recipe_no"/>
+		<result property="member.member_id" column="cmtmember_id"/>
+		<result property="recipecmt_detail" column="recipecmt_detail"/>
+		<result property="recipecmt_dt" column="recipecmt_dt"/>
+	</collection> 
+   </resultMap>   
+
+<!-- ******레시피 리스트 ******* -->
+
    <resultMap type="RecipeInfo" id="selectbyname" autoMapping="true">
    	 <id property="recipe_no" column="recipe_no"/>
    	 
@@ -12,6 +45,37 @@
    	 </collection>
    	 
    </resultMap>
+
+   
+
+ <!-- ******레시피 디테일 ******* -->  
+   <!-- 레시피 디테일 페이지 정보 불러오기-->
+   <select id="selectRecipeDetailByRecipe_no" parameterType="int" resultMap="detailinfo">
+SELECT info.recipe_no, info.member_id, recipe_name, recipe_category, recipe_time, recipe_level, recipe_img, recipe_scrap_cnt, recipe_cnt, recipe_dt, recipe_status, 
+recipe_ingre_no, recipe_ingre_name, recipe_ingre_metering, recipe_ingre_type,
+recipe_step_no, recipe_step_text, recipe_step_img, 
+recipecmt_no, c.member_id cmtmember_id, recipecmt_detail, recipecmt_dt
+FROM recipe_info info JOIN recipe_process  pro ON(info.recipe_no=pro.recipe_no)
+                      JOIN recipe_ingre ingre ON(info.recipe_no=ingre.recipe_no)
+                      JOIN recipe_comment c ON(info.recipe_no = c.recipe_no)        
+WHERE info.recipe_no = #{recipe_no} ORDER BY recipe_ingre_no ASC , recipe_step_no ASC , recipecmt_no DESC
+ </select>
+   
+   
+   <!-- 레시피 스크랩하기 -->
+   <insert id="insertScrap" parameterType="Scrap" >
+INSERT INTO SCRAP (scrap_no, member_id, recipe_no, scrap_dt)
+VALUES (SEQ_SCRAP.nextval,#{member.member_id},#{recipeinfo.recipe_no},SYSDATE)
+	</insert>
+	<!-- 레시피 디테일 댓글작성 -->
+	<insert id="insertRecipeCmt" parameterType="RecipeComment">
+INSERT INTO recipe_comment (recipecmt_no,recipe_no ,member_id, recipecmt_detail, recipecmt_dt)
+VALUES (SEQ_RECIPECMT.nextval,#{recipeinfo.recipe_no},#{member.member_id}, #{recipecmt_detail},SYSDATE)
+	</insert>
+
+	
+	
+<!-- ******레시피 리스트 ******* -->
   
   <!-- 레시피 개수를 찾아옴 --> 
   <select id="selectRecipeInfoCount" resultType="RecipeInfo">
@@ -52,5 +116,25 @@
    <select id="selectAllScrap" resultType="Scrap">
 	SELECT scrap_no FROM scrap WHERE recipe_no = 1 AND member_id='{member_id}';
   </select>   
-  
+
+
+<!-- ******레시피 등록******* -->  	
+		<!-- 진행중......... -->
+	<insert id="insertRecipeInfo" parameterType="RecipeInfo">
+INSERT INTO recipe_info (recipe_no, member_id, recipe_name, recipe_intro, recipe_category, recipe_time, recipe_level,recipe_img ,recipe_dt,recipe_status) 
+VALUES(seq_recipe.nextval, #{member.member_id}, #{recipe_name}, #{recipe_intro}, #{recipe_category}, #{recipe_time},#{recipe_level}, #{recipe_img}, SYSDATE)	
+	</insert>
+	<!-- info 등록 후 생성된 recipe_no 반환 -->
+	<select id="selectRecipe_no" parameterType="recipeInfo" resultType="int">
+SELECT recipe_no FROM recipe_info WHERE recipe_name= #{recipe_name} AND recipe_img = #{recipe_img}
+	</select>
+	
+	<insert id="insertRecipeIngre" parameterType="map">
+INSERT INTO recipe_ingre (recipe_no, recipe_ingre_no, recipe_ingre_name, recipe_ingre_metering, recipe_ingre_type)
+VALUES(#{recipe_no},SEQ_RECIPE_INGRE.NEXTVAL,#{recipe_ingre_name}, #{recipe_ingre_metering}, #{recipe_ingre_type})
+	</insert>	
+	<insert id="insertRecipeProcess" parameterType="map">
+INSERT INTO recipe_process (recipe_no,recipe_step_no,recipe_step_text,recipe_step_img)
+VALUES(#{recipe_no},#{recipe_step_no},#{recipe_step_text},#{recipe_step_img})
+	</insert>
    </mapper>

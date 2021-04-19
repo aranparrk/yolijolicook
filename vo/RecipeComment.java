@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class RecipeComment {
 	private int recipecmt_no;
 	private Member member; // member_id;
-	private int recipe_no;
+	private RecipeInfo recipeinfo;
 	private String recipecmt_detail;
 	@JsonFormat(pattern = "yy/MM/dd",timezone = "Asia/Seoul")
 	private String recipecmt_dt;
@@ -15,11 +15,11 @@ public class RecipeComment {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public RecipeComment(int recipecmt_no, Member member, int recipe_no, String recipecmt_detail, String recipecmt_dt) {
+	public RecipeComment(int recipecmt_no, Member member, RecipeInfo recipeinfo, String recipecmt_detail, String recipecmt_dt) {
 		super();
 		this.recipecmt_no = recipecmt_no;
 		this.member = member;
-		this.recipe_no = recipe_no;
+		this.recipeinfo = recipeinfo;
 		this.recipecmt_detail = recipecmt_detail;
 		this.recipecmt_dt = recipecmt_dt;
 	}
@@ -36,11 +36,11 @@ public class RecipeComment {
 	public void setMember(Member member) {
 		this.member = member;
 	}
-	public int getRecipe_no() {
-		return recipe_no;
+	public RecipeInfo getRecipe_no() {
+		return recipeinfo;
 	}
-	public void setRecipe_no(int recipe_no) {
-		this.recipe_no = recipe_no;
+	public void setRecipeInfo(RecipeInfo recipeinfo) {
+		this.recipeinfo = recipeinfo;
 	}
 	public String getRecipecmt_detail() {
 		return recipecmt_detail;

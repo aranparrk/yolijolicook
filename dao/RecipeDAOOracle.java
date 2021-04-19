@@ -2,13 +2,11 @@ package com.my.dao;
 
 import java.util.HashMap;
 import java.util.List;
-
-import javax.sql.DataSource;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.my.exception.AddException;
@@ -19,30 +17,28 @@ import com.my.vo.RecipeComment;
 import com.my.vo.RecipeInfo;
 import com.my.vo.RecipeIngre;
 import com.my.vo.RecipeProcess;
+import com.my.vo.Scrap;
 
 import lombok.extern.log4j.Log4j;
 
+
 @Repository
-@Qualifier(value = "oracle")
 @Log4j
 public class RecipeDAOOracle implements RecipeDAO {
-	@Autowired
-	private DataSource ds;
 
+//	@Autowired
+//	private DataSource ds;
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
-
-	/*레시피 개수를 찾아옴*/
+	
 	@Override
 	public int selectRecipeInfoCount() throws FindException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	/*최근 등록된 레시피 순으로 불러오기 */
 	@Override
-	public List<RecipeInfo> selectAllRecipeInfo() throws FindException {
-
+	public List<RecipeInfo> selectAllRecipeInfo() throws FindException {//list
 		SqlSession session = sqlSessionFactory.openSession();
 
 		try {
@@ -59,10 +55,9 @@ public class RecipeDAOOracle implements RecipeDAO {
 				session.close();
 		}
 	}
-
-	/*카테고리로 레시피 리스트 찾아오기*/
+	
 	@Override
-	public List<RecipeInfo> selectByCategory(List<String> categories) throws FindException {
+	public List<RecipeInfo> selectByCategory(List<String> categories) throws FindException {//list
 		SqlSession session = sqlSessionFactory.openSession();
 		try {
 			List<RecipeInfo> list = session.selectList("mybatis.RecipeMapper.selectByCategory", categories);
@@ -79,15 +74,14 @@ public class RecipeDAOOracle implements RecipeDAO {
 		}
 	}
 
-	/* 검색하여 레시피 리스트 찾아오기*/
 	@Override
-	public List<RecipeInfo> selectByIngre_name(String word) throws FindException {
+public List<RecipeInfo> selectByIngre_name(String word) throws FindException {//list
 		
 		SqlSession session = null;
 		HashMap<String,String> map = new HashMap<>();
 		map.put("word",word);
 		map.put("o","board_no DESC");
-		System.out.println("디에이오 오라클 초밥  = "+ word);
+
 
 		try {
 			session = sqlSessionFactory.openSession();
@@ -95,7 +89,7 @@ public class RecipeDAOOracle implements RecipeDAO {
 			if (list.size() == 0) {
 				throw new FindException("레서피가 없습니다.");
 			}
-			System.out.println("디에이오 리턴됨 리스트");
+
 			return list;
 			
 		} catch (Exception e) {
@@ -105,43 +99,63 @@ public class RecipeDAOOracle implements RecipeDAO {
 		}
 				
 	}
-	
 
-	/* 사용자가 스크랩한 레시피 번호를 찾아옴 */
 	@Override
 	public List<Integer> selectAllScrap(String member_id) throws FindException {
-		SqlSession session = sqlSessionFactory.openSession();
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public int insertRecipeInfo(RecipeInfo recipeinfo) throws AddException {//upload
+		SqlSession session = null;
+		
 		try {
-			List<Integer> list = session.selectList("mybatis.RecipeMapper.selectAllScrap");
-			if (list.size() == 0) {
-				throw new FindException("게시글이 없습니다.");
-			}
-
-			return list;
-		} catch (Exception e) {
-			throw new FindException(e.getMessage());
-		} finally {
-			if (session != null)
-				session.close();
+			session = sqlSessionFactory.openSession();
+			return session.insert("mybatis.RecipeMapper.insertRecipeInfo",recipeinfo);
+		}catch(Exception e) {
+			throw new AddException(e.getMessage());
+		}finally {
+			if(session != null) session.close();
 		}
-	}
-
-	@Override
-	public void insertRecipeInfo(RecipeInfo info) throws AddException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void insertRecipeIngre(RecipeIngre ingre) throws AddException {
-		// TODO Auto-generated method stub
+	public void insertRecipeIngre(List<RecipeIngre> recipeingre,int recipe_no) throws AddException {
+		SqlSession session = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			map.put("recipeingre", recipeingre);
+			map.put("recipe_no",recipe_no);
+			
+			session = sqlSessionFactory.openSession();
+			session.insert("mybatis.RecipeMapper.insertRecipeIngre",map);
+			
+		}catch(Exception e) {
+			throw new AddException(e.getMessage());
+		}finally {
+			if(session != null) session.close();
+		}
 
 	}
 
 	@Override
-	public void insertRecipeProcess(RecipeProcess process) throws AddException {
-		// TODO Auto-generated method stub
+	public void insertRecipeProcess(List<RecipeProcess> recipeprocess,int recipe_no) throws AddException {
+		SqlSession session = null;
+		Map <String, Object> map = new HashMap<>();
+		
+		try {
+			map.put("recipeprocess", recipeprocess);
+			map.put("recipe_no", recipe_no);
+			session = sqlSessionFactory.openSession();
+			session.insert("mybatis.RecipeMapper.insertRecipeProcess",map);
+			
+		}catch(Exception e) {
+			throw new AddException(e.getMessage());
+		}finally {
+			if(session != null) session.close();
+		}
 
 	}
 
@@ -177,8 +191,27 @@ public class RecipeDAOOracle implements RecipeDAO {
 
 	@Override
 	public List<RecipeInfo> selectRecipeDetailRecipe_no(int recipe_no) throws FindException {
-		// TODO Auto-generated method stub
-		return null;
+		SqlSession session = null;
+		
+		try {
+			
+			session = sqlSessionFactory.openSession();
+			List<RecipeInfo> detaillist = session.selectList("mybatis.RecipeMapper.selectRecipeDetailByRecipe_no",recipe_no);
+			
+			System.out.println("daooracle :"+detaillist);
+			
+			if(detaillist==null) {
+				throw new FindException("해당 게시물을 찾을 수 없습니다.");
+			}
+			return detaillist;
+			
+			
+		}catch(Exception e) {
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null)
+				session.close();
+		}
 	}
 
 	@Override
@@ -195,8 +228,56 @@ public class RecipeDAOOracle implements RecipeDAO {
 
 	@Override
 	public void insertRecipe_comment(RecipeComment rc) throws AddException {
-		// TODO Auto-generated method stub
+		SqlSession session = null;
+			
+			
+			try {
+				session = sqlSessionFactory.openSession();
+				session.insert("mybatis.RecipeMapper.insertRecipeCmt",rc);
+				
+			}catch(Exception e) {
+				throw new AddException(e.getMessage());
+			}finally {
+				if(session != null) session.close();
+			}
 
 	}
+
+	@Override
+	public void insertScrap(Scrap s) throws AddException {
+		SqlSession session = null;
+		
+		
+		try {
+			session = sqlSessionFactory.openSession();
+			session.insert("mybatis.RecipeMapper.insertScrap",s);
+			
+		}catch(Exception e) {
+			throw new AddException(e.getMessage());
+		}finally {
+			if(session != null) session.close();
+		}
+		
+		
+	}
+
+	@Override
+	public int selectRecipe_noByRecipe_name(RecipeInfo recipeinfo) throws FindException {//upload
+		SqlSession session = null;
+		
+		try {
+			session = sqlSessionFactory.openSession();
+			int recipe_no = session.selectOne("mybatis.RecipeMapper.selectRecipe_no",recipeinfo);
+			return recipe_no;
+			
+		}catch(Exception e) {
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null) session.close();
+		}
+		
+	}
+	
+
 
 }

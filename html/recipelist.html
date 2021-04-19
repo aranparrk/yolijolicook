@@ -15,8 +15,6 @@
 <script
 	src='https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js'></script>
 
-
-
 <style>
 @font-face {
 	font-family: 'Wemakeprice-Bold';
@@ -175,14 +173,16 @@ function listcategory(data, name) { //name은 myrecipe
 		}
 	});
 	var org = $("." + name + " .items .item");  //$(".myrecipe  .items .item")
-
+	
 	
 	if (data.status == -1) {
 		return false;
 	} else {
 		$("#search>span").html(data.list.length);
+		var i = 0;
 		$(data.list).each(
 				function(index, element) {
+					
 					var orgCopy = org.clone();
 					//orgCopy.addClass("aaa");
 					//레시피 관련
@@ -191,8 +191,10 @@ function listcategory(data, name) { //name은 myrecipe
 					orgCopy.find(".recipe_name").text(element.recipe_name);
 					orgCopy.find(".recipe_time").text("#"+element.recipe_time);
 					orgCopy.find(".recipe_category").text("#"+element.recipe_category);
+					$(".items").append("<div class=\"listnum\" style=\"display:none;\" id =\""+i+"\"></div>");
+					i++;
 					
-					var level;
+				var level;
 					if(element.recipe_level==1){
 						level =  "초보환영"
 					}else if(element.recipe_level==2){
@@ -205,6 +207,7 @@ function listcategory(data, name) { //name은 myrecipe
 					$("." + name + " .items").append(orgCopy);
 				});
 		$("." + name + " .items .item:nth-of-type(1)").hide();
+		
 
 	}
 }
@@ -248,8 +251,9 @@ function fn_categoryClick(t, savecategory) {
 
 	console.log(savecategory);
 
-
 }
+
+
 $(function() {
 	/*헤더, 푸터로드*/
 	$("#header").load("header.html");
@@ -264,7 +268,7 @@ $(function() {
 		},
 		success : function(data) {
 			//console.log(data);
-			listcategory(data, 'myrecipe');
+			listcategory(data, 'myrecipe');			
 		},
 		error : function(jqueryXHR) {
 			alert(jQueryXHR);
@@ -295,6 +299,18 @@ $(function() {
 		});
 		
 	});
+	
+		
+	/* 레시피 리스트에서 디테일로 넘어감 */	
+	
+	$("body > section > article:nth-child(2) > div > div.my.contents.first.myrecipe > div.items").on("click", "div.item", function(){
+		var recipe_no = $(this).find("input[type='hidden']").val();
+		var list_num = $(this).prev().attr("id");
+		
+		location.href="recipedetail.html?recipe_no="+recipe_no+":"+list_num;
+	});
+
+	
 
 });
 </script>
@@ -371,10 +387,9 @@ $(function() {
 						<div  class="item"
 							style="display: inline-block; box-shadow: #ddd 1px 1px 6px 1px; margin: 25px 10px;">
 							<div>
-								<a href="recipedetail.html"> <input
-									type="hidden" value="" class="recipe_no"> <img
-									src="../images/upload/recipe_img1.png" alt="대표이미지"
-									class="recipe_img" width="300px">
+								<a href="recipedetail.html"> 
+									<input type="hidden" value="" class="recipe_no"> 
+									<img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img" width="300px">
 								</a>
 							</div>
 							<!--#30분 #양식-->
