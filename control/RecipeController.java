@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.my.exception.AddException;
 import com.my.exception.FindException;
@@ -131,29 +132,48 @@ public class RecipeController {
 		
 	}
 	
-	
+//**************************레시피 등록
 	@PostMapping("/addrecipe")
-	public Map<String,Object> addRecipe(HttpSession session,RecipeInfo info, List<RecipeIngre> ingre, List<RecipeProcess> process){
-		Map<String, Object> map = new HashMap<>();
-		String member_id = (String)session.getAttribute("loginInfo");
-		if(member_id==null) {
-			map.put("status", 0);
-			return map;
-		}else {
-			try {
-				service.addRecipe(info,ingre,process);
-				map.put("status", 1);
-				
-			} catch (AddException e) {
-				System.out.println("controllerError : "+e.getMessage());
-				e.printStackTrace();
-				map.put("status", -1);
-			}
-			return map;
-		}
+	@ResponseBody
+	public Map<String,Object> addRecipe(HttpSession session,
+										MultipartFile recipe_main_img
+										//,List<MultipartFile> recipe_step_img
+										//,@RequestBody RecipeInfo info
+										){ 
 		
-	}
-	
+		System.out.println(recipe_main_img.getOriginalFilename() +":" + recipe_main_img.getSize());
+		
+		return null;
+//		System.out.println("in RecipeController addRecipe info=" + info);
+//		Map<String, Object> map = new HashMap<>();
+//		String member_id = (String)session.getAttribute("loginInfo");
+//		List<RecipeIngre> ingres = info.getRecipeingre();
+//		List<RecipeProcess> processes = info.getRecipeprocess();
+//		member_id = "id1";
+//		
+//		if(member_id==null) {
+//			map.put("status", 0);
+//			return map;
+//		}else {
+//			try {
+//				Member m = new Member();
+//				m.setMember_id(member_id);
+//				info.setMember(m);
+//				info.setRecipe_img("recipe_img");
+//				
+//				service.addRecipe(info,ingres,processes);
+//				map.put("status", 1);
+//				
+//			} catch (AddException e) {
+//				System.out.println("controllerError : "+e.getMessage());
+//				e.printStackTrace();
+//				map.put("status", -1);
+//			}
+//			return map;
+//		}
+		
+		
+	}	
 	
 //	********************레시피 리스트 controller***********************************
 	@PostMapping("/list")

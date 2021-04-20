@@ -51,6 +51,16 @@ public class RecipeInfo {
 		this.recipe_status = recipe_status;
 	}
 
+	@Override
+	public String toString() {
+		return "RecipeInfo [recipe_no=" + recipe_no + ", recipeprocess=" + recipeprocess + ", recipeingre="
+				+ recipeingre + ", recipecomment=" + recipecomment + ", member=" + member + ", recipe_name="
+				+ recipe_name + ", recipe_intro=" + recipe_intro + ", recipe_category=" + recipe_category
+				+ ", recipe_time=" + recipe_time + ", recipe_level=" + recipe_level + ", recipe_img=" + recipe_img
+				+ ", recipe_scrap_cnt=" + recipe_scrap_cnt + ", recipe_cnt=" + recipe_cnt + ", recipe_dt=" + recipe_dt
+				+ ", recipe_status=" + recipe_status + "]";
+	}
+
 	public int getRecipe_no() {
 		return recipe_no;
 	}

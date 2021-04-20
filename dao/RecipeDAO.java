@@ -2,6 +2,8 @@ package com.my.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.ModifyException;
@@ -56,25 +58,12 @@ public interface RecipeDAO {
 	
 	/**
 	 * 레시피 정보 등록후 생성된 시퀀스번호 (recipe_no) 반환
-	 * @param info
-	 * @return recipe_no반환 
+	 * @param info 
 	 * @throws AddException
 	 */
-	int insertRecipeInfo(RecipeInfo info) throws AddException;
 	
-	/**
-	 * 레시피 ingre에 해당하는 정보를 저장 (레시피 등록, 수정 페이지에서 사용)
-	 * @param ingre (타입 : RecipeIngre)
-	 * @throws AddException 재료정보 저장 실패시 예외 발생
-	 */
-	void insertRecipeIngre(List<RecipeIngre> ingre,int recipe_no) throws AddException;
+	void insertRecipe(RecipeInfo recipeinfo) throws AddException;
 	
-	/**
-	 * 레시피 process에 해당하는 정보를 저장 (레시피 등록, 수정페이지에서 사용)
-	 * @param process (타입 : RecipeProcess)
-	 * @throws AddException
-	 */
-	void insertRecipeProcess(List<RecipeProcess> process,int recipe_no) throws AddException;
 	
 	/**
 	 * 레시피 번호와 레시피 재료번호를 가져와 해당 레시피 재료정보 삭제(레시피 등록, 수정 페이지에서 사용)

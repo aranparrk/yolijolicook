@@ -192,6 +192,10 @@
     
     
          $(document).ready(function(){ function readURL(input) { 
+        	 //저장되어있는 레시피 정보 불러오기
+        	 
+        	 
+        	 
         
         if (input.files && input.files[0]) {
              var reader = new FileReader(); //파일을 읽기 위한 FileReader객체 생성 
@@ -320,50 +324,33 @@
                          		"recipe_step_text" : $(this).find(".recipe_step_text").val()
              			};
              			processes.push(process);
-             		});
+             		})
              		
              		
-             		var fd = new FormData();
+             		var FormData = FormData();
              		
              		var recipe_step_img = new Object();
              		var steps = [];
              		
-             		/* $(".step").each(function(){
+             		$(".step").each(function(){
              			recipe_step_img ={
              					"recipe_step_img" : $("input[name=recipe_step_img]") 			
              			};
              			steps.push(recipe_step_img);
-       				}); */
-             		
-       				fd.append("recipe_main_img", $("input[name=recipe_img]")[0].files[0]);
-       				fd.append("recipe_step_img", $("input[name=recipe_step_img]")[0].files);
-             		/* $($("input[name=recipe_step_img]")[0].files).each(function(index, element){
-             			fd.append("recipe_step_img", element);
-             			
-             		}); */
-             		
-             		         		
+       				});
+             		             			
+           			FormData = {
+             				"recipe_main_img" : $("input[name=recipe_img]");
+           					"recipe_step_img" : steps;
+             		}             		
              	
              		var sendData = {};
              		sendData = info;
              		sendData["recipeingre"] = ingres;
              		sendData["recipeprocess"] = processes;
-             		/*console.log(JSON.stringify(sendData));  */
-             		
-             		fd.append(   "recipe_info",  JSON.stringify(sendData));     
-             		for(var pair of fd.entries()){
-             			console.log(pair[0]+','+pair[1]);		   
-                 			
-             		}
-             		/* FormData = {
-             				"recipe_main_img" : $("input[name=recipe_img]"),
-           					"recipe_step_img" : steps,
-           					"recipe_info" : JSON.stringify(sendData)
-             		} 
-             		 */
-             		
+             		console.log(JSON.stringify(sendData));
 					//레시피 데이터 저장 
-             		/*  $.ajax({
+             		 $.ajax({
              			url:"../recipe/addrecipe",
              			method:"post",
              			dataType: "json",
@@ -381,28 +368,8 @@
              			error: function(jqXHR){
 			        		alert(jqXHR.status);
 					  }
-             		}); */
-             		  $.ajax({
-         			url:"../recipe/addrecipe",
-         			method:"post",
-         			
-         			processData:false,
-         			contentType:false,
-         			data:fd,
-         			sucess:function(data){
-         				console.log(data);
-         				if(data.status==0){
-         					alert("로그인 후 레시피 등록이 가능합니다");
-         				}else if (data.status==1){
-         					alert("레시피 등록이 완료되었습니다");
-         					//location.href("")-------------------------리스트 페이지로 이동
-         				}
-         			},
-         			error: function(jqXHR){
-		        		alert(jqXHR.status);
-				  }
-         		}); 
-             	return false;
+             		});
+             		return false;
              		
              		
              		//레시피 사진 업로드
@@ -430,12 +397,12 @@
 	
    <section id="section">
     <!--조리소개-->
-<form class="total" enctype="multipart/form-data">
+<form class="total">
         <div class="titleArea">
 
         </div>  
         <article>
-        <div id="infoForm"> 
+        <form id="infoForm" enctype="multipart/form-data">
             <div class="infoArea">
                
                 <div id="mainPhoto"> 
@@ -494,13 +461,13 @@
                     </div>
                 </div>
             </div><!-- /container -->
-           </div>
+           </form>
         </article>
 
 
        <!--조리재료/계량-->
        <article>
-       <div id="ingreForm">
+       <form id="ingreForm">
         <div class="ingreArea">
         
             <div class="title ingretitle">재료</div>
@@ -540,12 +507,12 @@
         </div>
 
 
-</div>
+</form>
     </article>
 
     <!--조리과정-->
     <article>
-    <div id="processForm" enctype="multipart/form-data">
+    <form id="processForm" enctype="multipart/form-data">
         <!-- </div>/cont_box -->
         <div class="processArea">
 		  <p class="title">요리순서</p>
@@ -625,7 +592,7 @@
                 <span class="glyphicon glyphicon-plus-sign"></span>추가
             </button>
         </div>
-</div>
+</form>
     </article>
 
     <div class="submitBtn">
