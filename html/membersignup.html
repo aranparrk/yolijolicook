@@ -91,11 +91,12 @@
 				$("#alert_member_email").text("인증이 완료되었습니다").css("color", "green");
 				$("#alert_email_no").attr('data-boolean','true');
 				$("#emailbtn").val('인증완료');
-				$("#member_email").attr('readonly', true);
+				$("#member_email").attr('disabled', true);
 				$("#emailbtn").attr('disabled', true);
 			}else if(inputCode != code){
 				$("#alert_email_no").text("인증번호가 틀립니다").css("color", "red");
 				$("#alert_email_no").attr('data-boolean','false');
+
 			}
 		});
 		
