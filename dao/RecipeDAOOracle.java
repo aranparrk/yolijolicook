@@ -106,16 +106,10 @@ public List<RecipeInfo> selectByIngre_name(String word) throws FindException {//
 		// TODO Auto-generated method stub
 		return null;
 	}
-<<<<<<< HEAD
-
-	@Override
-	public int insertRecipeInfo(RecipeInfo recipeinfo) throws AddException {//upload
-=======
 	
 	
 	@Transactional(rollbackFor = Exception.class)
 	public void insertRecipe( RecipeInfo recipeinfo) throws AddException{
->>>>>>> 3557d33eeb662f2cabeeed3d7e2568dc72f789bd
 		SqlSession session = null;
 		try {
 			System.out.println("in RecipeDAOOracle insertRecipe - 0");

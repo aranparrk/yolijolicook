@@ -374,9 +374,9 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
 	    var $recipeSeasoningIngreArea = $("section > article > div.ingre >div.seasoningIngre>div.seasoningIngreList");
 	
 	    let temp = location.href.split("?recipe_no=");
-        let data = temp[1].split(":");
-        let recipe_no = data[0];
-        let list_num = data[1];
+	    let recipe_no  = temp[1];
+        
+       
 	    
 	    $(function(){
 	    	//레시피 불러오기
@@ -406,11 +406,11 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
 		    			$recipeInfoArea.find(".titleName").html(data.list[0].recipe_name);
 		    			$recipeInfoArea.find(".recipe_writer").html(data.list[0].member.member_id);
 		    			$recipeInfoArea.find(".recipe_title").html(data.list[0].recipe_name);
-		    			$recipeInfoArea.find(".recipe_time").html(data.list[0].recipe_time);
+		    			$recipeInfoArea.find(".recipe_time").html(data.list[0].recipe_time+"분");
 		    			$recipeInfoArea.find(".recipe_level").html(level);
 		    			$recipeInfoArea.find(".recipe_category").html(data.list[0].recipe_category);
 		    			$recipeInfoArea.find(".intro").html(data.list[0].recipe_intro);
-		    			
+		    			$recipeInfoArea.find("img").attr('src', "../images/upload/"+data.list[0].recipe_img);
 		    			//레시피 재료
 		 		
 		    				for(var i = 0; i< data.list[0].recipeingre.length; i++){
@@ -436,13 +436,12 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
 								var recipe_step_text = data.list[0].recipeprocess[j].recipe_step_text;
 								var recipe_step_img = data.list[0].recipeprocess[j].recipe_step_img;
 								
-								$recipeProcessArea.append("<h2 class=\"step\">step<div class=\"step step_no\">"+recipe_step_no+"</div></h2><div class=\"processList\"><div class=\"process_text\">"+recipe_step_text+"</div><img class=\"process_img\" src=\"../images/web/food.jpg\"></div><br><br>");
-								
+		                        $recipeProcessArea.append("<h2 class=\"step\">step<div class=\"step step_no\">"+recipe_step_no+"</div></h2><div class=\"processList\"><div class=\"process_text\">"+recipe_step_text+"</div><img class=\"process_img\" src=\"../images/upload/"+recipe_step_img+"\" style=\"width:350px ; height:350px\"></div><br><br>");
 							}
 		    			//완성사진
 		    				$completeArea = $("section> article > div.completeArea");	    			
 		    				var completeImg = $('img.completeImg');
-		    				completeImg.attr('src','../images/web/paperclip.png');
+		    				completeImg.attr('src',"../images/upload/"+data.list[0].recipe_img);
 		    			
 		    			//레시피 댓글
 		    				$recipeCommentArea = $("section > article > table > tbody");
@@ -450,8 +449,6 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
 		    					var recipecmt_detail = data.list[0].recipecomment[k].recipecmt_detail;
 		    					var recipecmt_member_id = data.list[0].recipecomment[k].member.member_id;
 		    					var recipecmt_dt = data.list[0].recipecomment[k].recipecmt_dt.substr(0,16);
-		    					
-		    					//시간 :분 으로 자르기(미래의 나)
 		    					
 		    					
 		    					$recipeCommentArea.append("<tr class=\"recipeCmt\"><td class=\"cmtContent recipeCmt_detail\">"+recipecmt_detail+"</td><td class=\"cmtWriter recipeCmt_writer\">"+recipecmt_member_id+"</td><td class=\"cmtDt recipeCmt_dt\">"+recipecmt_dt+"</td></tr>");
@@ -549,7 +546,7 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
             <div class="titleName">레시피 이름</div>
         </div>
         <div class="info">
-            <div class="recipe_img" ><img src="../images/web/food.jpg" alt="비빔밥사진"> </div>
+            <div class="recipe_img" ><img src="../images/web/food.jpg" alt="비빔밥사진" style="width:430px ; height:400px"> </div>
             <div class="recipe_info">
                 <br>
                 <div class="recipe_writer">작성자 </div>님의 

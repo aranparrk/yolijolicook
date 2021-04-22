@@ -307,7 +307,7 @@ $(function() {
 		var recipe_no = $(this).find("input[type='hidden']").val();
 		var list_num = $(this).prev().attr("id");
 		
-		location.href="recipedetail.html?recipe_no="+recipe_no+":"+list_num;
+		location.href="recipedetail.html?recipe_no="+recipe_no;
 	});
 
 	
@@ -387,7 +387,7 @@ $(function() {
 						<div  class="item"
 							style="display: inline-block; box-shadow: #ddd 1px 1px 6px 1px; margin: 25px 10px;">
 							<div>
-								<a href="recipedetail.html"> 
+								<a href="#"> 
 									<input type="hidden" value="" class="recipe_no"> 
 									<img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img" width="300px">
 								</a>
