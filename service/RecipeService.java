@@ -59,6 +59,13 @@ public class RecipeService {
 	public List<RecipeInfo> findAll()throws FindException{
 		 return dao.selectAllRecipeInfo();
 	}
+	
+	public List<RecipeInfo> findAll( int currentPage, int cnt_per_page, String member_id) throws FindException{
+		return dao.selectAllRecipeInfo( currentPage, cnt_per_page, member_id);
+	}
+	public int findCount() throws FindException {
+		return dao.selectCount();
+	}
 
 	
 	public List<RecipeInfo> findByRecipeCategory(List<String> categories)throws FindException{
@@ -69,6 +76,9 @@ public class RecipeService {
 		 System.out.println("서비스초밥");
 		 return dao.selectByIngre_name(word);
 
+	}
+	public List<Scrap> findScrap(String member_id) throws FindException{
+		return dao.selectAllScrap(member_id);
 	}
 	//*******************레시피 등록******************************
 	/**

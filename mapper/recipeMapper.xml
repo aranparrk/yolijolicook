@@ -37,14 +37,65 @@
 
 <!-- ******레시피 리스트 ******* -->
 
-   <resultMap type="RecipeInfo" id="selectbyname" autoMapping="true">
-   	 <id property="recipe_no" column="recipe_no"/>
-   	 
+   <resultMap type="RecipeInfo" id="RecipeInfoMap" autoMapping="true">
+   	 <id property="recipe_no" column="recipe_no" />
+   	 <result property="member.member_id" column="member_id"/>
    	 <collection property="recipeingre" ofType="RecipeIngre" autoMapping="true">
    	 	<id property="recipe_ingre_no" column="recipe_ingre_no"/>
    	 </collection>
-   	 
+   	 <collection property="scraps" ofType="Scrap" autoMapping="true">
+   	 	<id property="scrap_no" column="scrap_no"/>
+   	 	<result property="member.member_id" column="smember_id"/>
+   	 </collection>
    </resultMap>
+  
+  <!-- 레시피 개수를 찾아옴 --> 
+  <select id="selectRecipeInfoCount" resultType="RecipeInfo">
+	SELECT count(*) FROM recipe_info 
+  </select>
+ 
+   <!--  최근 등록된 레시피 순으로 불러오기  --> 
+  <select id="selectAllRecipeInfo" resultMap="RecipeInfoMap">
+SELECT a.*
+FROM (             
+SELECT rownum rn, recipe_no, member_id,recipe_name, recipe_category, recipe_time, recipe_level, recipe_img, recipe_scrap_cnt,  
+       (SELECT member_id FROM scrap WHERE recipe_no= recipe.recipe_no AND member_id=#{member_id}) smember_id
+FROM recipe_info recipe
+ORDER BY recipe_dt desc
+) a
+WHERE rn BETWEEN  FUN_START_ROW(#{currentPage},#{cnt_per_page}) AND FUN_END_ROW(#{currentPage},#{cnt_per_page})
+  </select> 
+  
+    <!-- 카테고리로 레시피 리스트 찾아오기 --> 
+  <select id="selectByCategory" resultMap="RecipeInfoMap">
+	SELECT r.recipe_no, r.member_id,recipe_name, recipe_category, recipe_time, recipe_level, recipe_img, recipe_scrap_cnt,s.scrap_no, s.member_id smember_id
+	FROM recipe_info r left join  scrap s on(r.recipe_no=s.recipe_no)
+	WHERE r.recipe_no IN (SELECT recipe_no 
+    	               FROM recipe_info 
+        	           WHERE recipe_category IN 
+        	            <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+      						  #{item}
+  						</foreach>
+  						)
+	ORDER BY recipe_dt desc
+  </select>   
+  
+    <!-- 검색하여 레시피 리스트 찾아오기 --> 
+  <select id="selectByIngre_name" parameterType="String" resultMap="RecipeInfoMap">
+	SELECT DISTINCT info.RECIPE_NO,info.RECIPE_CATEGORY,info.recipe_name,info.recipe_time,info.recipe_level,info.recipe_img,info.recipe_dt ,s.scrap_no, s.member_id smember_id                  
+	FROM RECIPE_INFO info LEFT OUTER JOIN RECIPE_INGRE IG ON INFO.RECIPE_NO = IG.RECIPE_NO  
+						 left join  scrap s on(info.recipe_no=s.recipe_no)                 
+	WHERE info.recipe_name LIKE '%${word}%' or (ig.recipe_ingre_name LIKE '%${word}%' and ig.recipe_ingre_type LIKE '%재료')
+	ORDER BY info.recipe_dt desc
+
+  </select>  
+  
+  <!-- 페이징 -->
+  	<select id ="selectCount" resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM recipe_info
+	</select>
+
 
    
 
