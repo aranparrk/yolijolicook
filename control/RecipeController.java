@@ -176,57 +176,38 @@ public class RecipeController {
 	}	
 	
 //	********************레시피 리스트 controller***********************************
-		@PostMapping("/list")
+	@PostMapping("/list")
 	@ResponseBody // json형태로 응답시 써줘야함
-	public Map<String, Object> list(String word, HttpSession session, 
-			@RequestParam(value="currentPage", 
-		      required = false, 
-		      defaultValue = "1") int currentPage) throws FindException {
-int cnt_per_page = 4;	
-		
+	public Map<String, Object> list(String word) throws FindException {
+
 		log.info("검색어:" + word);
-		
+
 		List<RecipeInfo> list = null;
-		
+
 		Map<String, Object> map = new HashMap<>();
-		//String loginedId = (String)session.getAttribute("loginInfo");
-		String loginedId = "id1";
 		try {
-			if (word == null) {			
-				//list = service.findAll();		
-				List<RecipeInfo> lists = service.findAll(currentPage, cnt_per_page, loginedId);
-				System.out.println("list.size=" + lists.size());
-				int totalCnt = service.findCount();
-				String targetURL = "/recipelist";
-				PageGroupBean<RecipeInfo> pgb = 
-						new PageGroupBean<>(totalCnt, currentPage, lists, targetURL, cnt_per_page, 3);
-						//new PageGroupBean<>(totalCnt, currentPage, lists, targetURL);
-				//pgb.setCnt_per_page(cnt_per_page);
-				
-			System.out.println(pgb.getTotalCnt()+"----"+pgb.getList().size());
-				map.put("pgb", pgb);
+			if (word == null) {
+				list = service.findAll();
 			}else{
 				list = service.findByRecipeIngre(word);
 			}
-			//map.put("list", list);
+			map.put("list", list);
 			map.put("status", 1);
-			map.put("loginInfo", loginedId);
 		} catch (FindException e) {
-			e.printStackTrace();
 			log.info(e.getMessage());
 			map.put("status", -1);
 			map.put("msg", e.getMessage());
 		}
-		
+
 		return map;
 	}
-	
+
 	@PostMapping("/categorylist")
 	@ResponseBody // json형태로 응답시 써줘야함
-	
-	public Map<String, Object> categorylist(@RequestBody List<String> categories,  HttpSession session) {
+
+	public Map<String, Object> categorylist(@RequestBody List<String> categories) throws FindException {
 		List<RecipeInfo> list = null;
-		
+
 		Map<String, Object> map = new HashMap<>();
 		try {
 			for(int i=0; i<categories.size(); i++) {
@@ -248,10 +229,6 @@ int cnt_per_page = 4;
 			
 			map.put("list", list);
 			map.put("status", 1);
-			
-//			String loginedId = (String)session.getAttribute("loginInfo");
-			String loginedId = "id2";
-			map.put("loginInfo", loginedId);
 		} catch (FindException e) {
 			log.info(e.getMessage());
 			map.put("status", -1);
@@ -259,5 +236,8 @@ int cnt_per_page = 4;
 		}
 		return map;
 	}
+	
+	
+		
 
 }

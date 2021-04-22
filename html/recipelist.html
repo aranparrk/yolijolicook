@@ -180,7 +180,6 @@ function listcategory(data, name) { //name은 myrecipe
 	} else {
 		$("#search>span").html(data.list.length);
 		var i = 0;
-		var loginInfo = data.loginInfo;
 		$(data.list).each(
 				function(index, element) {
 					
@@ -204,13 +203,6 @@ function listcategory(data, name) { //name은 myrecipe
 						level =  "어려움"
 					}								
 					orgCopy.find(".recipe_level").text("#"+level);
-					$(element.scraps).each(function(index, scrap){
-						if(scrap.member.member_id == loginInfo){
-							//alert(element.recipe_no + "스크랩됨!");
-							orgCopy.find(".recipescrap_img").attr('src',"../images/web/mypage_clip.png");
-							return;
-						}
-					});
 					
 					$("." + name + " .items").append(orgCopy);
 				});
@@ -259,70 +251,6 @@ function fn_categoryClick(t, savecategory) {
 
 	console.log(savecategory);
 
-}
-
-function pageList(data){
-	   /*레시피 목록*/
-  /*   $.ajax({
-    	url : '../recipe/listPage',           
-    	method: 'post',
-    	data : {"currentPage" : currentPage},
-    	success:function(data){
-    		
-    		console.log(data.pgb);
-    		 */
-    		/* 페이징 */
-    		
-    		$('.paging li').empty();
-    		// alert(data.pgb.startPage);
-            if(data.pgb.startPage > 1){
-    			$('.paging li:first-child').html('<span class="'+(data.pgb.startPage-1)+'">&#10094;&nbsp;&nbsp;&nbsp;</span>');
-            }
-    		
-            $('.paging li:nth-child(2)').empty();        		
-            for(let i= data.pgb.startPage; i<=data.pgb.endPage; i++){
-    			$('.paging li:nth-child(2)').append('<span class ="'+i+'">'+i+'</span>&nbsp;&nbsp;&nbsp;</li>');            			
-    			let pageNum = $('.paging li:nth-child(2) span:nth-child('+i+')').attr("class");
-    			if(pageNum == data.pgb.currentPage){
-    				$('.'+pageNum).css("font-weight", "bold");
-    				$('.'+pageNum).css("cursor", "default");
-    			}
-            }
-            
-    		if(data.pgb.endPage < data.pgb.totalPage){
-    			$('.paging li:last-child').html('<span class="'+(data.pgb.endPage+1)+'">&#10095;&nbsp;&nbsp;&nbsp;</span>');
-    			
-    		}
-    		
-            /* 페이징 이동 */
-    		$(".paging>li>span").click(function(event){
-    			
-    			var classValue = $(event.target).html(); //.attr("class");
-    			//alert("페이지이동 page = " + classValue);
-    			//pageList(classValue);
-    			$('.paging li').empty(); 
-    			
-    			
-    			$.ajax({
-    				url : '../recipe/list',
-    				method : 'post',
-    				data : {
-    					"member_id" : sessionStorage.getItem("member_id"),
-    					"currentPage" : classValue
-    				},
-    				success : function(data) {
-    					console.log(data);
-    					listcategory(data, 'myrecipe');
-    					pageList(data);
-    				},
-    				error : function(jqueryXHR) {
-    					alert(jQueryXHR);
-    				}
-    			});
-    		});
-           
-    	/*  }*/
-    /* }); */
 }
 
 
@@ -483,12 +411,15 @@ $(function() {
 
 
 				<!--페이징-->
-				<div >			     
-			        <ul style="list-style-type:none; padding: 3px; cursor : pointer" margin : 0 auto; class ="paging" >
-			        	<li style="display:inline-block;"></li>
-			        	<li style="display:inline-block;"></li>
-			        	<li style="display:inline-block;"></li>
-			        </ul>
+				<div>
+					<div class="paging"
+						style="text-align: center; margin-top: 20px; cursor: pointer;">
+						<i class="fas fa-angle-double-left"></i> &nbsp; <i
+							class="fas fa-angle-left"></i> &nbsp; 1 &nbsp 2 &nbsp 3 &nbsp
+						4&nbsp 5 &nbsp 6 &nbsp 7 &nbsp 8 &nbsp <i
+							class="fas fa-angle-right"></i> &nbsp; <i
+							class="fas fa-angle-double-right"></i>
+					</div>
 				</div>
 		 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 		</article>

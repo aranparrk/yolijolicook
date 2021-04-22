@@ -1,6 +1,5 @@
 package com.my.vo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -24,7 +23,6 @@ public class RecipeInfo {
 	@JsonFormat(pattern = "yy/MM/dd",timezone = "Asia/Seoul")
 	private String recipe_dt; 
 	private int recipe_status;
-	private List<Scrap> scraps = new ArrayList<>();
 	
 	public RecipeInfo() {
 		super();
@@ -152,14 +150,6 @@ public class RecipeInfo {
 	}
 	public void setRecipe_status(int recipe_status) {
 		this.recipe_status = recipe_status;
-	}
-
-	public List<Scrap> getScraps() {
-		return scraps;
-	}
-
-	public void setScraps(List<Scrap> scraps) {
-		this.scraps = scraps;
 	}
 	  
 }
