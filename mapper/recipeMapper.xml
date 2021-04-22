@@ -172,20 +172,16 @@ VALUES (SEQ_RECIPECMT.nextval,#{recipeinfo.recipe_no},#{member.member_id}, #{rec
 <!-- ******레시피 등록******* -->  	
 		<!-- 진행중......... -->
 	<insert id="insertRecipeInfo" parameterType="RecipeInfo">
-INSERT INTO recipe_info (recipe_no, member_id, recipe_name, recipe_intro, recipe_category, recipe_time, recipe_level,recipe_img ,recipe_dt,recipe_status) 
+INSERT INTO recipe_info (recipe_no, member_id, recipe_name, recipe_intro, recipe_category, recipe_time, recipe_level,recipe_img ,recipe_dt) 
 VALUES(seq_recipe.nextval, #{member.member_id}, #{recipe_name}, #{recipe_intro}, #{recipe_category}, #{recipe_time},#{recipe_level}, #{recipe_img}, SYSDATE)	
 	</insert>
-	<!-- info 등록 후 생성된 recipe_no 반환 -->
-	<select id="selectRecipe_no" parameterType="recipeInfo" resultType="int">
-SELECT recipe_no FROM recipe_info WHERE recipe_name= #{recipe_name} AND recipe_img = #{recipe_img}
-	</select>
-	
-	<insert id="insertRecipeIngre" parameterType="map">
+
+	<insert id="insertRecipeIngre" parameterType="RecipeIngre">
 INSERT INTO recipe_ingre (recipe_no, recipe_ingre_no, recipe_ingre_name, recipe_ingre_metering, recipe_ingre_type)
-VALUES(#{recipe_no},SEQ_RECIPE_INGRE.NEXTVAL,#{recipe_ingre_name}, #{recipe_ingre_metering}, #{recipe_ingre_type})
+VALUES(seq_recipe.CURRVAL,SEQ_RECIPE_INGRE.NEXTVAL,#{recipe_ingre_name}, #{recipe_ingre_metering}, #{recipe_ingre_type})
 	</insert>	
-	<insert id="insertRecipeProcess" parameterType="map">
+	<insert id="insertRecipeProcess" parameterType="RecipeProcess">
 INSERT INTO recipe_process (recipe_no,recipe_step_no,recipe_step_text,recipe_step_img)
-VALUES(#{recipe_no},#{recipe_step_no},#{recipe_step_text},#{recipe_step_img})
+VALUES(seq_recipe.CURRVAL,#{recipe_step_no},#{recipe_step_text},#{recipe_step_img})
 	</insert>
    </mapper>

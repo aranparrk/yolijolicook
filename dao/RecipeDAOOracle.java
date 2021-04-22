@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.my.exception.AddException;
 import com.my.exception.FindException;
@@ -161,58 +162,65 @@ public class RecipeDAOOracle implements RecipeDAO {
 				session.close();
 		}
 	}
+<<<<<<< HEAD
 
 
 	@Override
 	public int insertRecipeInfo(RecipeInfo recipeinfo) throws AddException {//upload
+=======
+	
+	
+	@Transactional(rollbackFor = Exception.class)
+	public void insertRecipe( RecipeInfo recipeinfo) throws AddException{
+>>>>>>> 3557d33eeb662f2cabeeed3d7e2568dc72f789bd
 		SqlSession session = null;
-		
 		try {
+			System.out.println("in RecipeDAOOracle insertRecipe - 0");
 			session = sqlSessionFactory.openSession();
-			return session.insert("mybatis.RecipeMapper.insertRecipeInfo",recipeinfo);
+			insertRecipeInfo(session, recipeinfo);
+			insertRecipeIngre(session, recipeinfo.getRecipeingre());
+			insertRecipeProcess(session, recipeinfo.getRecipeprocess());
+			
 		}catch(Exception e) {
+			e.printStackTrace();
 			throw new AddException(e.getMessage());
 		}finally {
 			if(session != null) session.close();
-		}
-
+		}	
 	}
 
-	@Override
-	public void insertRecipeIngre(List<RecipeIngre> recipeingre,int recipe_no) throws AddException {
-		SqlSession session = null;
-		Map<String, Object> map = new HashMap<>();
-		try {
-			map.put("recipeingre", recipeingre);
-			map.put("recipe_no",recipe_no);
-			
-			session = sqlSessionFactory.openSession();
-			session.insert("mybatis.RecipeMapper.insertRecipeIngre",map);
-			
-		}catch(Exception e) {
-			throw new AddException(e.getMessage());
-		}finally {
-			if(session != null) session.close();
-		}
-
+	private void insertRecipeInfo(SqlSession session, RecipeInfo recipeinfo) throws Exception {//upload
+			session.insert("mybatis.RecipeMapper.insertRecipeInfo",recipeinfo);
+		
 	}
 
-	@Override
-	public void insertRecipeProcess(List<RecipeProcess> recipeprocess,int recipe_no) throws AddException {
-		SqlSession session = null;
-		Map <String, Object> map = new HashMap<>();
-		
-		try {
-			map.put("recipeprocess", recipeprocess);
-			map.put("recipe_no", recipe_no);
-			session = sqlSessionFactory.openSession();
-			session.insert("mybatis.RecipeMapper.insertRecipeProcess",map);
+	/**
+	 * 레시피 ingre에 해당하는 정보를 저장 (레시피 등록, 수정 페이지에서 사용)
+	 * @param ingre (타입 : RecipeIngre)
+	 * @throws AddException 재료정보 저장 실패시 예외 발생
+	 */
+
+	private void insertRecipeIngre(SqlSession session, List<RecipeIngre> recipeingre) throws Exception {
+	
+			for(RecipeIngre ingre: recipeingre) {
+				session.insert("mybatis.RecipeMapper.insertRecipeIngre",ingre);
+			}
 			
-		}catch(Exception e) {
-			throw new AddException(e.getMessage());
-		}finally {
-			if(session != null) session.close();
-		}
+		
+
+	}
+	
+	/**
+	 * 레시피 process에 해당하는 정보를 저장 (레시피 등록, 수정페이지에서 사용)
+	 * @param process (타입 : RecipeProcess)
+	 * @throws AddException
+	 */
+
+	private void insertRecipeProcess(SqlSession session, List<RecipeProcess> recipeprocess) throws Exception{
+				for(RecipeProcess process : recipeprocess) {
+					session.insert("mybatis.RecipeMapper.insertRecipeProcess",process);
+
+				}
 
 	}
 

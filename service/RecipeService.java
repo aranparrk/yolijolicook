@@ -88,20 +88,20 @@ public class RecipeService {
 	 * 
 	 * 3개의 메서드 전부 성공시 commit 하나라도 실패시 roll-back
 	 */
-	@Transactional
+	
 	public void addRecipe (RecipeInfo info,List<RecipeIngre> ingre,List<RecipeProcess> process) throws AddException{
-		dao.insertRecipeInfo(info);//info정보 insert
-		RecipeInfo recipeinfo = new RecipeInfo();
-		recipeinfo.setRecipe_name(info.getRecipe_name());
-		recipeinfo.setRecipe_img(info.getRecipe_img());
-		try {
-			int recipe_no = dao.selectRecipe_noByRecipe_name(recipeinfo);//info의 name과 img 정보로 recipe_no 찾아오기	
-			dao.insertRecipeIngre(ingre,recipe_no);
-			dao.insertRecipeProcess(process,recipe_no);
-		} catch (FindException e) {
-			System.out.println("레시피 정보를 등록하지 못했습니다.");
-			e.printStackTrace();
-		}
+		dao.insertRecipe(info);//info정보 insert
+//		RecipeInfo recipeinfo = new RecipeInfo();
+//		recipeinfo.setRecipe_name(info.getRecipe_name());
+//		recipeinfo.setRecipe_img(info.getRecipe_img());
+//		try {
+//			int recipe_no = dao.selectRecipe_noByRecipe_name(recipeinfo);//info의 name과 img 정보로 recipe_no 찾아오기	
+//			dao.insertRecipeIngre(ingre,recipe_no);
+//			dao.insertRecipeProcess(process,recipe_no);
+//		} catch (FindException e) {
+//			System.out.println("레시피 정보를 등록하지 못했습니다.");
+//			e.printStackTrace();
+//		}
 		
 		
 	}
