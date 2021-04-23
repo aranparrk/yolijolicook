@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  파일이 생성됨 - 월요일-4월-05-2021   
+--  파일이 생성됨 - 금요일-4월-23-2021   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Table REPORT
@@ -28,11 +28,10 @@
    COMMENT ON COLUMN "COOK"."REPORT"."REPORT_DT" IS '신고날짜';
 REM INSERTING into COOK.REPORT
 SET DEFINE OFF;
-Insert into COOK.REPORT (REPORT_NO,REPORT_TITLE,REPORT_DETAIL,MEMBER_ID,BOARD_NO,REPORT_STATUS,REPORT_DT) values (1,'이 사람 게시물 똑같은 거 계속 올려요','삭제 좀 해주세요 계속 똑같은 말 올려요','id1',1,0,to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.REPORT (REPORT_NO,REPORT_TITLE,REPORT_DETAIL,MEMBER_ID,BOARD_NO,REPORT_STATUS,REPORT_DT) values (2,'이 사람 게시물 똑같은 거 계속 올려요','삭제 좀 해주세요 계속 똑같은 말 올려요','id1',1,0,to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.REPORT (REPORT_NO,REPORT_TITLE,REPORT_DETAIL,MEMBER_ID,BOARD_NO,REPORT_STATUS,REPORT_DT) values (3,'이 사람 게시물 똑같은 거 계속 올려요','삭제 좀 해주세요 계속 똑같은 말 올려요','id1',1,0,to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.REPORT (REPORT_NO,REPORT_TITLE,REPORT_DETAIL,MEMBER_ID,BOARD_NO,REPORT_STATUS,REPORT_DT) values (4,'이 사람 게시물 똑같은 거 계속 올려요','삭제 좀 해주세요 계속 똑같은 말 올려요','id1',1,0,to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.REPORT (REPORT_NO,REPORT_TITLE,REPORT_DETAIL,MEMBER_ID,BOARD_NO,REPORT_STATUS,REPORT_DT) values (5,'이 사람 게시물 똑같은 거 계속 올려요','삭제 좀 해주세요 계속 똑같은 말 올려요','id1',1,0,to_date('21/03/31','RR/MM/DD'));
+Insert into COOK.REPORT (REPORT_NO,REPORT_TITLE,REPORT_DETAIL,MEMBER_ID,BOARD_NO,REPORT_STATUS,REPORT_DT) values (39,'광고성 게시글','광고하네요','qkrdkfks',8,0,to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.REPORT (REPORT_NO,REPORT_TITLE,REPORT_DETAIL,MEMBER_ID,BOARD_NO,REPORT_STATUS,REPORT_DT) values (40,'광고하네요','이런 글 올려도 되는 거예요? 관리부탁드립니다','shtjdqhd',8,0,to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.REPORT (REPORT_NO,REPORT_TITLE,REPORT_DETAIL,MEMBER_ID,BOARD_NO,REPORT_STATUS,REPORT_DT) values (41,'불쾌한 게시물','무거운 분위기를 조성하네요','shtjdqhd',11,0,to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.REPORT (REPORT_NO,REPORT_TITLE,REPORT_DETAIL,MEMBER_ID,BOARD_NO,REPORT_STATUS,REPORT_DT) values (42,'광고','광고합니다','rlatnals',8,0,to_date('21/04/23','RR/MM/DD'));
 --------------------------------------------------------
 --  DDL for Index REPORT_PK
 --------------------------------------------------------

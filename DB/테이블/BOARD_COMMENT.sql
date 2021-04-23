@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  파일이 생성됨 - 일요일-4월-04-2021   
+--  파일이 생성됨 - 금요일-4월-23-2021   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Table BOARD_COMMENT
@@ -17,22 +17,69 @@
   PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
   TABLESPACE "SYSTEM" ;
 
+   COMMENT ON COLUMN "COOK"."BOARD_COMMENT"."BOARDCMT_NO" IS '댓글번호';
    COMMENT ON COLUMN "COOK"."BOARD_COMMENT"."BOARD_NO" IS '게시글번호';
    COMMENT ON COLUMN "COOK"."BOARD_COMMENT"."MEMBER_ID" IS '작성자';
    COMMENT ON COLUMN "COOK"."BOARD_COMMENT"."BOARDCMT_DETAIL" IS '댓글내용';
    COMMENT ON COLUMN "COOK"."BOARD_COMMENT"."BOARDCMT_DT" IS '댓글작성일자';
 REM INSERTING into COOK.BOARD_COMMENT
 SET DEFINE OFF;
-Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (1,1,'id1','댓글테스트입니다',to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (2,1,'id1','댓글테스트입니다',to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (3,1,'id1','댓글테스트입니다',to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (4,1,'id1','댓글테스트입니다',to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (5,1,'id1','댓글테스트입니다',to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (6,1,'id1','댓글테스트입니다',to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (7,1,'id1','댓글테스트입니다',to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (8,1,'id1','댓글테스트입니다',to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (9,1,'id1','댓글테스트입니다',to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (10,1,'id1','댓글테스트입니다',to_date('21/03/31','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (3,21,'qkrdkfks','샐러드 어떠신지요?',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (1,30,'qkrdkfks','아 하하.. 축하드려요..',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (2,28,'qkrdkfks','삼계탕 추천이요',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (4,20,'qkrdkfks','헉.. 죽 먹어보세요..',to_date('21/04/21','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (5,27,'qkrdkfks','신고할게요',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (6,15,'qkrdkfks','뭐죠?',to_date('21/03/15','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (7,18,'qkrdkfks','힘드시겠어요ㅠㅠ',to_date('21/04/18','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (8,8,'qkrdkfks','신고요',to_date('20/09/25','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (9,30,'shtjdqhd','스윗해요~',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (10,24,'shtjdqhd','제가 버스태워드리져',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (11,11,'shtjdqhd','그런 것도 있나요??',to_date('20/12/10','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (12,19,'shtjdqhd','괜찮으세요?!',to_date('21/04/21','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (13,9,'shtjdqhd','너무 잘 알죠 진짜 맛있으니까 꼭 가보세요^^',to_date('20/10/09','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (14,3,'shtjdqhd','요즘 핫한 남자인가요?',to_date('20/04/01','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (15,6,'shtjdqhd','어우 많이 나가시네요 화이팅!',to_date('20/07/09','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (16,29,'shtjdqhd','맛있겠다..',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (17,1,'shtjdqhd','너무 좋아할듯',to_date('19/11/11','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (18,8,'shtjdqhd','이 글은 신고하죠',to_date('20/09/25','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (19,12,'shtjdqhd','떡볶이 어떠세요?',to_date('21/01/05','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (20,30,'dhstndls','감사합니다 ㅎㅎ',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (21,29,'dhstndls','오늘 저녁 해물찜각이네요',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (22,25,'dhstndls','감사합니다~',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (23,22,'dhstndls','ㅋㅋㅋㅋㅋ',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (24,21,'dhstndls','운동 많이 하세요~',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (25,11,'dhstndls','헉..ㄷㄷ',to_date('20/12/10','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (26,14,'dhstndls','저희 회사로 오세요',to_date('21/02/15','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (27,5,'dhstndls','공주병이세요?',to_date('20/07/09','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (28,4,'dhstndls','오 당장 검색하러 갑니다',to_date('20/04/24','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (29,4,'dhstndls','뭐야 본인 글인가요?',to_date('20/04/24','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (30,2,'dhstndls','조합이 이상한데요?',to_date('20/01/02','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (31,10,'dhstndls','그만하세요 ㅋㅋ',to_date('20/12/01','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (32,28,'shtjdqhd','싫어하지만.. 추천 감사합니다..',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (33,26,'shtjdqhd','ㅋㅋㅋ웃기네요',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (34,22,'shtjdqhd','ㅋㅋㅋㅋㅋㅋㅋ',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (35,17,'shtjdqhd','공복이라 많이 못 드실듯~ 샌드위치 추천드려요!',to_date('21/04/05','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (36,2,'shtjdqhd','닭강정 맛있겠다..',to_date('20/01/01','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (37,7,'shtjdqhd','저도 그거 정말 좋아해요 달달한 커피',to_date('20/08/14','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (38,23,'shtjdqhd','비싸네요....?!',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (39,16,'shtjdqhd','ㅋㅋ괜찮아요 제 사랑니는 누워있어요 일어나라고 하려고요',to_date('21/03/16','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (40,30,'rlatnals','우와 짱..',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (41,29,'rlatnals','맛있겠다 전 술은 못 마시지만..!',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (42,27,'rlatnals','준며든다..',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (43,25,'rlatnals','감사합니다!',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (44,21,'rlatnals','저도 다이어트 해야해요ㅠㅠ',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (45,11,'rlatnals','꿀팁 감사합니다 ㅋ',to_date('20/12/10','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (46,1,'rlatnals','로맨틱해요..ㅎㅎ',to_date('19/11/11','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (47,5,'rlatnals','헉 관심있는 거 같은데..?!',to_date('20/07/09','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (48,7,'rlatnals','아메리카노도 한 번 드셔보세요!',to_date('20/08/14','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (49,10,'rlatnals','아메리카노 한 잔 마셔야겠다 ㅋㅋ',to_date('20/12/01','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (50,6,'dlthdud','전 요즘 필라테스해요',to_date('20/07/09','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (51,16,'dlthdud','화이팅!',to_date('21/03/16','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (52,28,'dlthdud','저런ㅠㅠ..',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (53,24,'dlthdud','shtjdqhd님 저도 태워주세요',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (54,18,'dlthdud','잡채 갈비찜?',to_date('21/04/18','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (55,5,'dlthdud','추카추카',to_date('20/07/08','RR/MM/DD'));
+Insert into COOK.BOARD_COMMENT (BOARDCMT_NO,BOARD_NO,MEMBER_ID,BOARDCMT_DETAIL,BOARDCMT_DT) values (56,25,'qkrdkfks','같이 화이팅해요~',to_date('21/04/23','RR/MM/DD'));
 --------------------------------------------------------
 --  DDL for Index BOARD_COMMENT_PK
 --------------------------------------------------------

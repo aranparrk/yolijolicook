@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  파일이 생성됨 - 일요일-4월-04-2021   
+--  파일이 생성됨 - 금요일-4월-23-2021   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Table RECIPE_INFO
@@ -13,8 +13,8 @@
 	"RECIPE_CATEGORY" VARCHAR2(15 BYTE), 
 	"RECIPE_TIME" NUMBER(3,0), 
 	"RECIPE_LEVEL" NUMBER(1,0), 
-	"RECIPE_IMG" VARCHAR2(20 BYTE), 
-	"RECIPE_SCRAP_CNT_CNT" NUMBER(4,0) DEFAULT 0, 
+	"RECIPE_IMG" VARCHAR2(50 BYTE), 
+	"RECIPE_SCRAP_CNT" NUMBER(4,0) DEFAULT 0, 
 	"RECIPE_CNT" NUMBER(5,0) DEFAULT 0, 
 	"RECIPE_DT" DATE, 
 	"RECIPE_STATUS" NUMBER(1,0) DEFAULT 0
@@ -32,17 +32,43 @@
    COMMENT ON COLUMN "COOK"."RECIPE_INFO"."RECIPE_TIME" IS '조리시간';
    COMMENT ON COLUMN "COOK"."RECIPE_INFO"."RECIPE_LEVEL" IS '조리난이도';
    COMMENT ON COLUMN "COOK"."RECIPE_INFO"."RECIPE_IMG" IS '대표이미지';
-   COMMENT ON COLUMN "COOK"."RECIPE_INFO"."RECIPE_SCRAP_CNT_CNT" IS '스크랩수';
+   COMMENT ON COLUMN "COOK"."RECIPE_INFO"."RECIPE_SCRAP_CNT" IS '스크랩수';
    COMMENT ON COLUMN "COOK"."RECIPE_INFO"."RECIPE_CNT" IS '레시피조회수';
    COMMENT ON COLUMN "COOK"."RECIPE_INFO"."RECIPE_DT" IS '작성일자';
    COMMENT ON COLUMN "COOK"."RECIPE_INFO"."RECIPE_STATUS" IS '레시피상태';
 REM INSERTING into COOK.RECIPE_INFO
 SET DEFINE OFF;
-Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (1,'id1','맛있는 김치찌개','김치찌개는 스팸이지','한식',10,3,'kimchizzigae.png',0,0,to_date('21/03/31','RR/MM/DD'),0);
-Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (2,'id3','초밥','초밥엔 회','한식',10,3,'chobab.png',0,0,to_date('21/03/31','RR/MM/DD'),0);
-Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (3,'id3','닭볶음탕','닭','한식',10,3,'iloveyou.png',0,0,to_date('21/03/31','RR/MM/DD'),0);
-Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (4,'id2','로제떡볶이','로제떡볶이 황금 레시피','분식',15,1,'roseddokbokki.png',0,0,to_date('21/03/31','RR/MM/DD'),0);
-Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (5,'id4','칡냉면','냉면은 역시 칡 냉면이지~!','한식',15,3,'lang.png',0,0,to_date('21/03/31','RR/MM/DD'),0);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (7,'qkrdkfks','마늘쫑 소세지 볶음','우리아이, 마늘쫑에다 프라임 소시지를 넣고 같이 볶아주었더니 단짠단짠 "마늘쫑 소시지 볶음"에 빠져버렸네요~','한식',30,1,'7.jpg',0,0,to_date('21/04/21','RR/MM/DD'),0);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (8,'qkrdkfks','팽이버섯 덮밥','10분 레시피! 천원의 행복! 간단한데 맛까지 있음! 한그릇 팽이버섯 덮밥 함께해요!','한식',10,1,'8.jpg',0,0,to_date('21/03/15','RR/MM/DD'),0);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (9,'shtjdqhd','새송이버섯버터구이','새송이버섯버터구이는 재료도 간단하고, 예쁘며, 식감도 쫀득쫀득해서 간단하게 만들어 먹기 좋을 뿐만 아니라손님 초대상에 내기도 좋아요!','한식',10,1,'9.jpg',0,0,to_date('21/02/26','RR/MM/DD'),0);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (4,'shtjdqhd','유부초밥','맛있게 조린 유부에 밥을 넣어 만든 초밥종류입니다','한식',20,1,'you_main.jpg',0,0,to_date('21/04/05','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (5,'qkrdkfks','파김치','파김치는 익으면 젖갈과 맛이 잘 어울려 든든한 밑반찬이 된답니다.','한식',30,2,'pa_main.jpg',0,0,to_date('21/01/07','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (6,'qkrdkfks','떡국','설날 아침 떡국먹고 한살 더먹기!','한식',30,1,'dduck_main.jpg',0,0,to_date('20/01/01','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (3,'qkrdkfks','해물순두부찌개','부드럽게 넘어가는 맛이 최고!! 시원하고 개운한 국물맛이 단백하게 입맛을 살려주는 순두부찌개!!','한식',30,2,'3.png',0,0,to_date('21/04/21','RR/MM/DD'),0);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (1,'qkrdkfks','새콤달콤 무생채','새콤달콤하게 무쳐서 밥상위에 올려 놓으면 인기 짱!
+','한식',20,1,'1.png',0,0,to_date('21/04/21','RR/MM/DD'),0);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (2,'rlatnals','크림소스 파스타','남녀노소 좋아하는 크림파스타! 이젠 집에서도 즐겨보세요~','양식',50,2,'2.png',0,0,to_date('21/04/21','RR/MM/DD'),0);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (10,'dhstndls','버터갈릭새우','요즘 남편과 늦은 밤에 마시는 술 한잔에 푹 빠졌어요. ?(?ㆁ?ㆁ?)?”','양식',15,1,'10.jpg',0,0,to_date('21/01/28','RR/MM/DD'),0);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (11,'dlthdud','연두부 샐러드','초간단 초스피드~ 레시피로 맛은 물론 비쥬얼도 최고~','한식',5,1,'11.jpg',0,0,to_date('21/02/22','RR/MM/DD'),0);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (12,'rlatnals','허니버터 고구마','에어프라이어로도 패밀리레스토랑 비슷하게 허니버터고구마 만들수 있답니다.','한식',30,1,'12.jpg',0,0,to_date('21/03/22','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (13,'shtjdqhd','베이컨떡꼬치','쫄깃한 떡에 짭쪼름한 베이컨이 감싼 베이컨떡꼬치입니다. 꼬치로 만들어서 먹기도 쉽고 술안주로 안성맞춤인 꼬치요리입니다.','양식',15,1,'13.jpg',0,0,to_date('21/04/05','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (14,'qkrdkfks','소시지 피자','간편하게 만드는 후랑크 소시지 피자 무조건 맛있다~ 정말 맛있어요','양식',10,1,'14.jpg',0,0,to_date('21/04/22','RR/MM/DD'),0);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (15,'qkrdkfks','초코크랙쿠키','만드는방법도 정말 간단하고 촉촉하고 부드러운 초코크랙쿠키를 만들어보았어요~!! 버터가 없다면 식용유로 대체해서 만들어도 좋은 초코크랙쿠키랍니다♡♡♡','양식',30,1,'15.jpg',0,0,to_date('21/03/11','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (16,'dhstndls','고구마치즈전','달콤 고구마와 고소 치즈의 만남은 무죄!!^^','한식',15,1,'16.jpg',0,0,to_date('21/02/14','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (17,'shtjdqhd','버섯 들깨소스 무침','들어가는 양념재료는 아주 간단한데, 깊은 맛과 감칠맛을 내어주어서 가족 모두에게 사랑받는 밑반찬이 되었어요. 맛있게 고소하게 건강하게 만들어 드셔보세요!','한식',30,1,'17.jpg',0,0,to_date('21/01/03','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (18,'dlthdud','곤약조림','마트에서 싸게 파는 재료로 요리하기!!','한식',15,1,'18.jpg',0,0,to_date('21/04/15','RR/MM/DD'),0);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (19,'dhstndls','허니맥나잇','꿀호떡으로 만든 허니버터맥나잇 입니다. 아주 간편하게 만든 간식이예요.','양식',10,1,'19.jpg',0,0,to_date('21/02/07','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (20,'shtjdqhd','햄양파볶음','초간단 밑반찬, 햄양파볶음','한식',10,1,'ham_main.jpg',0,0,to_date('21/04/03','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (21,'shtjdqhd','콩나물볶음','콩나물~ 아삭 아삭 맛있는데다가 저렴하고 키우기도 은근히 쉬우면서 어렵기도하고. 콩나물 한봉지면 볶음에 국까지 끓일수있고. 얼마나 좋아요? 간단한 밑반찬 콩나물볶음 만들기.','한식',10,1,'kong_main.jpg',0,0,to_date('19/04/13','RR/MM/DD'),-1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (22,'qkrdkfks','콩비지로 만든 빈대떡','녹두 대신 콩비지와 남은 고사리 나물을 넣어 만든 빈대떡이에요. 고소하고 부드럽고 밑반찬이나 간식이나 안주 등 모두 잘 어울리는 콩비지 빈대떡이에요.','한식',20,2,'bean_main.jpg',0,0,to_date('20/08/15','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (23,'qkrdkfks','골뱅이소면무침','백종원 골뱅이무침 만드는 법 술안주로 좋은 골뱅이소면무침','한식',30,1,'gol_main.jfif',0,0,to_date('21/02/16','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (24,'qkrdkfks','모닝빵콘치즈 ','모닝빵콘치즈 간단간식','퓨전',30,1,'bbang_main.jpg',0,0,to_date('20/03/05','RR/MM/DD'),0);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (25,'qkrdkfks','베이컨에그토스트','오늘은 집에서 먹어도 카페 부럽지 않은 디저트 ''베이컨토스트''를 만들어 볼께요.커피와 함께 먹으면 정말 꿀맛이에요^^','퓨전',10,1,'eg_main.jpg',0,0,to_date('20/10/23','RR/MM/DD'),0);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (26,'qkrdkfks','황태채 버터구이','만들기는 간단하지만 맛은 중독성 있는 초간단 맥주안주 황태채 버터구이를 소개합니다. 씹을수록 고소한 맛에 한번 먹으면 손을 놓을수 없답니다^^','한식',5,1,'hw_main.jpg',0,0,to_date('19/04/09','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (27,'qkrdkfks','치즈스틱','평소 치즈가 들어간 음식이라면 무조껀 애정하는지라 치즈스틱도 정말 좋아하는데요. 집에서도 초간단 만드는 방법 소개해 드릴께요^^','양식',5,1,'stic_main.jpg',0,0,to_date('21/02/01','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (28,'qkrdkfks','햄치즈달걀랩','와인을 가끔 접하는 저에요. 제가 딴건 잘 못마셔도 와인과 맥주만 마신답니다. 근데 이제 연말이니 집에서 와인파티를 할수도 있잖아요~ 그래서 핑거푸드를 만들어봤답니다. 뭐 과일로 와인안주를 할수도 있지만 좀 있어보이게 하고싶다면 이런 핑거푸드도 좋겠죠?','퓨전',15,1,'hce_main.jpg',0,0,to_date('20/06/24','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (29,'rlatnals','닭장국','오는 길에 닭 한 마리 사서 보글보글 끓여 먹은 닭장국 간단한데 맛은 개인적으로 백숙보다 맛있네요','한식',30,2,'jang_main.jpg',0,0,to_date('21/01/07','RR/MM/DD'),1);
+Insert into COOK.RECIPE_INFO (RECIPE_NO,MEMBER_ID,RECIPE_NAME,RECIPE_INTRO,RECIPE_CATEGORY,RECIPE_TIME,RECIPE_LEVEL,RECIPE_IMG,RECIPE_SCRAP_CNT,RECIPE_CNT,RECIPE_DT,RECIPE_STATUS) values (30,'rlatnals','토마토 치킨 스튜','짜투리 채소들이 냉장고에 굴러다닐 때, 볶음밥 말고 색다른 채소요리가 먹고싶을 때,, 닭가슴 + 샐러드 다이어트가 지겨울 때! 재료 다 넣고 볶다가 끓여주기만 하면 스튜 완성!! ','양식',60,2,'tomato_main.jpg',0,0,to_date('21/02/25','RR/MM/DD'),1);
 --------------------------------------------------------
 --  DDL for Index RECIPE_INFO_PK
 --------------------------------------------------------

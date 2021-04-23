@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  파일이 생성됨 - 일요일-4월-04-2021   
+--  파일이 생성됨 - 금요일-4월-23-2021   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Table QNA
@@ -28,11 +28,15 @@
    COMMENT ON COLUMN "COOK"."QNA"."QUESTION_ANS_DETAIL" IS '문의답변내용';
 REM INSERTING into COOK.QNA
 SET DEFINE OFF;
-Insert into COOK.QNA (QUESTION_NO,QUESTION_TITLE,QUESTION_DETAIL,MEMBER_ID,QUESTION_DT,QUESTION_ANS_DT,QUESTION_ANS_DETAIL) values (1,'이거 어떻게 올려요?','레시피 어떻게 올려요? 모르겠는데','id1',to_date('21/03/31','RR/MM/DD'),null,null);
-Insert into COOK.QNA (QUESTION_NO,QUESTION_TITLE,QUESTION_DETAIL,MEMBER_ID,QUESTION_DT,QUESTION_ANS_DT,QUESTION_ANS_DETAIL) values (2,'이거 어떻게 올려요?','레시피 어떻게 올려요? 모르겠는데','id1',to_date('21/03/31','RR/MM/DD'),null,null);
-Insert into COOK.QNA (QUESTION_NO,QUESTION_TITLE,QUESTION_DETAIL,MEMBER_ID,QUESTION_DT,QUESTION_ANS_DT,QUESTION_ANS_DETAIL) values (3,'이거 어떻게 올려요?','레시피 어떻게 올려요? 모르겠는데','id1',to_date('21/03/31','RR/MM/DD'),null,null);
-Insert into COOK.QNA (QUESTION_NO,QUESTION_TITLE,QUESTION_DETAIL,MEMBER_ID,QUESTION_DT,QUESTION_ANS_DT,QUESTION_ANS_DETAIL) values (4,'이거 어떻게 올려요?','레시피 어떻게 올려요? 모르겠는데','id1',to_date('21/03/31','RR/MM/DD'),null,null);
-Insert into COOK.QNA (QUESTION_NO,QUESTION_TITLE,QUESTION_DETAIL,MEMBER_ID,QUESTION_DT,QUESTION_ANS_DT,QUESTION_ANS_DETAIL) values (5,'이거 어떻게 올려요?','레시피 어떻게 올려요? 모르겠는데','id1',to_date('21/03/31','RR/MM/DD'),null,null);
+Insert into COOK.QNA (QUESTION_NO,QUESTION_TITLE,QUESTION_DETAIL,MEMBER_ID,QUESTION_DT,QUESTION_ANS_DT,QUESTION_ANS_DETAIL) values (2,'초밥 만드는 방법은 없나요?','초밥도 한 번 만들어보고 싶어요','shtjdqhd',to_date('21/03/28','RR/MM/DD'),null,null);
+Insert into COOK.QNA (QUESTION_NO,QUESTION_TITLE,QUESTION_DETAIL,MEMBER_ID,QUESTION_DT,QUESTION_ANS_DT,QUESTION_ANS_DETAIL) values (3,'회원탈퇴 방법','알려주세요','rlatnals',to_date('21/04/01','RR/MM/DD'),null,null);
+Insert into COOK.QNA (QUESTION_NO,QUESTION_TITLE,QUESTION_DETAIL,MEMBER_ID,QUESTION_DT,QUESTION_ANS_DT,QUESTION_ANS_DETAIL) values (4,'이메일 주소 변경하고 싶어요','이메일 변경 가능한가요?','rlatnals',to_date('21/04/03','RR/MM/DD'),null,null);
+Insert into COOK.QNA (QUESTION_NO,QUESTION_TITLE,QUESTION_DETAIL,MEMBER_ID,QUESTION_DT,QUESTION_ANS_DT,QUESTION_ANS_DETAIL) values (5,'자동로그인이 뭔가요?','제 아이디 안전한 거에요?','dhstndls',to_date('21/04/03','RR/MM/DD'),null,null);
+Insert into COOK.QNA (QUESTION_NO,QUESTION_TITLE,QUESTION_DETAIL,MEMBER_ID,QUESTION_DT,QUESTION_ANS_DT,QUESTION_ANS_DETAIL) values (6,'레시피 삭제는 어떻게 해요?','맘에 안들어요 다시 올리고 싶어요','shtjdqhd',to_date('21/04/04','RR/MM/DD'),null,null);
+Insert into COOK.QNA (QUESTION_NO,QUESTION_TITLE,QUESTION_DETAIL,MEMBER_ID,QUESTION_DT,QUESTION_ANS_DT,QUESTION_ANS_DETAIL) values (7,'스크랩 어떻게 하는 건가요?','저장하고 싶은 레시피가 있는데 모르겠어요ㅠ','qkrdkfks',to_date('21/04/08','RR/MM/DD'),null,null);
+Insert into COOK.QNA (QUESTION_NO,QUESTION_TITLE,QUESTION_DETAIL,MEMBER_ID,QUESTION_DT,QUESTION_ANS_DT,QUESTION_ANS_DETAIL) values (1,'레시피 어떻게 올려요?','저도 맛있는 내용 공유하고 싶습니다!','qkrdkfks',to_date('21/03/15','RR/MM/DD'),null,null);
+Insert into COOK.QNA (QUESTION_NO,QUESTION_TITLE,QUESTION_DETAIL,MEMBER_ID,QUESTION_DT,QUESTION_ANS_DT,QUESTION_ANS_DETAIL) values (8,'닉네임도 변경 가능해요?','잘못만들었어요','shtjdqhd',to_date('21/04/11','RR/MM/DD'),null,null);
+Insert into COOK.QNA (QUESTION_NO,QUESTION_TITLE,QUESTION_DETAIL,MEMBER_ID,QUESTION_DT,QUESTION_ANS_DT,QUESTION_ANS_DETAIL) values (9,'회원탈퇴하면 제 정보는 어떻게 되는 건가요?','완전히 사라지나요?','qkrdkfks',to_date('21/04/22','RR/MM/DD'),null,null);
 --------------------------------------------------------
 --  DDL for Index QNA_PK
 --------------------------------------------------------

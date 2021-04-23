@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  파일이 생성됨 - 일요일-4월-04-2021   
+--  파일이 생성됨 - 금요일-4월-23-2021   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Table MEMBER
@@ -27,10 +27,11 @@
 REM INSERTING into COOK.MEMBER
 SET DEFINE OFF;
 Insert into COOK.MEMBER (MEMBER_ID,MEMBER_PWD,MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_STATUS,MEMBER_DT) values ('id1','p1','e1','n1',0,to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.MEMBER (MEMBER_ID,MEMBER_PWD,MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_STATUS,MEMBER_DT) values ('id2','p2','e2','n2',0,to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.MEMBER (MEMBER_ID,MEMBER_PWD,MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_STATUS,MEMBER_DT) values ('id3','p3','e3','n3',0,to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.MEMBER (MEMBER_ID,MEMBER_PWD,MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_STATUS,MEMBER_DT) values ('id4','p4','e4','n4',0,to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.MEMBER (MEMBER_ID,MEMBER_PWD,MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_STATUS,MEMBER_DT) values ('id5','p5','e5','n5',0,to_date('21/03/31','RR/MM/DD'));
+Insert into COOK.MEMBER (MEMBER_ID,MEMBER_PWD,MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_STATUS,MEMBER_DT) values ('rlatnals','rlatnals1','sumin0603@naver.com','김수망',0,to_date('21/04/21','RR/MM/DD'));
+Insert into COOK.MEMBER (MEMBER_ID,MEMBER_PWD,MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_STATUS,MEMBER_DT) values ('dlthdud','dlthdud1','dlthdud@naver.com','이소용',0,to_date('21/04/21','RR/MM/DD'));
+Insert into COOK.MEMBER (MEMBER_ID,MEMBER_PWD,MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_STATUS,MEMBER_DT) values ('dhstndls','dhstndls1','sottotndls@naver.com','옹수인',0,to_date('21/04/21','RR/MM/DD'));
+Insert into COOK.MEMBER (MEMBER_ID,MEMBER_PWD,MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_STATUS,MEMBER_DT) values ('qkrdkfks','qkrdkfks1','bb_ar@naver.com','박아랑',0,to_date('21/04/21','RR/MM/DD'));
+Insert into COOK.MEMBER (MEMBER_ID,MEMBER_PWD,MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_STATUS,MEMBER_DT) values ('shtjdqhd','shtjdqhd1','shtjdqhd@naver.com','노씨',0,to_date('21/04/21','RR/MM/DD'));
 --------------------------------------------------------
 --  DDL for Index MEMBER_PK
 --------------------------------------------------------

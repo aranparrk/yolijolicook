@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  파일이 생성됨 - 일요일-4월-04-2021   
+--  파일이 생성됨 - 금요일-4월-23-2021   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Table RECIPE_COMMENT
@@ -24,12 +24,13 @@
    COMMENT ON COLUMN "COOK"."RECIPE_COMMENT"."RECIPECMT_DT" IS '댓글작성날짜';
 REM INSERTING into COOK.RECIPE_COMMENT
 SET DEFINE OFF;
-Insert into COOK.RECIPE_COMMENT (RECIPECMT_NO,RECIPE_NO,MEMBER_ID,RECIPECMT_DETAIL,RECIPECMT_DT) values (1,1,'id1','우와~ 짱이다!',to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.RECIPE_COMMENT (RECIPECMT_NO,RECIPE_NO,MEMBER_ID,RECIPECMT_DETAIL,RECIPECMT_DT) values (2,1,'id1','우와~ 짱이다!',to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.RECIPE_COMMENT (RECIPECMT_NO,RECIPE_NO,MEMBER_ID,RECIPECMT_DETAIL,RECIPECMT_DT) values (3,1,'id1','우와~ 짱이다!',to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.RECIPE_COMMENT (RECIPECMT_NO,RECIPE_NO,MEMBER_ID,RECIPECMT_DETAIL,RECIPECMT_DT) values (4,1,'id1','우와~ 짱이다!',to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.RECIPE_COMMENT (RECIPECMT_NO,RECIPE_NO,MEMBER_ID,RECIPECMT_DETAIL,RECIPECMT_DT) values (5,1,'id1','우와~ 짱이다!',to_date('21/03/31','RR/MM/DD'));
-Insert into COOK.RECIPE_COMMENT (RECIPECMT_NO,RECIPE_NO,MEMBER_ID,RECIPECMT_DETAIL,RECIPECMT_DT) values (6,5,'id4','랭면은 역시 옥천랭면이라우',to_date('21/03/31','RR/MM/DD'));
+Insert into COOK.RECIPE_COMMENT (RECIPECMT_NO,RECIPE_NO,MEMBER_ID,RECIPECMT_DETAIL,RECIPECMT_DT) values (22,3,'shtjdqhd','와 맛있어보여요',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.RECIPE_COMMENT (RECIPECMT_NO,RECIPE_NO,MEMBER_ID,RECIPECMT_DETAIL,RECIPECMT_DT) values (23,18,'shtjdqhd','다이어트 식품이다..',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.RECIPE_COMMENT (RECIPECMT_NO,RECIPE_NO,MEMBER_ID,RECIPECMT_DETAIL,RECIPECMT_DT) values (24,2,'shtjdqhd','오늘은 양식이다!',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.RECIPE_COMMENT (RECIPECMT_NO,RECIPE_NO,MEMBER_ID,RECIPECMT_DETAIL,RECIPECMT_DT) values (25,12,'shtjdqhd','완전 달달해보여요!',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.RECIPE_COMMENT (RECIPECMT_NO,RECIPE_NO,MEMBER_ID,RECIPECMT_DETAIL,RECIPECMT_DT) values (26,2,'qkrdkfks','맛있겠다..!',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.RECIPE_COMMENT (RECIPECMT_NO,RECIPE_NO,MEMBER_ID,RECIPECMT_DETAIL,RECIPECMT_DT) values (27,20,'qkrdkfks','햄이랑 양파 잘 어울리나요?',to_date('21/04/23','RR/MM/DD'));
+Insert into COOK.RECIPE_COMMENT (RECIPECMT_NO,RECIPE_NO,MEMBER_ID,RECIPECMT_DETAIL,RECIPECMT_DT) values (21,26,'shtjdqhd','술 안주로 딱이네요',to_date('21/04/23','RR/MM/DD'));
 --------------------------------------------------------
 --  DDL for Index RECIPE_COMMENT_PK
 --------------------------------------------------------

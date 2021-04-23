@@ -1,5 +1,5 @@
 --------------------------------------------------------
---  파일이 생성됨 - 월요일-4월-05-2021   
+--  파일이 생성됨 - 금요일-4월-23-2021   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Table SCRAP
@@ -22,9 +22,56 @@
    COMMENT ON COLUMN "COOK"."SCRAP"."SCRAP_DT" IS '스크랩날짜';
 REM INSERTING into COOK.SCRAP
 SET DEFINE OFF;
-Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (1,'id1',1,to_date('21/04/01','RR/MM/DD'));
-Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (2,'id1',2,to_date('21/04/01','RR/MM/DD'));
-Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (3,'id1',3,to_date('21/04/01','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (26,'dlthdud',20,to_date('21/04/30','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (1,'qkrdkfks',4,to_date('21/03/14','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (27,'rlatnals',15,to_date('21/04/29','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (2,'shtjdqhd',5,to_date('21/03/14','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (3,'rlatnals',6,to_date('21/03/21','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (4,'dhstndls',12,to_date('21/03/22','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (5,'dlthdud',13,to_date('21/03/28','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (6,'dlthdud',15,to_date('21/03/28','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (7,'dhstndls',16,to_date('21/04/01','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (8,'dhstndls',17,to_date('21/04/01','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (9,'rlatnals',19,to_date('21/04/01','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (10,'qkrdkfks',20,to_date('21/04/02','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (11,'qkrdkfks',22,to_date('21/04/04','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (12,'shtjdqhd',23,to_date('21/04/11','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (13,'dhstndls',26,to_date('21/04/12','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (14,'dlthdud',27,to_date('21/04/13','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (28,'dlthdud',23,to_date('21/04/30','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (29,'shtjdqhd',1,to_date('21/04/30','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (30,'rlatnals',26,to_date('21/05/01','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (31,'shtjdqhd',27,to_date('21/05/01','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (32,'qkrdkfks',12,to_date('21/05/01','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (33,'shtjdqhd',13,to_date('21/05/02','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (34,'qkrdkfks',15,to_date('21/05/02','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (35,'qkrdkfks',16,to_date('21/05/02','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (36,'shtjdqhd',17,to_date('21/05/02','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (37,'dlthdud',30,to_date('21/05/02','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (38,'dlthdud',17,to_date('21/05/02','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (39,'dhstndls',15,to_date('21/05/05','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (40,'dhstndls',5,to_date('21/05/05','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (41,'dlthdud',5,to_date('21/05/05','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (42,'dlthdud',19,to_date('21/05/06','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (15,'dlthdud',28,to_date('21/04/20','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (16,'dhstndls',29,to_date('21/04/20','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (17,'qkrdkfks',30,to_date('21/04/20','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (18,'shtjdqhd',30,to_date('21/04/21','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (19,'shtjdqhd',15,to_date('21/04/22','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (20,'shtjdqhd',16,to_date('21/04/22','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (21,'qkrdkfks',17,to_date('21/04/22','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (22,'dhstndls',19,to_date('21/04/25','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (23,'rlatnals',20,to_date('21/04/26','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (24,'dlthdud',22,to_date('21/04/26','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (25,'rlatnals',23,to_date('21/04/26','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (43,'rlatnals',30,to_date('21/05/06','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (44,'shtjdqhd',22,to_date('21/05/06','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (45,'qkrdkfks',23,to_date('21/05/07','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (46,'dlthdud',26,to_date('21/05/07','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (47,'qkrdkfks',27,to_date('21/05/07','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (48,'dhstndls',1,to_date('21/05/07','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (49,'shtjdqhd',4,to_date('21/05/07','RR/MM/DD'));
+Insert into COOK.SCRAP (SCRAP_NO,MEMBER_ID,RECIPE_NO,SCRAP_DT) values (50,'qkrdkfks',6,to_date('21/05/07','RR/MM/DD'));
 --------------------------------------------------------
 --  DDL for Index SCRAP_PK
 --------------------------------------------------------
