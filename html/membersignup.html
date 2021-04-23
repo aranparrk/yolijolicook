@@ -6,6 +6,8 @@
 <title>회원가입 | 요리조리쿡</title>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <!-- 폰트 -->
+<!-- 파비콘 -->
+<link rel="shortcut icon" href="../images/web/favicon-32x32.png" type="image/x-icon">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
@@ -29,7 +31,7 @@
    font-style: normal;
 }
 
-.signup_section {color: #363131;height: 697px;font-family: 'Noto Sans KR', sans-serif;}
+.signup_section {color: #363131;height: 730px;font-family: 'Noto Sans KR', sans-serif;}
 .signup_form_container {width: 400px;margin: auto;padding-top: 150px;}
 .signup_form_title_div {margin: auto;text-align: center;}
 .signup_form_title_h {font-weight: bold;font-size: 40px;display: inline-block;padding-top: 8px;margin-bottom: 30px;}
@@ -37,7 +39,7 @@
 .signup_form_text_alert {height: 20px;font-size: 14px;margin-left: 2px;}
 .signup_form_text_alert_padding {padding-bottom: 10px;}
 .signup_form_submit_button {font-family: 'Noto Sans KR', sans-serif;cursor: pointer;width: 100%;height: 55px;background-color: #55a72b;border: 1px;border-radius: 3px; color: white; font-size: 17px; font-weight: 400;}
-.signup_form_submit_email {font-family: 'Noto Sans KR', sans-serif;   cursor: pointer;height: 30px;width: 55px;background-color: #55a72b;   color: white;border: 1px;border-radius: 3px;position: relative;   left: 330px;bottom: 38px;}
+.signup_form_submit_email {font-family: 'Noto Sans KR', sans-serif;   cursor: pointer;height: 30px;width: 55px;background-color: gray;   color: white;border: 1px;border-radius: 3px;position: relative;   left: 330px;bottom: 38px;}
 .signup_modal_background {   position: fixed;width: 100%;height: 100%;background: rgba(117, 117, 117, 0.8);top: 0;left: 0;text-align: center;display: none;}
 .signup_modal_content {background-color: white;   top: 50%;left: 50%;   transform: translate(-50%, -50%);width: 250px;height: 150px;margin: auto;text-align: center;border-radius: 3px;position: fixed;   font-family: 'Noto Sans KR', sans-serif;display: none;}
 .signup_send_email {font-family: 'Noto Sans KR', sans-serif;cursor: pointer;background-color: #55a72b; color: white;border: 1px;border-radius: 3px;height: 30px;width: 60px;margin-top: 10px;}
@@ -50,6 +52,8 @@
 		$("#header").load("header.html");
 		$("#footer").load("footer.html");
 		
+		
+		var code = ""; // 이메일전송 인증번호 저장을 위한 코드
 		// 모달창
 		$(".signup_form_submit_email").click(function() {
 			var email = $("#member_email").val(); // 입력한 이메일 값
@@ -60,13 +64,14 @@
 				url : "../member/emailCheck",
 				data : {"member_email" : email},
 				success : function(data){
-					alert("이메일이 전송 되었습니다");
+					code = data;
 				},
 				error: function(jqXHR){
 					alert(jqXHR.status);
 				}
 			});
 		});
+		
 		$(".signup_modal_background").click(function() {
 			$(".signup_modal_background").fadeOut();
 			$(".signup_modal_content").fadeOut();
@@ -75,8 +80,22 @@
 		
 		// 인증번호 확인 버튼
 		$("#emailcon").on("click", function() {
-			if ($("input[name='email_no']").val() == null || $("input[name='email_no']").val() == "") {
+			var inputCode = $("input[name='email_no']").val();
+			if (inputCode == null || inputCode == "") {
 				$("#alert_email_no").text("인증번호를 입력하세요").css("color", "red");
+				$("#alert_email_no").attr('data-boolean','false');
+			}else if(inputCode == code){
+				$("#alert_email_no").text("인증번호가 일치합니다").css("color", "green");
+				$(".signup_modal_background").fadeOut();
+				$(".signup_modal_content").fadeOut();
+				$("#alert_member_email").text("인증이 완료되었습니다").css("color", "green");
+				$("#alert_email_no").attr('data-boolean','true');
+				$("#emailbtn").val('인증완료');
+				$("#emailbtn").attr('disabled', true);
+			}else if(inputCode != code){
+				$("#alert_email_no").text("인증번호가 틀립니다").css("color", "red");
+				$("#alert_email_no").attr('data-boolean','false');
+
 			}
 		});
 		
@@ -110,6 +129,8 @@
 					if(responseObj.status == 1){
 						$("#alert_member_id").text("이미 존재하는 아이디 입니다.").css("color",   "red");
 						$("#alert_member_id").attr('data-boolean','false');
+						$("#emailcon").attr("disabled");
+						$("#emailcon").css("color", "gray");
 					}else if(responseObj.status == -1){
 						$("#alert_member_id").text("사용 가능한 아이디 입니다.").css("color", "green");
 						$("#alert_member_id").attr('data-boolean','true');
@@ -185,6 +206,8 @@
 					}else if(responseObj.status == -1){
 						$("#alert_member_email").text("사용 가능한 이메일 입니다.").css("color", "green");
 						$("#alert_member_email").attr('data-boolean','true');
+						$("#emailbtn").removeAttr('disabled', true);
+						$("#emailbtn").css("background-color", "#55a72b");
 					}
 				},
 				error: function(jqXHR){
@@ -231,68 +254,65 @@
 				}
 			});
 		});
-
-      // 입력칸을 공란으로 제출 시 경고 메세지 출력
-      $("#signupbtn").on("click",   function() {
-         /*if(($("#member_id").val() == ""   || $("#member_id").val() == null) 
-               || ($("#member_pwd").val() == ""|| $("#member_pwd").val() == null)
-               || ($("#member_pwd2").val() == ""|| $("#member_pwd2").val() == null)
-               || ($("#member_email").val() == ""|| $("#member_email").val() == null)
-               || ($("#member_nickname").val() == ""|| $("#member_nickname").val() == null)){
-            $("#alert_member_id").text("아이디를 입력하세요.").css("color",   "red");
-            $("#member_id").focus();
-            $("#alert_member_pwd").text("비밀번호를 입력하세요.").css("color", "red");
-            $("#member_pwd").focus();
-            $("#alert_member_pwd2").text("비밀번호를 확인하세요.").css(   "color", "red");
-            $("#member_pwd2").focus();
-            $("#alert_member_email").text("이메일을 입력하세요.").css("color", "red");
-            $("#member_email").focus();
-            $("#alert_member_nickname").text("닉네임을 입력하세요.").css("color", "red");
-            $("#member_nickname").focus();
-         }*/
-         
-         if ($("#member_id").val() == "" || $("#member_id").val() == null) {
-            $("#alert_member_id").text("아이디를 입력하세요.").css("color",   "red");
-            $("#member_id").focus();
-         }
-         if ($("#member_pwd").val() == ""|| $("#member_pwd").val() == null) {
-            $("#alert_member_pwd").text("비밀번호를 입력하세요.").css("color", "red");
-            $("#member_pwd").focus();
-         }
-         if ($("#member_pwd2").val() == ""|| $("#member_pwd2").val() == null) {
-            $("#alert_member_pwd2").text("비밀번호를 확인하세요.").css(   "color", "red");
-            $("#member_pwd2").focus();
-         }
-         if ($("#member_email").val() == ""|| $("#member_email").val() == null) {
-            $("#alert_member_email").text("이메일을 입력하세요.").css("color", "red");
-            $("#member_email").focus();
-         }
-         if ($("#member_nickname").val() == ""|| $("#member_nickname").val() == null) {
-            $("#alert_member_nickname").text("닉네임을 입력하세요.").css("color", "red");
-            $("#member_nickname").focus();
-         }
-         
+   
          //회원가입 하기 전 검사
-         function a(){        
-
-             var items = [];
+         function a(){   
+        	 var rt = "yes";
              $(".signup_form_text_alert").each(function(){
-                 items.push($(this).attr("data-boolean"));                       
+            	 if($(this).attr("data-boolean") == 'false'){
+            		 rt = $(this).attr('id');
+            	 }                              
              });
 
-             for(var i = 0; i < items.length;i++){
-                 if(items[i] == 'false'){
-                     return 'no';
-                 }
-             }
+             return rt;
          }
 
 
          //회원 가입 누르면 
          $('.signup_form_submit_button').click(function(){
+        	 
+        	  if ($("#member_id").val() == "" || $("#member_id").val() == null) {
+                  $("#alert_member_id").text("아이디를 입력하세요.").css("color",   "red");
+                  $("#member_id").focus();
+                  return;
+               }
+               if ($("#member_pwd").val() == ""|| $("#member_pwd").val() == null) {
+                  $("#alert_member_pwd").text("비밀번호를 입력하세요.").css("color", "red");
+                  $("#member_pwd").focus();
+                  return;
+               }
+               if ($("#member_pwd2").val() == ""|| $("#member_pwd2").val() == null) {
+                  $("#alert_member_pwd2").text("비밀번호를 확인하세요.").css(   "color", "red");
+                  $("#member_pwd2").focus();
+                  return;
+               }
+               if ($("#member_email").val() == ""|| $("#member_email").val() == null) {
+                  $("#alert_member_email").text("이메일을 입력하세요.").css("color", "red");
+                  $("#member_email").focus();
+                  return;
+               }
+               if ($("#member_nickname").val() == ""|| $("#member_nickname").val() == null) {
+                  $("#alert_member_nickname").text("닉네임을 입력하세요.").css("color", "red");
+                  $("#member_nickname").focus();
+                  return;
+               }
+               
              var boolean = a();
-
-             if(boolean  == 'no'){
+             if(boolean  != 'yes'){
+            	 if(boolean == 'alert_member_id'){
+            		 alert("아이디를 다시 확인해주세요");
+            	 }else if(boolean == 'alert_member_pwd'){
+            		 alert("비밀번호를 다시 확인해주세요");
+            	 }else if(boolean == 'alert_member_pwd2'){
+            		 alert("비밀번호를 다시 확인해주세요");
+            	 }else if(boolean == 'alert_member_email'){
+            		 alert("이메일를 다시 확인해주세요");
+            	 }else if(boolean == 'alert_member_nickname'){
+            		 alert("닉네임을 다시 확인해주세요");
+            	 }else if(boolean == 'alert_email_no'){
+            		 alert("인증번호를 다시 확인해주세요")
+            	 }
+            	 
              }else{
                  $.ajax({
   			       url : "../member/signup",
@@ -300,9 +320,10 @@
   			       data : $("form").serialize(),
   			       success : function(responseObj) {
   			          if (responseObj.status == 1) {
+  			        	 alert("회원가입이 완료되었습니다")
   			             location.href = 'memberlogin.html';
   			          } else if(responseObj.status == -1) {
-  			        	  
+  			        	 
   			          }
   			       },
   			       error : function(jqXHR) {
@@ -311,19 +332,7 @@
   			    });
              }
          });
-         
-         
-         
-         //var asd = $(".signup_form_text_alert").attr('data-boolean');
-         //if(asd == 'true'){
-			
-         //}else if(asd == 'false'){
-			//console.log($(".signup_form_text_alert"));
-			//console.log("값을 입력해주세요");
-         //}
-         // 회원가입 전송
-           
-      });
+      
    });
 </script>
 </head>
@@ -369,18 +378,7 @@
                            style="color: gray;"></div>
                      </div>
                   </div>
-                  <div>
-                     <div style="height: 45px;">
-                        <input type="email" id="member_email" name="member_email"
-                           placeholder="이메일" class="signup_form_input" /> <input
-                           type="button" name="email" id="emailbtn"
-                           class="signup_form_submit_email" value="인증하기">
-                     </div>
-                     <div class="signup_form_text_alert_padding">
-                        <div id="alert_member_email" class="signup_form_text_alert" data-boolean=""
-                           style="color: gray;">ex) user@kosta.com</div>
-                     </div>
-                  </div>
+
                   <div>
                      <div>
                         <input type="text" id="member_nickname" name="member_nickname"
@@ -389,6 +387,18 @@
                      <div class="signup_form_text_alert_padding">
                         <div id="alert_member_nickname" class="signup_form_text_alert" data-boolean=""
                            style="color: gray;">2~8자, 한글</div>
+                     </div>
+                  </div>
+                                    <div>
+                     <div style="height: 45px;">
+                        <input type="email" id="member_email" name="member_email"
+                           placeholder="이메일" class="signup_form_input" /> <input
+                           type="button" name="email" id="emailbtn"
+                           class="signup_form_submit_email" value="인증하기" disabled>
+                     </div>
+                     <div class="signup_form_text_alert_padding">
+                        <div id="alert_member_email" class="signup_form_text_alert" data-boolean=""
+                           style="color: gray;">ex) user@kosta.com</div>
                      </div>
                   </div>
                   <div style="height: 10px;"></div>
@@ -405,7 +415,7 @@
                         <input type="text" name="email_no" style="height: 30px;"
                            id="email_no" placeholder="6자 입력">
                         <div id="alert_email_no" class="signup_form_text_alert"
-                           style="color: red; font-size: 0.8em; text-align: left; margin-left: 38px;"></div>
+                           style="color: red; font-size: 0.8em; text-align: left; margin-left: 38px;" data-boolean="false"></div>
                         <input type="button" name="email_no" id="emailcon"
                            class="signup_send_email" value="인증하기">
                      </div>

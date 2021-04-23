@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.my.dao.MemberDAO;
 import com.my.exception.AddException;
-import com.my.exception.FindException;
 import com.my.exception.ModifyException;
 import com.my.exception.RemoveException;
 import com.my.vo.Board;
@@ -82,9 +81,34 @@ public class MemberService {
 		
 	}
 	
+	/**
+	 * 아이디 찾기
+	 * @param member_email
+	 * @return
+	 * @throws Exception
+	 */
+	public String findId(String member_email) throws Exception{
+		return mDAO.selectFindId(member_email);
+	}
+	
+	/**
+	 * 비밀번호 찾기
+	 * @param member_email
+	 * @param member_id
+	 * @return
+	 * @throws Exception
+	 */
+	public String findPwd(String member_email , String member_id) throws Exception{
+		return mDAO.selectFindPwd(member_email , member_id);
+	}
+	
+	
+	// 문의하기 -------------------------------------------
+	
 
 
 	// 마이페이지 -------------------------------------------
+
 	
 	/**
 	 * 닉네임 수정

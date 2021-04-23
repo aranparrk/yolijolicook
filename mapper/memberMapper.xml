@@ -70,22 +70,17 @@
    </select>
    
    <!-- 아이디 찾기 -->
-   <select id="selectFindId" parameterType="string" resultType="Member">
+   <select id="selectFindId" parameterType="string" resultType="string">
       SELECT member_id FROM member WHERE member_email = #{member_email}
    </select>
    
    <!-- 비밀번호 찾기 -->
-   <select id="selectFindPwd" parameterType="string" resultType="Member">
+   <select id="selectFindPwd" parameterType="map" resultType="string">
       SELECT member_pwd FROM member WHERE member_id = #{member_id} AND member_email = #{member_email}
    </select>
-
-   
-
    
    
-   
-   <!-- 마이레시피 -->
-   
+  <!-- 마이레시피 -->
    
    
    <!-- 닉네임 수정 -->

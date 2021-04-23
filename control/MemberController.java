@@ -46,8 +46,6 @@ public class MemberController {
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	
-	
 	// 회원가입
 	@RequestMapping("/signup")
 	@ResponseBody
@@ -65,18 +63,17 @@ public class MemberController {
 		return map;
 	}
 	
-	
-	// 이메일 인증
+	// 회원가입 이메일 인증
 	@RequestMapping("/emailCheck")
 	@ResponseBody
-	public void mailCheckGET(String member_email) throws Exception{
+	public String mailCheckGET(String member_email) throws Exception{
 		// 인증번호 난수 생성
 		Random random = new Random();
 		int checkNum = random.nextInt(888888) + 111111; // 111111 ~ 999999 범위의 숫자를 얻기 위해
 		
 		String from = "aranparrk@gmail.com";
 		String to = member_email;
-		String subject = "요리조리쿡 회원가입 인증 메일입니다";
+		String subject = "요리조리쿡 회원가입 인증";
 		String content = 
 				"요리조리쿡을 방문해주셔서 감사합니다." +
 				"<br><br>" +
@@ -98,7 +95,8 @@ public class MemberController {
 			e.printStackTrace();
 		}
 		
-
+		String num = Integer.toString(checkNum);
+		return num;
 	}
 	
 	// 로그인
@@ -177,19 +175,72 @@ public class MemberController {
 	}
 	
 	// 아이디 찾기
-	@RequestMapping("/finid")
-	public String findId(String id) throws FindException{
-		return "/member/findid";
+	@RequestMapping("/findid")
+	@ResponseBody
+	public Map<String, Object> findId(String member_email) throws FindException{
+		Map<String, Object> map = new HashMap<>();
+		String member_id ;
+
+		try {
+			member_id = service.findId(member_email);
+			
+			String from = "aranparrk@gmail.com";
+			String to = member_email;
+			String subject = "요리조리쿡 아이디 찾기";
+			String content = 
+					"요리조리쿡을 방문해주셔서 감사합니다." +
+					"<br><br>" +
+					"회원님의 아이디는  " + member_id + " 입니다";
+			
+			map.put("status", 1);
+			MimeMessage mail = mailSender.createMimeMessage();
+			MimeMessageHelper mailHelper = new MimeMessageHelper(mail, true, "UTF-8"); // true는 멀티파트 메세지를 사용하겠다는 의미
+			
+			mailHelper.setFrom(from);
+			mailHelper.setTo(to);
+			mailHelper.setSubject(subject);
+			mailHelper.setText(content, true);
+			
+			mailSender.send(mail);
+		}catch(Exception e){
+			e.printStackTrace();
+			map.put("status", -1);
+		}
+		return map;
 	}
 	
-	
-	// 문의하기 -----------------------------------------------------------------------------
-
-	
-	
-	// 마이페이지 ---------------------------------------------
-	
-	
+	// 비밀번호 찾기
+	@RequestMapping("/findpwd")
+	@ResponseBody
+	public Map<String, Object> findPwd(String member_email, String member_id) throws FindException{
+		Map<String, Object> map = new HashMap<>();
+		
+		try {
+			String member_pwd = service.findPwd(member_email, member_id);
+			System.out.println(member_pwd);
+			String from = "aranparrk@gmail.com";
+			String to = member_email;
+			String subject = "요리조리쿡 비밀번호 찾기";
+			String content = 
+					"요리조리쿡을 방문해주셔서 감사합니다." +
+							"<br><br>" +
+							member_id + "님의 비밀번호는  " + member_pwd + " 입니다";
+			map.put("status", 1);
+			MimeMessage mail = mailSender.createMimeMessage();
+			MimeMessageHelper mailHelper = new MimeMessageHelper(mail, true, "UTF-8"); // true는 멀티파트 메세지를 사용하겠다는 의미
+			
+			mailHelper.setFrom(from);
+			mailHelper.setTo(to);
+			mailHelper.setSubject(subject);
+			mailHelper.setText(content, true);
+			
+			mailSender.send(mail);
+		}catch(Exception e){
+			e.printStackTrace();
+			map.put("status", -1);
+		}
+		return map;
+	}
 	
 	
 	// 정보수정
@@ -238,11 +289,12 @@ public class MemberController {
 	//회원탈퇴
 	@RequestMapping("/deletemember")
 	@ResponseBody
-	public Map<String, Object> deleteMember(HttpServletRequest request)throws Exception {
+	public Map<String, Object> deleteMember(HttpServletRequest request,String member_pwd)throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		HttpSession session = request.getSession();
 		String member_id = (String)session.getAttribute("loginInfo");
 		try {
+			service.login(member_id, member_pwd);
 			service.deleteMember(member_id);
 			map.put("status", 1);
 			
@@ -254,7 +306,7 @@ public class MemberController {
 		return map;
 	}
 	
-	
+	// 내가 쓴 레시피
 	@RequestMapping("/myRecipe")
 	@ResponseBody
 	public Map<String, Object> selectMyRecipe(HttpServletRequest request)throws Exception {
@@ -277,7 +329,7 @@ public class MemberController {
 	}
 	
 	
-	
+	// 내가 올린 레시피 현황
 	@RequestMapping("/myRqt")
 	@ResponseBody
 	public Map<String, Object> selectRequestRecipe(HttpServletRequest request)throws Exception {
@@ -299,7 +351,7 @@ public class MemberController {
 		return map;
 	}
 	
-	
+	// 내가 한 스크랩
 	@RequestMapping("/myScrap")
 	@ResponseBody
 	public Map<String, Object> selectScrapRecipe(HttpServletRequest request)throws Exception {
@@ -321,7 +373,7 @@ public class MemberController {
 		return map;
 	}
 	
-	
+	// 내가 쓴 게시물
 	@RequestMapping("/myBoard")
 	@ResponseBody
 	public Map<String, Object> selectMyBoard(HttpServletRequest request)throws Exception {
@@ -343,7 +395,7 @@ public class MemberController {
 		return map;
 	}
 	
-	
+	// 내가 쓴 신고
 	@RequestMapping("/myReport")
 	@ResponseBody
 	public Map<String, Object> selectMyReport(HttpServletRequest request)throws Exception {
@@ -365,7 +417,7 @@ public class MemberController {
 		return map;
 	}
 	
-	
+	// 내가 쓴 문의
 	@RequestMapping("/myQna")
 	@ResponseBody
 	public Map<String, Object> selectMyQNA(HttpServletRequest request)throws Exception {
@@ -386,7 +438,7 @@ public class MemberController {
 		return map;
 	}
 	
-	
+	// 내가 쓴 게시글 댓글
 	@RequestMapping("/myBoardCmt")
 	@ResponseBody
 	public Map<String, Object> selectMyBoardCmt(HttpServletRequest request)throws Exception {
@@ -407,6 +459,7 @@ public class MemberController {
 		return map;
 	}
 	
+	// 내가 쓴 레시피 댓글
 	@RequestMapping("/myRecipeCmt")
 	@ResponseBody
 	public Map<String, Object> selectMyRecipeCmt(HttpServletRequest request)throws Exception {
@@ -429,9 +482,6 @@ public class MemberController {
 	
 	
 	//삭제기능
-	
-	
-	
 	
 	
 	// 문의 삭제

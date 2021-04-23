@@ -12,34 +12,36 @@ import com.my.vo.QNA;
 
 @Service
 public class QnaService {
-	
+
 	@Autowired
 	@Qualifier("oracle")
 	private QnaDAO qDAO;
-	
+
 	public QnaDAO getQnaDAO() {
 		return qDAO;
 	}
 
 	/**
 	 * 문의글 추가
+	 * 
 	 * @param qna
 	 * @throws AddException
 	 */
-	public void insertQNA(QNA qna) throws AddException{
-		if(qna.getQuestion_no() != 0) {
+	public void insertQNA(QNA qna) throws AddException {
+		if (qna.getQuestion_no() != 0) {
 			qna.setQuestion_no(0);
 		}
 		qDAO.insertQNA(qna);
 	}
-	
+
 	/**
 	 * 문의글번호에 해당하는 게시물을 검색
+	 * 
 	 * @param question_no 게시물 번호
 	 * @return
-	 * @throws FindException 
+	 * @throws FindException
 	 */
-	public QNA findByQuestion_no(int question_no) throws FindException{
+	public QNA findByQuestion_no(int question_no) throws FindException {
 		QNA qna = qDAO.selectQNA(question_no);
 		try {
 			qDAO.selectQNA(question_no);
@@ -51,11 +53,11 @@ public class QnaService {
 
 	/**
 	 * 문의글 삭제
+	 * 
 	 * @param question_no
 	 * @throws RemoveException
 	 */
-	public void deleteQNA(int question_no) throws RemoveException{
+	public void deleteQNA(int question_no) throws RemoveException {
 		qDAO.deleteQNA(question_no);
 	}
-
 }

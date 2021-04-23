@@ -40,87 +40,87 @@ public class MemberDAOOracle implements MemberDAO {
     private SqlSessionFactory sqlSessionFactory;
 
  // 회원가입
-  	@Override
-  	public void insertMember(Member m) throws AddException {
+ 	@Override
+ 	public void insertMember(Member m) throws AddException {
 
-  		SqlSession session = null;
-  		try {
-  			session = sqlSessionFactory.openSession();
-  			session.insert("yolijolicook.MemberMapper.insertMember", m);
-  		} catch (Exception e) {
-  			Throwable causeException = e.getCause();
-  			if (causeException instanceof SQLIntegrityConstraintViolationException) {
-  				SQLIntegrityConstraintViolationException scve = (SQLIntegrityConstraintViolationException) causeException;
-  				if (scve.getErrorCode() == 1) {// PK중복
-  					throw new AddException("이미 사용중인 아이디입니다");
-  				} else { // CK, NOT NULL, FK
-  					throw new AddException(e.getMessage());
-  				}
-  			} else {
-  				throw new AddException(e.getMessage());
-  			}
-  		} finally {
-  			if (session != null)
-  				session.close();
-  		}
-  	}
+ 		SqlSession session = null;
+ 		try {
+ 			session = sqlSessionFactory.openSession();
+ 			session.insert("yolijolicook.MemberMapper.insertMember", m);
+ 		} catch (Exception e) {
+ 			Throwable causeException = e.getCause();
+ 			if (causeException instanceof SQLIntegrityConstraintViolationException) {
+ 				SQLIntegrityConstraintViolationException scve = (SQLIntegrityConstraintViolationException) causeException;
+ 				if (scve.getErrorCode() == 1) {// PK중복
+ 					throw new AddException("이미 사용중인 아이디입니다");
+ 				} else { // CK, NOT NULL, FK
+ 					throw new AddException(e.getMessage());
+ 				}
+ 			} else {
+ 				throw new AddException(e.getMessage());
+ 			}
+ 		} finally {
+ 			if (session != null)
+ 				session.close();
+ 		}
+ 	}
 
- // 아이디 중복
-  	@Override
-  	public String selectById(String id) throws FindException {
-  		SqlSession session = null;
-  		try {
-  			session = sqlSessionFactory.openSession();
-  			String member_id = session.selectOne("yolijolicook.MemberMapper.selectById", id);
-  			if(member_id == null)  {
-  				throw new Exception("유저 아이디에 해당하는 값이 없습니다");
-  			}
-  			return member_id;
-  		} catch (Exception e) {
-  			throw new FindException(e.getMessage());
-  		} finally {
-  			if (session != null)
-  				session.close();
-  		}
-  	}
+ 	// 아이디 중복
+ 	@Override
+ 	public String selectById(String id) throws FindException {
+ 		SqlSession session = null;
+ 		try {
+ 			session = sqlSessionFactory.openSession();
+ 			String member_id = session.selectOne("yolijolicook.MemberMapper.selectById", id);
+ 			if(member_id == null)  {
+ 				throw new Exception("유저 아이디에 해당하는 값이 없습니다");
+ 			}
+ 			return member_id;
+ 		} catch (Exception e) {
+ 			throw new FindException(e.getMessage());
+ 		} finally {
+ 			if (session != null)
+ 				session.close();
+ 		}
+ 	}
 
- // 닉네임 중복
-  	@Override
-  	public String selectByNickname(String nickname) throws FindException {
-  		SqlSession session = null;
-  		try {
-  			session = sqlSessionFactory.openSession();
-  			String member_nickname = session.selectOne("yolijolicook.MemberMapper.selectByNickname", nickname);
-  			if(member_nickname == null)  {
-  				throw new Exception("유저 닉네임에 해당하는 값이 없습니다");
-  			}
-  			return member_nickname;
-  		} catch (Exception e) {
-  			throw new FindException(e.getMessage());
-  		} finally {
-  			if (session != null)
-  				session.close();
-  		}
-  	}
+ 	// 닉네임 중복
+ 	@Override
+ 	public String selectByNickname(String nickname) throws FindException {
+ 		SqlSession session = null;
+ 		try {
+ 			session = sqlSessionFactory.openSession();
+ 			String member_nickname = session.selectOne("yolijolicook.MemberMapper.selectByNickname", nickname);
+ 			if(member_nickname == null)  {
+ 				throw new Exception("유저 닉네임에 해당하는 값이 없습니다");
+ 			}
+ 			return member_nickname;
+ 		} catch (Exception e) {
+ 			throw new FindException(e.getMessage());
+ 		} finally {
+ 			if (session != null)
+ 				session.close();
+ 		}
+ 	}
 
- // 이메일 중복
-  	@Override
-  	public String selectByEmail(String email) throws FindException {
-  		SqlSession session = null;
-  		try {
-  			session = sqlSessionFactory.openSession();
-  			String member_email = session.selectOne("yolijolicook.MemberMapper.selectByEmail", email);
-  			if(member_email == null)  {
-  				throw new Exception("유저 이메일에 해당하는 값이 없습니다");
-  			}
-  			return member_email;
-  		} catch (Exception e) {
-  			throw new FindException(e.getMessage());
-  		} finally {
-  			if (session != null)
-  				session.close();
-  		}
-  	}
+ 	// 이메일 중복
+ 	@Override
+ 	public String selectByEmail(String email) throws FindException {
+ 		SqlSession session = null;
+ 		try {
+ 			session = sqlSessionFactory.openSession();
+ 			String member_email = session.selectOne("yolijolicook.MemberMapper.selectByEmail", email);
+ 			if(member_email == null)  {
+ 				throw new Exception("유저 이메일에 해당하는 값이 없습니다");
+ 			}
+ 			return member_email;
+ 		} catch (Exception e) {
+ 			throw new FindException(e.getMessage());
+ 		} finally {
+ 			if (session != null)
+ 				session.close();
+ 		}
+ 	}
 
  	// 로그인
  	@Override
@@ -145,27 +145,48 @@ public class MemberDAOOracle implements MemberDAO {
  	}
 
  	// 아이디 찾기
-  	@Override
-  	public String selectFindId(String member_email) throws FindException {
-  		SqlSession session = null;
-  		session = sqlSessionFactory.openSession();
-  		return session.selectOne("yolijolicook.MemberMapper.selectFindId", member_email);
-  	}
-
-	// 비밀번호 찾기
- 	@Override
- 	public String selectFindPwd(String member_id, String member_email) throws FindException {
- 		// TODO Auto-generated method stub
- 		return null;
+ 	@Override 
+ 	public String selectFindId(String member_email) throws FindException {
+ 		SqlSession session = null;
+ 		try{
+ 			session = sqlSessionFactory.openSession();
+ 			return session.selectOne("yolijolicook.MemberMapper.selectFindId", member_email);
+ 		}catch (Exception e) {
+ 			throw new FindException(e.getMessage());
+ 		}finally {
+ 			if(session != null)
+ 				session. close();
+ 		}
  	}
+
+ 	// 비밀번호 찾기
+ 	@Override
+ 	public String selectFindPwd(String member_email, String member_id) throws FindException {
+
+ 		SqlSession session = null;
+ 		try {
+ 			Map<String, String> map = new HashMap<>();
+ 			map.put("member_id", member_id);
+ 			map.put("member_email", member_email);
+ 			session = sqlSessionFactory.openSession();
+ 			String pwd = session.selectOne("yolijolicook.MemberMapper.selectFindPwd", map);
+ 			return pwd;
+ 		}catch (Exception e) {
+ 			throw new FindException(e.getMessage());
+ 		}
+ 	}
+
+
 	
+	
+	// 문의하기
 
 
 	
 	
 	// 마이페이지---------------------------------
 	
- 	// 닉네임 수정
+	// 닉네임 수정
  	@Override
  	public void updateNickname(String member_id, String member_nickname) throws ModifyException {
  		SqlSession session = null;

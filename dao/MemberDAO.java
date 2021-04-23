@@ -25,7 +25,7 @@ public interface MemberDAO {
 	/**
 	 * 중복아이디 확인
 	 * @param member_id
-	 * @return true or false
+	 * @return 
 	 * @throws FindException
 	 */
 	public String selectById(String member_id) throws FindException;
@@ -33,7 +33,7 @@ public interface MemberDAO {
 	/**
 	 * 닉네임 중복 확인
 	 * @param member_nickname
-	 * @return true or false
+	 * @return 
 	 * @throws FindException
 	 */
 	public String selectByNickname(String member_nickname) throws FindException;
@@ -41,7 +41,7 @@ public interface MemberDAO {
 	/**
 	 * 이메일 중복 확인
 	 * @param member_email
-	 * @return true or false
+	 * @return 
 	 * @throws FindException
 	 */
 	public String selectByEmail(String member_email) throws FindException;
@@ -55,9 +55,9 @@ public interface MemberDAO {
 	 */
 	public Member login(String member_id,String member_pwd) throws Exception;
 	/**
-	 * 이메일 찾기
+	 * 아이디 찾기
 	 * @param member_email
-	 * @return 이메일 정보
+	 * @return 
 	 * @throws FindException
 	 */
 	public String selectFindId(String member_email) throws FindException;
@@ -72,7 +72,6 @@ public interface MemberDAO {
 	
 //	정보수정
 	
-
 	/**
 	 * 닉네임 변경
 	 * @param member_id

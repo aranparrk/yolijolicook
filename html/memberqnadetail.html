@@ -7,6 +7,10 @@
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- 파비콘 -->
+<link rel="shortcut icon" href="../images/web/favicon-32x32.png" type="image/x-icon">
+<link rel="icon" href="../images/web/favicon-32x32.png" type="image/x-icon">
     <style>
 *{margin: 0;padding:0;list-style: none;text-decoration: none;}
 .a_write{width: 800px;  padding-top: 120px;margin: 0 auto;}
@@ -30,20 +34,23 @@
 
             $writeArea = $("body > section > div.a_write")
             $answerArea = $("body > section > div.a_answer")
-            
+
+            var temp = location.href.split("?question_no=");
+            var question_no = temp[1];
+
+
             $(document).ready(function(){
 	            $.ajax({
 	            	url:"../qna/a_write",
 	            	method:"get",
-	            	data : {"question_no" : 1},
+	            	data : {"question_no" : question_no},
 	            	success:function(data){
 	            		if(data.status==1){
-	            			console.log(data.qna);
 	            			$writeArea.find("p.a_title").html(data.qna.question_title);
 	            			$writeArea.find("textarea.a_detail").html(data.qna.question_detail);
 	            			$writeArea.find("div.a_questiondate").html(data.qna.question_dt.substr(0, 10));
-	            			$answerArea.find("textarea.a_answer_detail").html(data.qna.question_ans_detail)
-	            			$answerArea.find("div.a_answerdate").html(data.qna.question_ans_dt.substr(0, 10))
+	            			$answerArea.find("textarea.a_answer_detail").html(data.qna.question_ans_detail);
+	            			$answerArea.find("div.a_answerdate").html(data.qna.question_ans_dt.substr(0, 10));
 	            		}
 	            	},
 	            	error: function(jqXHR){
@@ -64,7 +71,7 @@
           			$.ajax({
           				url: "../qna/deleteQNA",
           				method: "post",
-          				data : {"question_no" : 1},
+          				data : {"question_no" : question_no},
           				success:function(data){
           					if(data.status == 1){
           						alert("삭제완료가 완료되었습니다");

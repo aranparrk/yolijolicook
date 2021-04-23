@@ -6,6 +6,10 @@
        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
        <title>마이페이지 | 요리조리쿡</title>
 
+       <!-- 파비콘 -->
+<link rel="shortcut icon" href="../images/web/favicon-32x32.png" type="image/x-icon">
+<link rel="icon" href="../images/web/favicon-32x32.png" type="image/x-icon">
+
         <!-- 폰트 -->
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
@@ -157,7 +161,7 @@
 
 
             /* 스크롤 클래스 */
-            section .content .items.sc{overflow: scroll; height: 500px;}
+            section .content .items.sc{overflow: scroll; height: 500px; overflow-x:hidden; border-bottom: 1px solid #ddd;}
             section .content .list.sc {width: 98.9%;}
 
 
@@ -173,7 +177,11 @@
             .top:active{background-color: #fdfdfd; color: #55A72B;}
 
 
-
+            /* 검색창 */
+            section > label{display: flex; align-self: center; width: 270px; position: fixed; right: 70px; bottom: 450px;}
+            section > label input[name=recipe_search]{width: 200px; height: 50px;padding: 0 10px;font-family: 'Noto Sans KR', sans-serif; border: none; border-radius: 5px;box-shadow: #ddd 1px 1px 6px 1px ; outline: none; font-size: 16px;}
+            section > label button{width: 50px; height: 50px;outline: none; border: none; border-left: none;  box-shadow: #ddd 1px 1px 6px 1px ;border-radius: 5px; background-color: #55A72B ; cursor: pointer; margin-left: 10px;}
+            section > label img{width: 25px; height: 25px;}
 
        </style>
 
@@ -243,9 +251,9 @@
                         <a href="recipedetail.html" class="item">
                             <input type="hidden" value="" class="recipe_no">
                             <input type="checkbox" name="ck" class="ck img_ck recipe_no"value="" id="recipeDelete">
-                            <img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img">
+                            <img src="../images/upload/bbang1.jpg" alt="대표이미지" class="recipe_img">
                             <div class="txt">
-                                <span class="recipe_name">라면</span>
+                                <span class="recipe_name search_key">라면</span>
                                 <span class="recipe_dt">21-03-22</span>
                                 <div class="cnts">
                                     <span class="recipe_scrap_cnt_box"><img src="../images/web/mypage_clip.png" alt="스크랩"><span class="recipe_scrap_cnt">300</span></span>
@@ -273,9 +281,9 @@
                         <a href="recipedetail.html" class="item">
                             <input type="hidden" value="" class="recipe_no">
                             <input type="checkbox" name="ck" class="ck img_ck scrap_no" value="" id="scrapDelete">
-                            <img src="../images/upload/a.png" alt="대표이미지" class="recipe_img">
+                            <img src="../images/upload/bbang1.jpg" alt="대표이미지" class="recipe_img">
                             <div class="txt">
-                                <span class="recipe_name">라면</span>
+                                <span class="recipe_name search_key" >라면</span>
                                 <span class="member_nickname"></span>
                                 <span class="scrap_dt">21-03-22</span>
                             </div>
@@ -299,10 +307,10 @@
                         <a href="#" class="item">
                             <input type="hidden" value="" class="recipe_no">
                             <input type="checkbox" name="ck" class="ck img_ck recipe_no"value="" id="recipeDelete">
-                            <img src="../images/upload/b.png" alt="" class="recipe_img">
+                            <img src="../images/upload/bbang1.jpg" alt="" class="recipe_img">
                             <div class="txt">    
                                 <span class="recipe_status">승인대기</span>
-                                <span class="recipe_name">라면</span>
+                                <span class="recipe_name search_key">라면</span>
                                 <span class="recipe_dt">21-03-22</span>
                             </div>
                             
@@ -355,7 +363,7 @@
                         <a href="boarddetail.html" class="item">
                             <input type="hidden" value="" class="board_no">
                             <span class="ck_box"><input type="checkbox" name="ck" class="ck list_ck board_no"value="" id="boardDelete"></span>
-                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_title title search_key">게시글이다 우와오아오아오아옹오오와</span>
                             <span class="board_dt dt">20-03-01</span>
                             <span class="board_cnt etc">300</span>
                             
@@ -384,7 +392,7 @@
                         <a href="#" class="item">
                             <input type="hidden" value="" class="report_no">
                             <span class="ck_box"><input type="checkbox" name="ck" class="ck list_ck report_no"value="" id="reportDelete"></span>
-                            <span class="report_title title">신고글입니다. 우와오아오아오아옹오오와</span>
+                            <span class="report_title title search_key">신고글입니다. 우와오아오아오아옹오오와</span>
                             <span class="report_dt dt">21-10-09</span>
                             <span class="report_status etc">처리중</span>
                             
@@ -410,7 +418,7 @@
                         <a href="memberqnadetail.html" class="item">
                             <input type="hidden" value="" class="question_no">
                             <span class="ck_box"><input type="checkbox" name="ck" class="ck list_ck question_no" value="" id="qnaDelete"></span>
-                            <span class="qna_title title">문의글입니다. 우와오아오아오아옹오오와</span>
+                            <span class="qna_title title search_key">문의글입니다. 우와오아오아오아옹오오와</span>
                             <span class="qna_dt dt">21-03-15</span>
                             <span class="qna_status etc">답변대기</span>
                             
@@ -461,7 +469,7 @@
                         <a href="boarddetail.html" class="item">
                             <input type="hidden" value="" class="board_no">
                             <span class="ck_box"><input type="checkbox" name="ck" class="ck list_ck boardcmt_no"  value="" id="boardCmtDelete"></span>
-                            <span class="board_title title">게시글이다 우와오아오아오아옹오오와</span>
+                            <span class="board_title title search_key">게시글이다 우와오아오아오아옹오오와</span>
                             <span class="boardcmt_detail etc">댓글 내용이다~!~!~!~!~ddddddddddddddddddddddddddddddd</span>
                             <span class="boardcmt_dt dt">21-05-05</span>
                             
@@ -488,7 +496,7 @@
                         <a href="recipedetail.html" class="item">
                             <input type="hidden" value="" class="recipe_no">
                             <span class="ck_box"><input type="checkbox" name="ck" class="ck list_ck recipecmt_no" value="" id="recipeCmtDelete"></span>
-                            <span class="recipe_name title">레시피 명이다</span>
+                            <span class="recipe_name title search_key">레시피 명이다</span>
                             <span class="recipecmt_detail etc">댓글 내용이다~!~!~!~!~dddddddddddddddddd44444444444dddddddddㄷㄷㄷㄷㄷㄷㄷㄷdddd</span>
                             <span class="recipecmt_dt dt">21-10-05</span>
                             
@@ -548,6 +556,10 @@
             </div>
 
 
+
+            <!-- 검색창 -->
+
+            <label><input type="search" name="recipe_search" class="search" placeholder="Search"><button class="search_btn"><img src="../images/web/main_search.png" alt="돋보기"></button></label>
          
         </section>
 
@@ -568,7 +580,6 @@
                  $(".more").click(function(){
                     $(".my_recipe .items").toggleClass("act");
                     var text = $(this).text();
-                    console.log(text);
                     if(text == "더보기"){
                         $(this).text("줄이기");
                     }else{
@@ -726,10 +737,10 @@
 
                 //메인 탭
                 $(".main_tab").click(function(){
-                    var value = $(this).attr("data-tab");    
-                    var subData = $(this).attr("data-sub");       
-                    var checked = $(this).prop('checked');  
-                    var label = $("label[for="+ value +"]");
+                    let value = $(this).attr("data-tab");    
+                    let subData = $(this).attr("data-sub");       
+                    let checked = $(this).prop('checked');  
+                    let label = $("label[for="+ value +"]");
                     now = $('input:radio[name="subTab"]:checked').val();
 
                     //탭 색상 변경
@@ -739,6 +750,15 @@
                     //컨텐츠들 보여주기
                     $(".content").hide();
                     $("." + value).show();
+                    $("." + value + " .item").show();
+
+                    //검색창 초기화
+                    $(".search").val("");
+
+
+                    //더보기 초기화
+                    $(".my_recipe .items").removeClass("act");
+                    $(".more").text("더보기");
                     
                     //서브 데이터 강제 발동
                     $("label[for="+ subData +"]").trigger('click');
@@ -746,8 +766,10 @@
                     //정보수정에는 딜리트 박스 삭제
                     if(value == 'my_info'){
                         $(".delete_box").hide();
+                        $("section > label").hide();
                     }else{
                         $(".delete_box").show();
+                        $("section > label").show();
                     }
 
                     //체크 박스 풀기
@@ -757,9 +779,9 @@
 
                 //서브 탭
                 $(".sub_tab").click(function(){
-                    var value = $(this).attr("data-tab");           
-                    var checked = $(this).prop('checked');  
-                    var label = $("label[for="+ value +"]");
+                    let value = $(this).attr("data-tab");           
+                    let checked = $(this).prop('checked');  
+                    let label = $("label[for="+ value +"]");
                     now = value;
                     
 
@@ -770,6 +792,14 @@
                     //서브 컨텐츠들 보여주기
                     $(".sub_content").hide();
                     $("." + value).show();
+                    $("." + value + " .item").show();
+
+                    //검색창 초기화
+                    $(".search").val("");
+
+                    //더보기 초기화
+                    $(".my_recipe .items").removeClass("act");
+                    $(".more").text("더보기");
 
                     //체크 박스 풀기
                     off();
@@ -816,8 +846,6 @@
 
 
                 //삭제기능
-
-
                 //전체 선택
                 function on(){
                     $('.all').text("전체해제");
@@ -861,7 +889,7 @@
 
 
                 
-                $(document).on('click', '.item', function(){
+                $(".items").on('click', '.item', function(){
                     let status =  $(".start_delete").attr('data-status');
                     if(status == 'off'){
 
@@ -870,6 +898,7 @@
                         var para1 = $(this).find("input[type='hidden']").attr('class');
                         var para2 = $(this).find("input[type='hidden']").val();
                         $(this).attr('href',href + "?" + para1 + "=" + para2);
+
                     }else if(status == 'on'){
 
                         //클릭시 삭제 체크 박스 선택됨
@@ -878,6 +907,8 @@
                     }
 
                 });
+
+
                 $(".qna_btn").click(function(){
                     var qnahref = $(this).attr('href');
                     var paraid = sessionStorage.getItem("member_id");
@@ -927,7 +958,7 @@
 
                         //삭제 할 리스트
                         tabData =  ckbox.attr("id"); 
-
+                        console.log(deleteItems);
                         if(confirm("삭제 하시겠습니까?")){
 
                             //삭제요청
@@ -935,6 +966,7 @@
                                 url : '../member/listdelete',
                                 method: 'post',
                                 data: {"deleteItems" : deleteItems , "name" : tabData},
+
                                 success : function(data){
                                     
                                     if(data.status == "1"){
@@ -967,12 +999,83 @@
                  //정보수정
 
 
+                // 새로운 비밀번호 확인
+                $(".last_pwd").keyup(function(){
+                    let pwd1 = $(".first_pwd").val();
+                    if(pwd1 == null || pwd1 == ""){
+                        $(".ck_pwd2").text("새 비밀번호 확인을 입력해주세요.").css("color", "red");
+                        $(".last_pwd").attr('data-status','no');
+                    }else{     
+                        if($(".last_pwd").val() == $(".first_pwd").val()){
+                            $(".ck_pwd2").text("비밀번호가 일치합니다.").css("color", "green");
+                            $(".last_pwd").attr('data-status','ok');
+                            $(".ck_pwd1").text("비밀번호가 일치합니다.").css("color", "green");
+                            $(".first_pwd").attr('data-status','ok');
+                        }else{
+                            $(".ck_pwd2").text("비밀번호가 일치하지 않습니다.").css("color", "red");
+                            $(".last_pwd").attr('data-status','no');
+                            $(".ck_pwd1").text("비밀번호가 일치하지 않습니다.").css("color", "red");
+                            $(".first_pwd").attr('data-status','no');
+                        }
+                    }
+
+                });
 
 
+                $(".first_pwd").keyup(function(){
+                    let pwd2 = $(".last_pwd").val();
+                    if(pwd2 == null || pwd2 == ""){
+                        $(".ck_pwd1").text("새로운 비밀번호를 입력해주세요.").css("color", "red");
+                        $(".first_pwd").attr('data-status','no');
+                    }else{
+                        if($(".first_pwd").val() == $(".last_pwd").val()){
+                            $(".ck_pwd1").text("비밀번호가 일치합니다.").css("color", "green");
+                            $(".first_pwd").attr('data-status','ok');
+                            $(".ck_pwd2").text("비밀번호가 일치합니다.").css("color", "green");
+                            $(".last_pwd").attr('data-status','ok');
+                        }else{
+                            $(".ck_pwd1").text("비밀번호가 일치하지 않습니다.").css("color", "red");
+                            $(".first_pwd").attr('data-status','no');
+                            $(".ck_pwd2").text("비밀번호가 일치하지 않습니다.").css("color", "red");
+                            $(".last_pwd").attr('data-status','no');
+                        }
+                    }
 
+                });
+
+
+                // 기존 비밀번호 확인
+                $(".now_pwd").keyup(function(){
+                    var member_pwd = $(this).val();
+                    var member_id = sessionStorage.getItem("member_id");
+
+                    if(member_pwd == null || member_pwd == ""){
+                        $(".ck_pwd0").text("비밀번호를 입력해주세요.").css("color", "red");
+                        $(".now_pwd").attr('data-status','no');
+                    }else{
+                        $.ajax({
+                            url : '../member/login',
+                            method: 'post',
+                            data:{"member_id": member_id , "member_pwd": member_pwd},
+                            success : function(data){
+                                if(data.status == '1'){
+                                    $(".now_pwd").attr('data-status','ok');
+                                    $(".ck_pwd0").text("");
+                                }else{
+                                    $(".ck_pwd0").text("비밀번호가 틀립니다.").css("color", "red");
+                                    $(".now_pwd").attr('data-status','no');
+                                }
+                            },
+                            error : function(jqueryXHR){
+                                alert(jQueryXHR);
+                            }
+                        });
+                    }
+                    
+                });
 
                 // 비밀번호 유효성 검사
-                $(".in_pwd").focusout(function(){
+                $(".in_pwd").keyup(function(){
                     var pwd = $(".in_pwd").val();
                     var alert_pwd = $(".ck_pwd1");
                     var pwdregex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{7,15}$/;
@@ -991,55 +1094,6 @@
                     }
                 });
 
-
-                // 새로운 비밀번호 확인
-                $(".last_pwd").focusout(function(){
-                    if($(".last_pwd").val() == $(".first_pwd").val()){
-                        $(".ck_pwd2").text("비밀번호가 일치합니다.").css("color", "green");
-                        $(".last_pwd").attr('data-status','ok');
-                    }else{
-                        $(".ck_pwd2").text("비밀번호가 일치하지 않습니다.").css("color", "red");
-                        $(".last_pwd").attr('data-status','no');
-                    }
-                });
-
-
-                $(".first_pwd").focusout(function(){
-                    if($(".first_pwd").val() == $(".last_pwd").val()){
-                        $(".ck_pwd2").text("비밀번호가 일치합니다.").css("color", "green");
-                        $(".first_pwd").attr('data-status','ok');
-                    }else{
-                        $(".ck_pwd2").text("비밀번호가 일치하지 않습니다.").css("color", "red");
-                        $(".first_pwd").attr('data-status','no');
-                    }
-                });
-
-
-                // 기존 비밀번호 확인
-                $(".now_pwd").focusout(function(){
-                    var member_pwd = $(this).val();
-                    var member_id = sessionStorage.getItem("member_id");
-                    $.ajax({
-                            url : '../member/login',
-                            method: 'post',
-                            data:{"member_id": member_id , "member_pwd": member_pwd},
-                            success : function(data){
-                                if(data.status == '1'){
-                                    $(".now_pwd").attr('data-status','ok');
-                                    $(".ck_pwd0").text("");
-                                }else{
-                                    $(".ck_pwd0").text("비밀번호가 틀립니다.").css("color", "red");
-                                    $(".now_pwd").attr('data-status','no');
-                                }
-                            },
-                            error : function(jqueryXHR){
-                                alert(jQueryXHR);
-                            }
-                        });
-                });
-
-
-                // 비밀번호 상태 저장
 
 
 
@@ -1158,12 +1212,12 @@
                         data:{"member_pwd": member_pwd},
                         success : function(data){
                             if(data.status == '-1'){
-                                alert("탈퇴 실패");
+                                alert("비밀번호를 다시 입력해주세요.");
                             }else{
                                 if(confirm("정말로 탈퇴 하시겠습니까?")){
                                     alert("탈퇴 완료");
                                     $(".logout_btn").trigger('click');
-                                    //window.location.replace("main.html");
+                                    window.location.replace("main.html");
                                 }else{
 
                                 }
@@ -1203,13 +1257,22 @@
 
 
 
+                // 검색기능
+                $(".search").change(function(){
+                    $("." + now + " .item").hide();
+                    var val = $(this).val();
+                    var showItem = $("." + now + " .item .search_key:contains("+ val +")");
+                    console.log(val);
 
+                    if(val == ""){
+                        $("." + now + " .item").show();
+                    }else{
+                        console.log("쇼아이템 " + $(showItem).text());
+                        $(showItem).parents(".item").show();
+                    }
 
+                })
 
-
-
-
-        
 
 
 
