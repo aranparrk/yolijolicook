@@ -101,15 +101,10 @@ public List<RecipeInfo> selectByIngre_name(String word) throws FindException {//
 				
 	}
 
-	@Override
-	public List<Integer> selectAllScrap(String member_id) throws FindException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	
 	@Transactional(rollbackFor = Exception.class)
-	public void insertRecipe( RecipeInfo recipeinfo) throws AddException{
+	public void insertRecipe(RecipeInfo recipeinfo) throws AddException{
 		SqlSession session = null;
 		try {
 			System.out.println("in RecipeDAOOracle insertRecipe - 0");
@@ -142,8 +137,6 @@ public List<RecipeInfo> selectByIngre_name(String word) throws FindException {//
 			for(RecipeIngre ingre: recipeingre) {
 				session.insert("mybatis.RecipeMapper.insertRecipeIngre",ingre);
 			}
-			
-		
 
 	}
 	
@@ -152,45 +145,101 @@ public List<RecipeInfo> selectByIngre_name(String word) throws FindException {//
 	 * @param process (타입 : RecipeProcess)
 	 * @throws AddException
 	 */
-
 	private void insertRecipeProcess(SqlSession session, List<RecipeProcess> recipeprocess) throws Exception{
 				for(RecipeProcess process : recipeprocess) {
 					session.insert("mybatis.RecipeMapper.insertRecipeProcess",process);
-
 				}
 
 	}
+	
 
-	@Override
-	public void deleteRecipeIngre(int recipe_no, int recipe_ingre_no) throws RemoveException {
-		// TODO Auto-generated method stub
 
+//0425 수정	
+	
+	 //레시피 삭제
+	  
+	  @Transactional(rollbackFor = Exception.class) 
+	  public int deleteRecipe(int recipe_no) throws RemoveException{
+		SqlSession session = null;
+		System.out.println("in RecipeDAOOracle updateRecipe - delete");
+		session = sqlSessionFactory.openSession();
+		try {
+			deleteRecipeIngre(session,recipe_no);
+			deleteRecipeProcess(session, recipe_no);
+			deleteRecipeInfo(session, recipe_no);
+			return 1;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
+		
+	  }
+	 
+	
+	//레시피 수정 ****
+	@Transactional(rollbackFor = Exception.class)
+	public void updateRecipe(RecipeInfo recipeinfo, int recipe_no) throws AddException{
+	
+		SqlSession session = null;
+;
+		session = sqlSessionFactory.openSession();
+		System.out.println("in RecipeDAOOracle updateRecipe - update");
+
+		try {
+			updateRecipeInfo(session, recipeinfo, recipe_no);
+			updateRecipeIngre(session, recipeinfo.getRecipeingre(),recipe_no);
+			updateRecipeProcess(session, recipeinfo.getRecipeprocess(),recipe_no);				
+			}catch(Exception e) {
+				e.printStackTrace();
+				throw new AddException(e.getMessage());
+			}finally {
+			if(session != null) session.close();
+		}	
+	} 
+	
+	//레시피 수정 --레시피 삭제
+	private void deleteRecipeInfo(SqlSession session,int recipe_no) throws Exception{
+		session.delete("mybatis.RecipeMapper.deleteRecipeInfo",recipe_no);
 	}
 
-	@Override
-	public void deleteRecipeProcess(int recipe_no, int recipe_step_no) throws RemoveException {
-		// TODO Auto-generated method stub
-
+	
+	private void deleteRecipeIngre(SqlSession session,int recipe_no) throws Exception {
+		session.delete("mybatis.RecipeMapper.deleteRecipeIngre",recipe_no);
 	}
 
-	@Override
-	public void updateRecipeInfo(RecipeInfo info) throws ModifyException {
-		// TODO Auto-generated method stub
+	
+	private void deleteRecipeProcess(SqlSession session,int recipe_no) throws Exception {
+		session.delete("mybatis.RecipeMapper.deleteRecipeProcess",recipe_no);
 
 	}
-
-	@Override
-	public void updateRecipeIngre(RecipeIngre ingre) throws ModifyException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void updateRecipeProcess(RecipeProcess process) throws ModifyException {
-		// TODO Auto-generated method stub
+	
+	
+	//레시피 수정--레시피 삽입
+	private void updateRecipeInfo(SqlSession session, RecipeInfo recipeinfo, int recipe_no) throws Exception {
+		recipeinfo.setRecipe_no(recipe_no);
+		session.insert("mybatis.RecipeMapper.updateRecipeInfo",recipeinfo);
 
 	}
+	
+	private void updateRecipeIngre(SqlSession session,List<RecipeIngre> recipeingre,int recipe_no) throws Exception {
+		for(RecipeIngre ingre: recipeingre) {
+			ingre.setRecipe_no(recipe_no);
+			session.insert("mybatis.RecipeMapper.updateRecipeIngre",ingre);
+		}
 
+	}
+	
+	private void updateRecipeProcess(SqlSession session,List<RecipeProcess> recipeprocess, int recipe_no) throws Exception {
+		for(RecipeProcess process : recipeprocess) {
+			process.setRecipe_no(recipe_no);
+			session.insert("mybatis.RecipeMapper.updateRecipeProcess",process);
+
+		}
+
+	}
+//END 0425
+	
 	@Override
 	public List<RecipeInfo> selectRecipeDetailRecipe_no(int recipe_no) throws FindException {
 		SqlSession session = null;
@@ -200,7 +249,6 @@ public List<RecipeInfo> selectByIngre_name(String word) throws FindException {//
 			session = sqlSessionFactory.openSession();
 			List<RecipeInfo> detaillist = session.selectList("mybatis.RecipeMapper.selectRecipeDetailByRecipe_no",recipe_no);
 			
-			System.out.println("daooracle :"+detaillist);
 			
 			if(detaillist==null) {
 				throw new FindException("해당 게시물을 찾을 수 없습니다.");
@@ -216,23 +264,10 @@ public List<RecipeInfo> selectByIngre_name(String word) throws FindException {//
 		}
 	}
 
-	@Override
-	public List<Integer> selectRecipeCmtListByMember_id(String member_id) throws FindException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteRecipeCmtByRecipeCmt_no(int recipecmt_no) throws RemoveException {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void insertRecipe_comment(RecipeComment rc) throws AddException {
 		SqlSession session = null;
-			
-			
 			try {
 				session = sqlSessionFactory.openSession();
 				session.insert("mybatis.RecipeMapper.insertRecipeCmt",rc);
@@ -242,7 +277,6 @@ public List<RecipeInfo> selectByIngre_name(String word) throws FindException {//
 			}finally {
 				if(session != null) session.close();
 			}
-
 	}
 
 	@Override
@@ -259,8 +293,7 @@ public List<RecipeInfo> selectByIngre_name(String word) throws FindException {//
 		}finally {
 			if(session != null) session.close();
 		}
-		
-		
+
 	}
 
 	@Override
@@ -279,6 +312,7 @@ public List<RecipeInfo> selectByIngre_name(String word) throws FindException {//
 		}
 		
 	}
+
 	
 
 

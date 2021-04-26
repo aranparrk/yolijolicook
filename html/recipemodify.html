@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>레시피 등록 | 요리조리쿡</title>
+    <title>레시피 수정 | 요리조리쿡</title>
     <!-- 폰트 -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
@@ -189,42 +189,146 @@
             $("#header").load("header.html");
             $("#footer").load("footer.html");
         });
-    var sel_file;
-$(document).ready(function(){
-	$("#upload_file").on("change",handleImgFileSelect);
-	
-});
-	function handleImgFileSelect(e){
+    
+    
+         $(document).ready(function(){ 
+        	  
+        	 let temp = location.href.split("?recipe_no=");
+     	     let recipe_no  = temp[1];
+             
+        	
+        	//레시피 불러오기
+ 		    $.ajax({
+ 		    	url:"../recipe/recipedetail",
+ 		    	method:"get",
+ 		    	data:{recipe_no:recipe_no},
+ 		    	success:function(data){
+ 		    		
+ 		    		if(data.status==1){
+ 		    			
+ 		    			$(section).find("recipe_no").val(recipe_no);
+ 		    			
+ 		    			//레시피 info
+ 		    			$("#preview").attr('src',"../images/upload/"+data.list[0].recipe_img)
+ 		    			$(".infoArea").find(".infoTitle").val(data.list[0].recipe_name);
+ 		    			$(".infoArea").find("textarea.infoIntro").val(data.list[0].recipe_intro);    
+ 		    			$(".infoArea").find(".recipe_time").val(data.list[0].recipe_time);
+ 		    			
+ 		    			var dblevel = data.list[0].recipe_level;
+ 		    			if(dblevel == 1){
+ 		    				$(".recipe_level").append("<option class=\"op\" selected value=\"1\">초보환영</option><option class=\"op\" value=\"2\">보통</option><option class=\"op\" value=\"3\">어려움</option>");		
+ 		    			}else if (dblevel ==2){
+ 		    				$(".recipe_level").append("<option class=\"op\"  value=\"1\">초보환영</option><option class=\"op\" selected value=\"2\">보통</option><option class=\"op\" value=\"3\">어려움</option>");
+ 		    			}else if (dblevel ==3){
+ 		    				$(".recipe_level").append("<option class=\"op\"  value=\"1\">초보환영</option><option class=\"op\" value=\"2\">보통</option><option class=\"op\" selected value=\"3\">어려움</option>");
+ 		    			}
+ 		    			
+ 		    			
+ 		    			var dbcategory = data.list[0].recipe_level;
+ 		    			if (dbcategory=='한식'){
+ 		    				$(".recipe_category").append("<option class=\"op\" selected value=\"한식\">한식</option><option class=\"op\" value=\"양식\">양식</option><option class=\"op\" value=\"일식\">일식</option><option class=\"op\" value=\"중식\">중식</option><option class=\"op\" value=\"퓨전\">퓨전</option>");
+ 		    			}else if(dbcategory=='양식'){
+ 		    				$(".recipe_category").append("<option class=\"op\" value=\"한식\">한식</option><option class=\"op\" selected value=\"양식\">양식</option><option class=\"op\" value=\"일식\">일식</option><option class=\"op\" value=\"중식\">중식</option><option class=\"op\" value=\"퓨전\">퓨전</option>");
+ 		    			}else if(dbcategory=='일식'){
+ 		    				$(".recipe_category").append("<option class=\"op\" value=\"한식\">한식</option> <option class=\"op\" value=\"양식\">양식</option><option class=\"op\" selected value=\"일식\">일식</option> <option class=\"op\" value=\"중식\">중식</option> <option class=\"op\" value=\"퓨전\">퓨전</option>");
+ 		    			}else if(dbcategory=='중식'){
+ 		    				$(".recipe_category").append("<option class=\"op\" value=\"한식\">한식</option><option class=\"op\" value=\"양식\">양식</option><option class=\"op\" value=\"일식\">일식</option><option class=\"op\" selected value=\"중식\">중식</option><option class=\"op\" value=\"퓨전\">퓨전</option>");
+ 		    			}else if(dbcategory=='퓨전'){
+ 		    				$(".recipe_category").append("<option class=\"op\" value=\"한식\">한식</option><option class=\"op\" value=\"양식\">양식</option><option class=\"op\" value=\"일식\">일식</option><option class=\"op\" value=\"중식\">중식</option><option class=\"op\" selected value=\"퓨전\">퓨전</option>");
+ 		    			}
+ 		    			
+ 		    			
+ 		    			
+ 		    			//레시피 재료
+ 		 		
+ 		    				for(var i = 0; i< data.list[0].recipeingre.length; i++){
+ 		    					
+ 			    				var recipe_ingre_type = data.list[0].recipeingre[i].recipe_ingre_type;
+ 			    				var recipe_ingre_name = data.list[0].recipeingre[i].recipe_ingre_name;
+ 			    				var recipe_ingre_metering = data.list[0].recipeingre[i].recipe_ingre_metering;
+								
+ 			    				var $ingreArea = $('.ingreArea');
+ 				             	
+ 				                
+ 			    				if(recipe_ingre_type =="주재료"){
+ 			    					$ingreArea.append("<div class=\"ingre\"><label class=\"ingreBox\"><select class=\"box recipe_ingre_type\" name=\"recipe_ingre_type\"><option class=\"op\" selected value=\"주재료\">주재료</option><option class=\"op\" value=\"부재료\">부재료</option><option class=\"op\" value=\"양념\"\>양념</option></select>&nbsp<input class=\"box recipeIngreName recipe_ingre_name\" name=\"recipe_ingre_name\" type=\"text\" value=\""+recipe_ingre_name+"\">&nbsp<span>계량</span>&nbsp<input class=\"box recipeIngreMetering recipe_ingre_metering\" name=\"recipe_ingre_metering[]\" type=\"text\" value=\""+recipe_ingre_metering+"\"><i class=\"fas fa-times\"></i></label><br></div>");
+ 			    				}else if(recipe_ingre_type =="부재료"){
+ 			    					$ingreArea.append("<div class=\"ingre\"><label class=\"ingreBox\"><select class=\"box recipe_ingre_type\" name=\"recipe_ingre_type\"><option class=\"op\" value=\"주재료\">주재료</option><option class=\"op\" selected value=\"부재료\">부재료</option><option class=\"op\" value=\"양념\"\>양념</option></select>&nbsp<input class=\"box recipeIngreName recipe_ingre_name\" name=\"recipe_ingre_name\" type=\"text\" value=\""+recipe_ingre_name+"\">&nbsp<span>계량</span>&nbsp<input class=\"box recipeIngreMetering recipe_ingre_metering\" name=\"recipe_ingre_metering[]\" type=\"text\" value=\""+recipe_ingre_metering+"\"><i class=\"fas fa-times\"></i></label><br></div>");
+		    					}else if(recipe_ingre_type =="양념"){
+		    						$ingreArea.append("<div class=\"ingre\"><label class=\"ingreBox\"><select class=\"box recipe_ingre_type\" name=\"recipe_ingre_type\"><option class=\"op\" value=\"주재료\">주재료</option><option class=\"op\" value=\"부재료\">부재료</option><option class=\"op\" selected value=\"양념\"\>양념</option></select>&nbsp<input class=\"box recipeIngreName recipe_ingre_name\" name=\"recipe_ingre_name\" type=\"text\" value=\""+recipe_ingre_name+"\">&nbsp<span>계량</span>&nbsp<input class=\"box recipeIngreMetering recipe_ingre_metering\" name=\"recipe_ingre_metering[]\" type=\"text\" value=\""+recipe_ingre_metering+"\"><i class=\"fas fa-times\"></i></label><br></div>");
+	    						}
+ 			    				
 		
-		var files = e.target.files;
-		var filesArr = Array.prototype.slice.call(files);
-		
-		filesArr.forEach(function(f){
-			if(!f.type.match("image.*")){
-				alert("확장자는 이미지 확장자만 가능합니다.");
-				return;
-			}
-			sel_file = f;
-			
-			var reader = new FileReader();
-			reader.onload = function(e){
-				$(".preview").attr('src',e.target.result);
-			}
-			reader.readAsDataURL(f);
-		});
-	}
+ 			    	   				
+ 		    				}
+ 		    			
+ 		    				var $stepAreaBlock = $(".stepAreaBlock");
+ 		    			//레시피 과정
+ 							for(var j = 0; j<data.list[0].recipeprocess.length; j++){
+ 								
+ 								var recipe_step_no = data.list[0].recipeprocess[j].recipe_step_no;
+ 								var recipe_step_text = data.list[0].recipeprocess[j].recipe_step_text;
+ 								var recipe_step_img = data.list[0].recipeprocess[j].recipe_step_img;
+ 						
+ 			             		$stepAreaBlock.append("<div class=\"divStepArea\"><div><div class=\"step\"><p><b>Step&nbsp;<span class=\"recipe_step_no\">"+recipe_step_no+"</span></b></p><br><div><textarea name=\"recipe_step_text\"class=\"box stepbox recipe_step_text\">"+recipe_step_text+"</textarea><i class=\"fas fa-times\"></i></div><div ><input type='file' id=\"upload_file\" name=\"recipe_step_img\" value = \""+recipe_step_img+"\" multiple></div></div></div></div><br>");
+ 							
+ 								
+ 							}
+ 		    			
+ 		    			
+ 		    				} 	
+ 		    		
+ 		    		
+ 		    	},
+ 		    	error: function(jqXHR){
+ 	        		alert(jqXHR.status);
+ 				}
+ 		    });
+ 		    return false;
+        	 
+ 		    
+        	 //첫화면 값 넣기
+    
+         });
 
+         
+    	 
+		   $(document).ready(function(){
+				$("#upload_file").on("change",handleImgFileSelect);
+				
+			});
+				function handleImgFileSelect(e){
+					
+					var files = e.target.files;
+					var filesArr = Array.prototype.slice.call(files);
+					
+					filesArr.forEach(function(f){
+						if(!f.type.match("image.*")){
+							alert("확장자는 이미지 확장자만 가능합니다.");
+							return;
+						}
+						sel_file = f;
+						
+						var reader = new FileReader();
+						reader.onload = function(e){
+							$("#preview").attr('src',e.target.result);
+						}
+						reader.readAsDataURL(f);
+					});
+				}//미리보기
+         
+         
 
-         <!-- 재료추가 script -->
+         // 재료추가 script 
              $(function(){
-             	var i=1;
+             	
                  //추가버튼 클릭시
                  
 	             $(".ingreButton").click(function(){ 
 	           
 	                 var $ingreArea = $('.ingreArea');
 	             	
-	                 var ingreBox ="<div class=\"ingre\"><label class=\"ingreBox\"><select class=\"box recipe_ingre_type\" name=\"recipe_ingre_type\"><option class=\"op\" selected value=\"주재료\">주재료</option><option class=\"op\" value=\"부재료\">부재료</option><option class=\"op\" value=\"양념\"\>양념</option></select>&nbsp<input class=\"box recipeIngreName recipe_ingre_name\" name=\"recipe_ingre_name\" type=\"text\" placeholder=\"예) 닭고기\">&nbsp<span>계량</span>&nbsp<input class=\"box recipeIngreMetering recipe_ingre_metering\" name=\"recipe_ingre_metering[]\" type=\"text\" placeholder=\"예) 300g\"><i class=\"fas fa-times\"></i></label></div><br>";
+	                 var ingreBox ="<div class=\"ingre\"><label class=\"ingreBox\"><select class=\"box recipe_ingre_type\" name=\"recipe_ingre_type\"><option class=\"op\" selected value=\"주재료\">주재료</option><option class=\"op\" value=\"부재료\">부재료</option><option class=\"op\" value=\"양념\"\>양념</option></select>&nbsp<input class=\"box recipeIngreName recipe_ingre_name\" name=\"recipe_ingre_name\" type=\"text\" placeholder=\"예) 닭고기\">&nbsp<span>계량</span>&nbsp<input class=\"box recipeIngreMetering recipe_ingre_metering\" name=\"recipe_ingre_metering[]\" type=\"text\" placeholder=\"예) 300g\"><i class=\"fas fa-times\"></i></label><br></div>";
 	                  $ingreArea.append(ingreBox);
 	             });
 	
@@ -240,16 +344,14 @@ $(document).ready(function(){
 	                 $(".svg-inline--fa").css("display","none");
 	             });
 	             
-	             
-	             
 	             //재료추가 x 클릭
 	             $(".ingreArea").on("click","svg",function(){
 	                 
-	                 $(this).parents().remove("#ingre");
+	                 $(this).parents().remove("div.ingre");
 	             });
 	             
              });
-       
+            
          
              /* 과정입력 추가 */
              $(function(){
@@ -293,8 +395,11 @@ $(document).ready(function(){
              	
              	//레시피 저장
             	$("section").on("click",".save",function(){  
-             	
+            		let temp = location.href.split("?recipe_no=");
+            	    let recipe_no  = temp[1];
+            		
              		var info = new Object();//info 데이터 객체생성
+             		info.recipe_no = recipe_no;
              		info.recipe_category = $(".recipe_category").val();
              		info.recipe_img =  $("input[name=recipe_img]").val();
              		info.recipe_intro = $(".recipe_intro").val();
@@ -302,7 +407,6 @@ $(document).ready(function(){
              		info.recipe_name =  $(".recipe_name").val();
              		info.recipe_time =  $(".recipe_time").val();
              		 
-             		
              		var ingre = new Object();//재료 객체 생성
              		var ingres = [];
              	
@@ -334,24 +438,16 @@ $(document).ready(function(){
              		var recipe_step_img = new Object();
              		var steps = [];
              		
-             		/* $(".step").each(function(){
-             			recipe_step_img ={
-             					"recipe_step_img" : $("input[name=recipe_step_img]") 			
-             			};
-             			steps.push(recipe_step_img);
-       				}); */
-             		
+             	
        				fd.append("recipe_main_img", $("input[name=recipe_img]")[0].files[0]);
 
-                    //fd.append("recipe_step_img", $("input[name=recipe_step_img]")[0].files);
-             		
+                    
                     var step_img_files = [];
                     $("input[name=recipe_step_img]").each(function(index, element){
                     	fd.append("recipe_step_img",element.files[0]);
                     });             		
-                    console.log("오문정:" + step_img_files.length);
-                    //fd.append("recipe_step_img",step_img_files);
-                    
+               
+               
              		var sendData = {};
              		sendData = info;
              		sendData["recipeingre"] = ingres;
@@ -362,30 +458,11 @@ $(document).ready(function(){
              		for(var pair of fd.entries()){
              			console.log(pair[0]+',value='+pair[1] + ":");	
              		}
+             		console.log("보낼 데이터 : "+ fd);
              		
-             		
-					//레시피 데이터 저장 
-             		/*  $.ajax({
-             			url:"../recipe/addrecipe",
-             			method:"post",
-             			dataType: "json",
-             			contentType: 'application/json',
-             			data: JSON.stringify(sendData),
-             			sucess:function(data){
-             				console.log(data);
-             				if(data.status==0){
-             					alert("로그인 후 레시피 등록이 가능합니다");
-             				}else if (data.status==1){
-             					alert("레시피 등록이 완료되었습니다");
-             					//location.href("")-------------------------리스트 페이지로 이동
-             				}
-             			},
-             			error: function(jqXHR){
-			        		alert(jqXHR.status);
-					  }
-             		}); */
+			
              		  $.ajax({
-         			url:"../recipe/addrecipe",
+         			url:"../recipe/modifyrecipe",
          			method:"post",
          			processData:false,
          			contentType:false,
@@ -394,7 +471,7 @@ $(document).ready(function(){
          				if(responseObj.status==0){
          					alert("로그인 후 레시피 등록이 가능합니다");
          				}else if (responseObj.status==1){
-         					alert("레시피 등록이 완료되었습니다");
+         					alert("레시피 수정이 완료되었습니다");
          					//location.href("")-------------------------리스트 페이지로 이동
          				}else if(responseObj.status==-1){
          					alert("형식에 맞춰 작성했는지 확인해주세요");
@@ -406,10 +483,6 @@ $(document).ready(function(){
          		}); 
              	return false;
              		
-             		
-             		//레시피 사진 업로드
-             		
-       
              		
              		
              	});//저장 버튼클릭 
@@ -431,6 +504,7 @@ $(document).ready(function(){
     </header>
 	
    <section id="section">
+   <div class="recipe_no" style="display:hidden"></div>
     <!--조리소개-->
 <form class="total" enctype="multipart/form-data">
         <div class="titleArea">
@@ -439,14 +513,13 @@ $(document).ready(function(){
         <article>
         <div id="infoForm"> 
             <div class="infoArea">
-               
                 <div id="mainPhoto"> 
                     <div  class="mainPhoto">
                     <p class="title"> 대표사진등록</p>
                     	<div class="mainPhotoInner">
 	                        <div class="realPhoto">	                     
-	                        <img class="preview" src="" width="300px" height="300px">
-	                        <input type='file' id="upload_file" class="files" name="recipe_img" multiple>
+	                        <img id="preview" src="" width="300px" height="300px">
+	                        <input type='file' id="upload_file" name="recipe_img" multiple>
 	                        </div>
 	                        <div class="exPhoto">
 	                            <div> 최소 사이즈 : 300PX <br>최대 사이즈 : 600PX</div>
@@ -464,7 +537,7 @@ $(document).ready(function(){
                 </div>
                 <div>
                     <p class="title2">요리소개</p>
-                    <textarea  class="recipe_intro box infoIntro" name="recipe_intro" placeholder="이 레시피의 탄생배경을 적어주세요. &#13;&#10;예) 어머니로부터 배운 미역국 레시피를 남편의 입맛에 맞게 고안했습니다."></textarea>
+                    <textarea class="recipe_intro box infoIntro" name="recipe_intro" placeholder="이 레시피의 탄생배경을 적어주세요. &#13;&#10;예) 어머니로부터 배운 미역국 레시피를 남편의 입맛에 맞게 고안했습니다."></textarea>
                 </div>
 				<br>
                 <div class="recipeTimeLevelCategory">
@@ -506,37 +579,10 @@ $(document).ready(function(){
         <div class="ingreArea">
         
             <div class="title ingretitle">재료</div>
+			<div class="warn"> &#9888; 계량 단위를 정확히 적어주세요</div>
+			
 
-            <div class="ingre">
-                
-                <select class="box recipe_ingre_type"  name="recipe_ingre_type"><!-- style="display: inline-block;" -->
-                    <option class="op" selected value="주재료">주재료</option>
-                    <option class="op" value="부재료">부재료</option>
-                    <option class="op" value="양념">양념</option>
-                </select>
-                <input class="box recipeIngreName recipe_ingre_name" name="recipe_ingre_name" type="text" placeholder="예) 닭고기">
-                <span>계량</span>
-                <input class="box recipeIngreMetering recipe_ingre_metering" name="recipe_ingre_metering" type="text" placeholder="예) 300g">
-                <span class="warn"> &#9888; 계량 단위를 정확히 적어주세요</span>
-                </div>
-
-            <div class="ingre">
-                
-                <select class="box recipe_ingre_type"  name="recipe_ingre_type"><!-- style="display: inline-block;" -->
-                    <option class="op" selected value="주재료">주재료</option>
-                    <option class="op" value="부재료">부재료</option>
-                    <option class="op" value="양념">양념</option>
-                </select>
-                <input class="box recipeIngreName recipe_ingre_name" name="recipe_ingre_name" type="text" placeholder="예) 닭고기">
-                <span>계량</span>
-                <input class="box recipeIngreMetering recipe_ingre_metering" name="recipe_ingre_metering" type="text" placeholder="예) 300g">
-                </div>
-			<br>
-
-            
-
-
-        </div>
+      </div>
         <div>
             <input class="button plusIntre ingreButton" type="button" value="추가">
         </div>
@@ -548,7 +594,7 @@ $(document).ready(function(){
     <!--조리과정-->
     <article>
     <div id="processForm" enctype="multipart/form-data">
-        <!-- </div>/cont_box -->
+    
         <div class="processArea">
 		  <p class="title">요리순서</p>
             <span class="recipeStepText" >
@@ -562,64 +608,10 @@ $(document).ready(function(){
             <br>
             
             <div class="stepAreaBlock">
-            <!--step1-->
-            <div  class="divStepArea">
-            <div>
-                <div class="step">
-                    <p ><b>Step&nbsp;<span class="recipe_step_no">1</span></b></p><br>
-                    <div>
-                        <textarea name="recipe_step_text"class="box stepbox recipe_step_text" placeholder="예) 소고기는 기름기를 떼어내고 적당한 크기로 썰어주세요."></textarea>
-                    </div>
-                    <div >
-                		<input type='file' id="upload_file" name="recipe_step_img" multiple>
-            		</div>
-                </div>
-                
-            </div>
-            
-        </div>
-        <br>
-            <!--step2-->
-            <div  class="divStepArea">
-                <div>
-                    <div  class="step">
-                        <p><b>Step&nbsp;<span class="recipe_step_no">2</span></b></p><br>
-                        <div>
-                            <textarea name="recipe_step_text"class="box stepbox recipe_step_text" placeholder="입력해주세요" ></textarea>
-                        	<i class="fas fa-times"></i>
-                        </div>
-                        <div>
-                		    <input type='file' id="upload_file" name="recipe_step_img" multiple>
-               			</div>
-                    </div>
-                </div>
-                
-            </div>
-            <br>
-            <!--step3-->
-            <div  class="divStepArea">
-                <div>
-                    <div class="step">
-                       <p><b>Step&nbsp;<span class="recipe_step_no">3</span></b></p><br>
-                        <div>
-                            <textarea name="recipe_step_text"class="box stepbox recipe_step_text" placeholder="입력해주세요"></textarea>
-                        	<i class="fas fa-times"></i>
-                        </div>
-                         <div >
-                    		<input type='file' id="upload_file" name="recipe_step_img" multiple>
-               			 </div>
-                    </div>
-                </div>
-               
-            </div>
-            <br>
-            
+          
 
         </div>
-        <!-- </div> -->
-    
-        <!-- 레시피 과정 추가 / 순서추가 버튼 클릭시 보임 -->
-        <!-- step template -->
+
 
         <br><br>
         <div class="btn_add mag_b_25">
@@ -632,7 +624,7 @@ $(document).ready(function(){
 
     <div class="submitBtn">
         <button type="button" onclick="history.back();" class="button btn-lg btn-default">취소</button> <!-- 이전페이지로 이동 -->
-        <button type="button"  class="button btn-lg btn-primary save">저장</button><!-- DB저장 후 마이페이지로 이동 -->  
+        <button type="button"  class="button btn-lg btn-primary save">수정</button><!-- DB저장 후 마이페이지로 이동 -->  
     </div>
                                                        
 

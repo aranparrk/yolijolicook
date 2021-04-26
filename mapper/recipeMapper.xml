@@ -51,7 +51,7 @@
  <!-- ******레시피 디테일 ******* -->  
    <!-- 레시피 디테일 페이지 정보 불러오기-->
    <select id="selectRecipeDetailByRecipe_no" parameterType="int" resultMap="detailinfo">
-SELECT info.recipe_no, info.member_id, recipe_name, recipe_category, recipe_time, recipe_level, recipe_img, recipe_scrap_cnt, recipe_cnt, recipe_dt, recipe_status, 
+SELECT info.recipe_no, info.member_id,recipe_intro, recipe_name, recipe_category, recipe_time, recipe_level, recipe_img, recipe_scrap_cnt, recipe_cnt, recipe_dt, recipe_status, 
 recipe_ingre_no, recipe_ingre_name, recipe_ingre_metering, recipe_ingre_type,
 recipe_step_no, recipe_step_text, recipe_step_img, 
 recipecmt_no, c.member_id cmtmember_id, recipecmt_detail, recipecmt_dt
@@ -119,7 +119,7 @@ VALUES (SEQ_RECIPECMT.nextval,#{recipeinfo.recipe_no},#{member.member_id}, #{rec
 
 
 <!-- ******레시피 등록******* -->  	
-		<!-- 진행중......... -->
+
 	<insert id="insertRecipeInfo" parameterType="RecipeInfo">
 INSERT INTO recipe_info (recipe_no, member_id, recipe_name, recipe_intro, recipe_category, recipe_time, recipe_level,recipe_img ,recipe_dt) 
 VALUES(seq_recipe.nextval, #{member.member_id}, #{recipe_name}, #{recipe_intro}, #{recipe_category}, #{recipe_time},#{recipe_level}, #{recipe_img}, SYSDATE)	
@@ -133,4 +133,36 @@ VALUES(seq_recipe.CURRVAL,SEQ_RECIPE_INGRE.NEXTVAL,#{recipe_ingre_name}, #{recip
 INSERT INTO recipe_process (recipe_no,recipe_step_no,recipe_step_text,recipe_step_img)
 VALUES(seq_recipe.CURRVAL,#{recipe_step_no},#{recipe_step_text},#{recipe_step_img})
 	</insert>
+	
+<!-- ******레시피 수정****** -->
+<!-- //레시피 수정 시 기존 레시피정보 삭제 후 재 삽입// -->
+
+<!-- 레시피 정보 삭제 -->
+    <delete id="deleteRecipeInfo" parameterType="int">
+DELETE FROM recipe_info  WHERE recipe_no = #{recipe_no}
+   </delete>
+   <delete id="deleteRecipeIngre" parameterType="int">
+DELETE FROM recipe_ingre  WHERE recipe_no = #{recipe_no}
+   </delete>
+   <delete id="deleteRecipeProcess" parameterType="int">
+DELETE FROM recipe_process  WHERE recipe_no = #{recipe_no}
+   </delete>
+   
+
+<!-- 레시피 수정 메퍼 수정 필요 ,,,,,,,,,,,, date값 설정 변경 -->	
+	<insert id="updateRecipeInfo" parameterType="RecipeInfo">
+INSERT INTO recipe_info (recipe_no, member_id, recipe_name, recipe_intro, recipe_category, recipe_time, recipe_level,recipe_img ,recipe_dt) 
+VALUES(#{recipe_no}, #{member.member_id}, #{recipe_name}, #{recipe_intro}, #{recipe_category}, #{recipe_time},#{recipe_level}, #{recipe_img}, SYSDATE)	
+	</insert>
+
+	<insert id="updateRecipeIngre" parameterType="RecipeIngre">
+INSERT INTO recipe_ingre (recipe_no, recipe_ingre_no, recipe_ingre_name, recipe_ingre_metering, recipe_ingre_type)
+VALUES(#{recipe_no},SEQ_RECIPE_INGRE.NEXTVAL,#{recipe_ingre_name}, #{recipe_ingre_metering}, #{recipe_ingre_type})
+	</insert>	
+	<insert id="updateRecipeProcess" parameterType="RecipeProcess">
+INSERT INTO recipe_process (recipe_no,recipe_step_no,recipe_step_text,recipe_step_img)
+VALUES(#{recipe_no},#{recipe_step_no},#{recipe_step_text},#{recipe_step_img})
+	</insert>
+
+
    </mapper>

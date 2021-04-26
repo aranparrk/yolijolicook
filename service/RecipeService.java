@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.my.dao.RecipeDAO;
 import com.my.exception.AddException;
 import com.my.exception.FindException;
+import com.my.exception.RemoveException;
 import com.my.vo.RecipeComment;
 import com.my.vo.RecipeInfo;
 import com.my.vo.RecipeIngre;
@@ -66,7 +67,6 @@ public class RecipeService {
 	}
 	
 	public List<RecipeInfo> findByRecipeIngre(String word)throws FindException {
-		 System.out.println("서비스초밥");
 		 return dao.selectByIngre_name(word);
 
 	}
@@ -81,19 +81,24 @@ public class RecipeService {
 	
 	public void addRecipe (RecipeInfo info,List<RecipeIngre> ingre,List<RecipeProcess> process) throws AddException{
 		dao.insertRecipe(info);//info정보 insert
-//		RecipeInfo recipeinfo = new RecipeInfo();
-//		recipeinfo.setRecipe_name(info.getRecipe_name());
-//		recipeinfo.setRecipe_img(info.getRecipe_img());
-//		try {
-//			int recipe_no = dao.selectRecipe_noByRecipe_name(recipeinfo);//info의 name과 img 정보로 recipe_no 찾아오기	
-//			dao.insertRecipeIngre(ingre,recipe_no);
-//			dao.insertRecipeProcess(process,recipe_no);
-//		} catch (FindException e) {
-//			System.out.println("레시피 정보를 등록하지 못했습니다.");
-//			e.printStackTrace();
-//		}
+
 		
-		
+//매개변수 지우고 다시 확인..		
 	}
+
+	//******************레시피 수정*******************************
+	@Transactional(rollbackFor = Exception.class)
+	public void updateReicipe(RecipeInfo info,List<RecipeIngre> ingre,List<RecipeProcess> process,int recipe_no) throws Exception{		
+		int result = dao.deleteRecipe(recipe_no);	
+		
+		if(result==1) {
+			dao.updateRecipe(info,recipe_no);
+		}else if(result==0){
+			throw new RemoveException();
+		}
+		
+			
+	}
+
 	
 }
