@@ -54,22 +54,35 @@ public class RecipeService {
 	
 	//*******************레시피 리스트 Service*********************
 	/**게시물 전체 레시피를 보여준다
-	 * 전체레시피
-	 * @return FindException 게시글이 없을떄 예외가 발생한다
-	 */
-	public List<RecipeInfo> findAll()throws FindException{
-		 return dao.selectAllRecipeInfo();
-	}
+	    * 전체레시피
+	    * @return FindException 게시글이 없을떄 예외가 발생한다
+	    */
+	   public List<RecipeInfo> findAll()throws FindException{
+	       return dao.selectAllRecipeInfo();
+	   }
 
-	
-	public List<RecipeInfo> findByRecipeCategory(List<String> categories)throws FindException{
-		 return dao.selectByCategory(categories);
-	}
-	
-	public List<RecipeInfo> findByRecipeIngre(String word)throws FindException {
-		 return dao.selectByIngre_name(word);
+	   /**
+	    * 레시피 검색 레시피 번호만 불러온다
+	    * @param word
+	    * @return
+	    * @throws FindException
+	    */
+	   public List<Integer> findByRecipeIngre(String word)throws FindException {
+	       return dao.selectByIngre_name(word);
 
-	}
+	   }
+	   
+
+	   /**
+	    * 로그인 한 계정이 스크랩한 레시피 목록
+	    * @param member_id
+	    * @return
+	    * @throws FindException
+	    */
+	   public List<Integer> selectMyScrap(String member_id)throws FindException{
+	      return dao.selectMyScrap(member_id);
+	   }
+
 	//*******************레시피 등록******************************
 	/**
 	 * 레시피 등록하기

@@ -11,7 +11,9 @@
 
     <script src = "http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-
+<!-- 파비콘 -->
+<link rel="shortcut icon" href="../images/web/favicon-32x32.png" type="image/x-icon">
+<link rel="icon" href="../images/web/favicon-32x32.png" type="image/x-icon">
 
     <style>
         /* 폰트 */
@@ -334,56 +336,26 @@ $(document).ready(function(){
              		var recipe_step_img = new Object();
              		var steps = [];
              		
-             		/* $(".step").each(function(){
-             			recipe_step_img ={
-             					"recipe_step_img" : $("input[name=recipe_step_img]") 			
-             			};
-             			steps.push(recipe_step_img);
-       				}); */
+             	
              		
        				fd.append("recipe_main_img", $("input[name=recipe_img]")[0].files[0]);
 
-                    //fd.append("recipe_step_img", $("input[name=recipe_step_img]")[0].files);
+      
              		
                     var step_img_files = [];
                     $("input[name=recipe_step_img]").each(function(index, element){
                     	fd.append("recipe_step_img",element.files[0]);
                     });             		
-                    console.log("오문정:" + step_img_files.length);
-                    //fd.append("recipe_step_img",step_img_files);
+               
                     
              		var sendData = {};
              		sendData = info;
              		sendData["recipeingre"] = ingres;
              		sendData["recipeprocess"] = processes;
              		fd.append("recipe_info", JSON.stringify(sendData));   
-                    console.log(sendData);
-                    console.log("-----");
-             		for(var pair of fd.entries()){
-             			console.log(pair[0]+',value='+pair[1] + ":");	
-             		}
+             
              		
-             		
-					//레시피 데이터 저장 
-             		/*  $.ajax({
-             			url:"../recipe/addrecipe",
-             			method:"post",
-             			dataType: "json",
-             			contentType: 'application/json',
-             			data: JSON.stringify(sendData),
-             			sucess:function(data){
-             				console.log(data);
-             				if(data.status==0){
-             					alert("로그인 후 레시피 등록이 가능합니다");
-             				}else if (data.status==1){
-             					alert("레시피 등록이 완료되었습니다");
-             					//location.href("")-------------------------리스트 페이지로 이동
-             				}
-             			},
-             			error: function(jqXHR){
-			        		alert(jqXHR.status);
-					  }
-             		}); */
+					
              		  $.ajax({
          			url:"../recipe/addrecipe",
          			method:"post",
@@ -395,7 +367,7 @@ $(document).ready(function(){
          					alert("로그인 후 레시피 등록이 가능합니다");
          				}else if (responseObj.status==1){
          					alert("레시피 등록이 완료되었습니다");
-         					//location.href("")-------------------------리스트 페이지로 이동
+         					location.href='recipelist.html';//레시피 등록 완료시 리스트 페이지로 이동
          				}else if(responseObj.status==-1){
          					alert("형식에 맞춰 작성했는지 확인해주세요");
          				}

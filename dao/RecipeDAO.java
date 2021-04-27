@@ -17,38 +17,32 @@ import com.my.vo.Scrap;
 public interface RecipeDAO {
 //	레시피 리스트 페이지 
 
-	/**
-	 * 레시피 개수를 찾아옴
-	 * 
-	 * @return int 레시피 수
-	 * @throws FindException 등록된 레시피를 찾지 못한경우 예외발생
-	 */
-	int selectRecipeInfoCount() throws FindException;
+	   /**
+	    * 최근 등록된 레시피 순으로 불러오기 
+	    * @return List<RecipeInfo> 레시피 정보
+	    * @throws FindException 등록된 레시피를 찾지 못한 경우 예외발생
+	    */
+	   List<RecipeInfo> selectAllRecipeInfo() throws FindException;
 
 	/**
-	 * 최근 등록된 레시피 순으로 불러오기
-	 * 
-	 * @return List<RecipeInfo> 레시피 정보
-	 * @throws FindException 등록된 레시피를 찾지 못한 경우 예외발생
-	 */
-	List<RecipeInfo> selectAllRecipeInfo() throws FindException;
+	    * 검색하여 레시피 리스트 찾아오기
+	    * @return List <Integer> 검색어에 해당하는 레시피 정보 찾기 
+	    * @throws FindException 검색어에 맞는 레시피 정보를 찾는 경우
+	    */
+	   List<Integer> selectByIngre_name(String word) throws FindException;
 
 	/**
-	 * 카테고리로 레시피 리스트 찾아오기
-	 * 
-	 * @return List<Recipeinfo> 카테고리에 해당하는 레시피 정보
-	 * @throws FindException 카테고리에 해당하는 레시피를 찾을 수 없는 경우 예외 발생
-	 */
-	List<RecipeInfo> selectByCategory(List<String> categories) throws FindException;
+	    * 리스트에서 내가 스크랩한 레시피 확인
+	    * @param member_id
+	    * @return
+	    * @throws FindException
+	    */
+	   List<Integer> selectMyScrap(String member_id)throws FindException;
+	
+	//------------------------------------
 
-	/**
-	 * 검색하여 레시피 리스트 찾아오기
-	 * 
-	 * @return List <Recipeinfo> 검색어에 해당하는 레시피 정보 찾기
-	 * @throws FindException 검색어에 맞는 레시피 정보를 찾는 경우
-	 */
-	List<RecipeInfo> selectByIngre_name(String word) throws FindException;
 
+	
 //	레시피 등록 페이지
 
 	/**

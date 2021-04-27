@@ -129,8 +129,8 @@
             text-align: center;
         }
         .ingreChild{
-            
-            text-align: center;
+            padding-left: 40px;
+            text-align: left;
         }
 
         .ingreName, .IngreMetering{
@@ -190,7 +190,8 @@
 
         /* 버튼영역 */
         .buttonArea{
-            text-align: right;
+            display: flex;
+            justify-content: flex-end;
         }
         /* 스크랩 버튼 */
         .scrap{
@@ -378,6 +379,10 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
         
        
 	    
+        //수정하기 버튼 href 바꾸기
+        var href = $(".modify_btn").attr('href');
+        $(".modify_btn").attr('href',href + "?recipe_no=" + recipe_no);
+
 	    $(function(){
 	    	//레시피 불러오기
 		    $.ajax({
@@ -387,7 +392,11 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
 		    	success:function(data){
 		    		
 		    		if(data.status==1){
-		    		
+		    			console.log("디테일 정보 가져옴");
+		    			console.log(recipe_no);
+		    			console.log(data);
+		    			console.log(data.list[0]);
+		    			
 		    			//console.log(data.list[0].recipeingre);
 		    			var level;
 						if(data.list[0].recipe_level==1){
@@ -397,8 +406,10 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
 						}else if(data.list[0].recipe_level==3){
 							level =  "어려움"
 						}
+
+                    
 		    			
-		    			//레시피 info *************************************사진정보 불러오기
+		    			//레시피 info *************************************사진정보 불러오기                   
 		    			$recipeInfoArea.find(".titleName").html(data.list[0].recipe_name);
 		    			$recipeInfoArea.find(".recipe_writer").html(data.list[0].member.member_id);
 		    			$recipeInfoArea.find(".recipe_title").html(data.list[0].recipe_name);
@@ -407,6 +418,20 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
 		    			$recipeInfoArea.find(".recipe_category").html(data.list[0].recipe_category);
 		    			$recipeInfoArea.find(".intro").html(data.list[0].recipe_intro);
 		    			$recipeInfoArea.find("img").attr('src', "../images/upload/"+data.list[0].recipe_img);
+
+
+                        //수정하기 관련
+                        var login_id = sessionStorage.getItem("member_id");
+                        var recipe_writer = $(".recipe_writer").text();
+                        if(login_id == recipe_writer){
+                            $(".modify").show();
+                        }else{
+                            $(".modify").hide();
+                        }
+
+
+
+
 		    			//레시피 재료
 		 		
 		    				for(var i = 0; i< data.list[0].recipeingre.length; i++){
@@ -432,7 +457,7 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
 								var recipe_step_text = data.list[0].recipeprocess[j].recipe_step_text;
 								var recipe_step_img = data.list[0].recipeprocess[j].recipe_step_img;
 								
-		                        $recipeProcessArea.append("<h2 class=\"step\">step<div class=\"step step_no\">"+recipe_step_no+"</div></h2><div class=\"processList\"><div class=\"process_text\">"+recipe_step_text+"</div><img class=\"process_img\" src=\"../images/upload/"+recipe_step_img+"\" style=\"width:350px ; height:350px\"></div><br><br>");
+		                        $recipeProcessArea.append("<h2 class=\"step\">step<div class=\"step step_no\">"+recipe_step_no+"</div></h2><div class=\"processList\"><div class=\"process_text\">"+recipe_step_text+"</div><img class=\"process_img\" src=\"../images/upload/"+recipe_step_img+"\" style=\"width:350px ; height:250px\"></div><br><br>");
 							}
 		    			//완성사진
 		    				$completeArea = $("section> article > div.completeArea");	    			
@@ -458,6 +483,16 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
 				}
 		    });
 		    return false;
+
+
+
+            
+
+            
+
+            
+
+
 	    	
 	    });
 	    
@@ -473,7 +508,7 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
 		      });
 			  //스크랩 버튼 클릭
 			  $(".doScrap").click(function(){
-				  
+				  alert("스크랩버튼 클릭!");
 				  $.ajax({
 					  url: "../recipe/scrap",
 					  method:"post",
@@ -542,7 +577,7 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
             <div class="titleName">레시피 이름</div>
         </div>
         <div class="info">
-            <div class="recipe_img" ><img src="../images/web/food.jpg" alt="비빔밥사진" style="width:430px ; height:400px"> </div>
+            <div class="recipe_img" ><img src="" alt="메인사진" style="width:430px ; height:300px"> </div>
             <div class="recipe_info">
                 <br>
                 <div class="recipe_writer">작성자 </div>님의 
@@ -552,14 +587,14 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
                 <br><br>
                 <div class="processInfo">
                     조리시간 : <div class="processInfochild recipe_time">조리시간</div><br>
-                    조리 난이도 : <div class="processInfochild recipe_level">조리난이도</div><br>
+                  조리 난이도 : <div class="processInfochild recipe_level">조리난이도</div><br>
                     <div class="processInfochild recipe_category">한식</div>
                 </div> 
             </div>
         </div>
 
         <div class="intro">레시피를 소개하는 글을 입력하는 곳</div>
-		</div><!-- recipeInfoArea -->
+      </div><!-- recipeInfoArea -->
             <!-- 재료 -->
         <div class=" ingre">
             <div class="ingreParent mainIngre"><b>주재료</b>
@@ -605,29 +640,33 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
         </div>
         
         <div class="completeArea">
+
         <h1>완성된 음식 사진</h1>
         <div class="completeImg"><img class="completeImg" src="" alt="완성된 음식 사진"></div>
         </div>    
        
         <div class="buttonArea">
-        <!-- 스크랩하기 버튼 -->
-        <a><div class="scrap"><input class="button scrapBtn" type="button" value="스크랩" style="cursor:pointer"> </div></a>
-        
-        <!-- 스크랩 모달 -->
-        <div class="scrapModal"> 
-            <div class="scrapModalContent" title="클릭하면 창이 닫힙니다.">
-                스크랩 하시겠습니까?<br>
-                <div  class="scrapModalBtn">
-                    <div class="scrapInner"><input class="button backToRecipe scrapModalBtnInner" type="button" value="레시피로 돌아가기" style="cursor:pointer"> </div>
-                    <div class="scrapInner"><input class="button doScrap scrapModalBtnInner" type="button" value="스크랩" style="cursor:pointer"> </div>
-                </div>
-            </div> 
-        </div>
+            <!-- 수정하기 버튼 -->
+            <a class="modify_btn" href="../html/recipemodify.html"><div class="modify"><input class="button modifyBtn" type="button" value="수정하기" style="cursor:pointer"> </div></a>
+
+            <!-- 스크랩하기 버튼 -->
+            <a><div class="scrap"><input class="button scrapBtn" type="button" value="스크랩" style="cursor:pointer"> </div></a>
+            
+            <!-- 스크랩 모달 -->
+            <div class="scrapModal"> 
+                <div class="scrapModalContent" title="클릭하면 창이 닫힙니다.">
+                    스크랩 하시겠습니까?<br>
+                    <div  class="scrapModalBtn">
+                        <div class="scrapInner"><input class="button backToRecipe scrapModalBtnInner" type="button" value="레시피로 돌아가기" style="cursor:pointer"> </div>
+                        <div class="scrapInner"><input class="button doScrap scrapModalBtnInner" type="button" value="스크랩" style="cursor:pointer"> </div>
+                    </div>
+                </div> 
+            </div>
 
 
 
-        <!-- 리스트로 돌아가기 버튼 -->
-        <a href="recipelist.html"><div class="backToList"><input class="button" type="button" value="리스트로 돌아가기" style="cursor:pointer">  </div></a>
+            <!-- 리스트로 돌아가기 버튼 -->
+            <a href="recipelist.html"><div class="backToList"><input class="button" type="button" value="리스트로 돌아가기" style="cursor:pointer">  </div></a>
          </div>
        
         <!-- 댓글 article -->
@@ -639,11 +678,6 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
                 <th class="cmtWriter">작성자</td>
                 <th class="cmtDt">작성일</td>
             </tr>
-        <!--     <tr class="recipeCmt">
-                <td class="cmtContent recipeCmt_detail">작성내용dddddddddddddddddddddddddddddddddddddddddddddd</td>
-                <td class="cmtWriter recipeCmt_writer">작성자</td>
-                <td class="cmtDt recipeCmt_dt">2021-05-05 12:12:12</td>
-            </tr> -->
     
         </table>
 

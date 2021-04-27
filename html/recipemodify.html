@@ -11,6 +11,9 @@
 
     <script src = "http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    <!-- 파비콘 -->
+<link rel="shortcut icon" href="../images/web/favicon-32x32.png" type="image/x-icon">
+<link rel="icon" href="../images/web/favicon-32x32.png" type="image/x-icon">
 
 
     <style>
@@ -179,8 +182,7 @@
 
     </style>
     
-    <!-- 자바스크립트 나중에 최신버전으로 바꾸기-->
-    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> 
+    
     
     <!-- 선택한 메인사진 미리보기 -->
     <script>
@@ -190,7 +192,7 @@
             $("#footer").load("footer.html");
         });
     
-    
+        var before_info;
          $(document).ready(function(){ 
         	  
         	 let temp = location.href.split("?recipe_no=");
@@ -203,7 +205,7 @@
  		    	method:"get",
  		    	data:{recipe_no:recipe_no},
  		    	success:function(data){
- 		    		
+ 		    		before_info = data.list[0];
  		    		if(data.status==1){
  		    			
  		    			$(section).find("recipe_no").val(recipe_no);
@@ -325,7 +327,7 @@
                  //추가버튼 클릭시
                  
 	             $(".ingreButton").click(function(){ 
-	           
+	           	
 	                 var $ingreArea = $('.ingreArea');
 	             	
 	                 var ingreBox ="<div class=\"ingre\"><label class=\"ingreBox\"><select class=\"box recipe_ingre_type\" name=\"recipe_ingre_type\"><option class=\"op\" selected value=\"주재료\">주재료</option><option class=\"op\" value=\"부재료\">부재료</option><option class=\"op\" value=\"양념\"\>양념</option></select>&nbsp<input class=\"box recipeIngreName recipe_ingre_name\" name=\"recipe_ingre_name\" type=\"text\" placeholder=\"예) 닭고기\">&nbsp<span>계량</span>&nbsp<input class=\"box recipeIngreMetering recipe_ingre_metering\" name=\"recipe_ingre_metering[]\" type=\"text\" placeholder=\"예) 300g\"><i class=\"fas fa-times\"></i></label><br></div>";
@@ -381,16 +383,12 @@
 	             });
              	
              	
-             	
+             	//x클릭시 삭제, index 재설정
              	$(".stepAreaBlock").on("click","svg",function(){  
              		$(this).parents().remove(".divStepArea");
-             		
-             		$(".divStepArea").find("div.step span").each(function(index,element){
-             			$(element).html(++index);
-             		});
-             		
-             		
-           
+	             		$(".divStepArea").find("div.step span").each(function(index,element){
+	             			$(element).html(++index);
+	             		});
              	});
              	
              	//레시피 저장
@@ -438,10 +436,10 @@
              		var recipe_step_img = new Object();
              		var steps = [];
              		
-             	
+             		//formdata에 메인 이미지 저장
        				fd.append("recipe_main_img", $("input[name=recipe_img]")[0].files[0]);
 
-                    
+                    //레시피 이미지 저장 후 formdata에 저장
                     var step_img_files = [];
                     $("input[name=recipe_step_img]").each(function(index, element){
                     	fd.append("recipe_step_img",element.files[0]);
@@ -453,15 +451,10 @@
              		sendData["recipeingre"] = ingres;
              		sendData["recipeprocess"] = processes;
              		fd.append("recipe_info", JSON.stringify(sendData));   
-                    console.log(sendData);
-                    console.log("-----");
-             		for(var pair of fd.entries()){
-             			console.log(pair[0]+',value='+pair[1] + ":");	
-             		}
-             		console.log("보낼 데이터 : "+ fd);
+                    fd.append("before_info",JSON.stringify(before_info));
              		
 			
-             		  $.ajax({
+            		$.ajax({
          			url:"../recipe/modifyrecipe",
          			method:"post",
          			processData:false,
@@ -472,9 +465,11 @@
          					alert("로그인 후 레시피 등록이 가능합니다");
          				}else if (responseObj.status==1){
          					alert("레시피 수정이 완료되었습니다");
-         					//location.href("")-------------------------리스트 페이지로 이동
+         					location.href='recipelist.html';
          				}else if(responseObj.status==-1){
          					alert("형식에 맞춰 작성했는지 확인해주세요");
+         				}else if(responseObj.status==-2){
+         					alert("사진을 선택해주세요");
          				}
          			},
          			error: function(jqXHR){
@@ -482,16 +477,10 @@
 				  }
          		}); 
              	return false;
-             		
-             		
-             		
-             	});//저장 버튼클릭 
-             	
-             	
-             	
-             	
+            		
+           	});//저장 버튼클릭 
              	 
-             });
+         });
          
          
 

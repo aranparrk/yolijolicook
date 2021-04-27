@@ -33,74 +33,64 @@ public class RecipeDAOOracle implements RecipeDAO {
 	private SqlSessionFactory sqlSessionFactory;
 	
 	@Override
-	public int selectRecipeInfoCount() throws FindException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	   public List<RecipeInfo> selectAllRecipeInfo() throws FindException {//list
+	      SqlSession session = sqlSessionFactory.openSession();
+
+	      try {
+	         List<RecipeInfo> list = session.selectList("mybatis.RecipeMapper.selectAllRecipeInfo");
+
+	         return list;
+	      } catch (Exception e) {
+	         throw new FindException(e.getMessage());
+	      } finally {
+	         if (session != null)
+	            session.close();
+	      }
+	   }
+
+
+
+	   @Override
+	public List<Integer> selectByIngre_name(String word) throws FindException {//list
+	      
+	      SqlSession session = null;
+
+	      try {
+	         session = sqlSessionFactory.openSession();
+	         List<Integer> list = session.selectList("mybatis.RecipeMapper.selectByIngre_name",word);
+
+	         return list;
+	         
+	      } catch (Exception e) {
+	         throw new FindException(e.getMessage());
+	      }finally {
+	         if(session != null) session.close();
+	      }
+	            
+	   }
+
+
 
 	@Override
-	public List<RecipeInfo> selectAllRecipeInfo() throws FindException {//list
-		SqlSession session = sqlSessionFactory.openSession();
-
-		try {
-			List<RecipeInfo> list = session.selectList("mybatis.RecipeMapper.selectAllRecipeInfo");
-			if (list.size() == 0) {
-				throw new FindException("레시피가 없습니다.");
-			}
-
-			return list;
-		} catch (Exception e) {
-			throw new FindException(e.getMessage());
-		} finally {
-			if (session != null)
-				session.close();
-		}
-	}
+	   public List<Integer> selectMyScrap(String member_id)throws FindException{
+	      SqlSession session = null;
+	      
+	      try {
+	         session = sqlSessionFactory.openSession();
+	         List<Integer> list = session.selectList("mybatis.RecipeMapper.selectMyScrap",member_id);
+	         System.out.println(list.get(0));
+	         return list;
+	         
+	      }catch(Exception e) {
+	         throw new FindException(e.getMessage());
+	      }finally {
+	         if(session != null) session.close();
+	      }
+	   }
 	
-	@Override
-	public List<RecipeInfo> selectByCategory(List<String> categories) throws FindException {//list
-		SqlSession session = sqlSessionFactory.openSession();
-		try {
-			List<RecipeInfo> list = session.selectList("mybatis.RecipeMapper.selectByCategory", categories);
-			if (list.size() == 0) {
-				throw new FindException("레시피가 없습니다.");
-			}
-
-			return list;
-		} catch (Exception e) {
-			throw new FindException(e.getMessage());
-		} finally {
-			if (session != null)
-				session.close();
-		}
-	}
-
-	@Override
-public List<RecipeInfo> selectByIngre_name(String word) throws FindException {//list
-		
-		SqlSession session = null;
-		HashMap<String,String> map = new HashMap<>();
-		map.put("word",word);
-		map.put("o","board_no DESC");
-
-
-		try {
-			session = sqlSessionFactory.openSession();
-			List<RecipeInfo> list = session.selectList("mybatis.RecipeMapper.selectByIngre_name",word);
-			if (list.size() == 0) {
-				throw new FindException("레서피가 없습니다.");
-			}
-
-			return list;
-			
-		} catch (Exception e) {
-			throw new FindException(e.getMessage());
-		}finally {
-			if(session != null) session.close();
-		}
-				
-	}
-
+	
+	
+	//----------------------------
 	
 	
 	@Transactional(rollbackFor = Exception.class)
@@ -313,7 +303,8 @@ public List<RecipeInfo> selectByIngre_name(String word) throws FindException {//
 		
 	}
 
-	
+
+
 
 
 }

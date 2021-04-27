@@ -6,427 +6,585 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>레시피리스트 | 요리조리쿡</title>
 
+
+<!-- 파비콘 -->
+<link rel="shortcut icon" href="../images/web/favicon-32x32.png" type="image/x-icon">
+<link rel="icon" href="../images/web/favicon-32x32.png" type="image/x-icon">
+
+
 <!-- 폰트 -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
-	rel="stylesheet">
+   href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+   rel="stylesheet">
 
 <script
-	src='https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js'></script>
+   src='https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js'></script>
+
+
 
 <style>
 @font-face {
-	font-family: 'Wemakeprice-Bold';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Wemakeprice-Bold.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
+   font-family: 'Wemakeprice-Bold';
+   src:
+      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Wemakeprice-Bold.woff')
+      format('woff');
+   font-weight: normal;
+   font-style: normal;
 }
 
 @font-face {
-	font-family: 'Wemakeprice-Regular';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Wemakeprice-Regular.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
+   font-family: 'Wemakeprice-Regular';
+   src:
+      url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Wemakeprice-Regular.woff')
+      format('woff');
+   font-weight: normal;
+   font-style: normal;
 }
 
 section {
-	width: 1300px;
-	margin: 30px auto;
-	font-family: 'Noto Sans KR', sans-serif;
+   width: 1300px;
+   margin: 30px auto;
+   font-family: 'Noto Sans KR', sans-serif;
+   opacity: 1;
 }
 
-.top {
-	width: 1300px;
-	margin: 0px auto;
+section .category_box {
+   width: 100%;
+   margin: 0px auto;
+   height: 400px;
 }
 
-.title {
-	text-align: center;
-	padding: 50px 10px 10px 10px;
-	height: 160px;
-	background-image: url("../images/web/back3.jpg");
-	background-position: center;
-	font-size: 27px;
-	font-weight: bold;
-}
 /* 카테고리 : 한식, 양식, 일식, 중식 */
-.category {
-	margin: 20px 10px;
-	padding: 17px;
-	border-radius: 10px;
-	border-style: none;
-	background-color: rgba(224, 224, 224, 0.7);
-	font-size: 14px;
+section .category {
+   box-sizing: border-box;
+   border-style: none;
+   font-size: 18px;
+   background-color: inherit;
 }
 
-.category:focus {
-	border: none;
-	outline: none;
+section .category_list{
+   display: flex; flex-flow: nowrap; align-items: center; justify-content: space-around; width: 80%; height: 150px; margin: 0 auto;
 }
 
-.category:hover {
-	background-color: #55A72B;
-	color: white;
+section .category_list label {
+   cursor: pointer; display: flex; flex-flow: column; height: 110px; justify-content: space-between; align-items: center;
 }
 
-.category.on {
-	background-color: #55A72B;
-	color: white;
+section .category_list label img{
+   width: 100px; height: 70px;
 }
 
-/*옵션선택*/
-#recipe_ingre {
-	width: 130px;
-	height: 33px;
-	margin: 0 auto;
-	border-radius: 2px;
+section .category.act {
+   font-size: 22px;
+   font-weight: bold;
+   color: #FC6636;
 }
 
-#text {
-	width: 250px;
-	height: 29px;
-	margin: auto;
-	text-align: center;
-	border-radius: 2px;
-}
-/* 검색버튼 */
-#submit {
-	background-color: #55A72B;
-	color: white;
-	border: none;
-	outline: none;
-	font-size: 15px;
-	width: 100px;
-	height: 32px;
-	border-radius: 5px;
+section .ct_img.act{
+   transform: rotate(-5deg) scale(1.3);
 }
 
-/*검색 결과*/
-#search {
-	margin-top: 60px;
-	margin-left: 53px;
-	font-size: 25px;
-	font-weight: bold;
+
+section .category:focus {
+   border: none;
+   outline: none;
 }
 
-#searchlist {
-	margin: 30px;
-	display: inline-block;
+section .ct_btn:hover .category{
+   font-size: 22px;
+   font-weight: bold;
+   color: #FC6636;
 }
+
+section .ct_btn:hover .ct_img{
+   transform: rotate(-5deg) scale(1.3);
+}
+
+
 /* #양식#30분 */
-.ex {
-	font-size: 16px;
-	margin: 3px;
-	font-weight: bold;
-	display: inline-block;
+section .ex {
+   margin: 3px;
+   font-weight: bold;
+   display: inline-block;
 }
 
-.button {
-	font-weight: bold;
-	font-size: 15px;
-	width: 150px;
-	height: 45px;
-	margin: 10px;
-	margin-left: 0px;
-	background: #55A72B;
-	color: white;
-	border-radius: 10px;
-}
 
-.box {
-	border-radius: 8px;
-	border: solid 2px #36313138;
-	outline: none;
-}
 
-input {
-	cursor: pointer;
-	font-family: 'Noto Sans KR', sans-serif;
+
+section input {
+   cursor: pointer;
+   font-family: 'Noto Sans KR', sans-serif;
 }
 
 header .recipe_list {
-	color: #FC6636;
-	font-weight: bold;
+   color: #FC6636;
+   font-weight: bold;
 }
+
+section .item {width: 300px;height: 269px; cursor: pointer;}
+section .first {width: 300px; opacity: 0;}
+
+
+/* 검색기능 */
+section .content{ width: 450px; margin: 50px auto 0;}
+section .content .ex {color: rgb(179, 179, 179);}
+
+
+section .content label{display: flex; align-self: center; width: 450px; margin: 20px auto;}
+section .content label input[name=recipe_search]{width: 400px; height: 50px;padding: 0 20px;font-family: 'Noto Sans KR', sans-serif; border: none; border-radius: 5px;box-shadow: rgb(181, 181, 181) 2px 2px 4px 1px;  outline: none; font-size: 22px;}
+section .content label button{width: 50px; height: 50px;outline: none; border: none; border-left: none;  box-shadow: rgb(181, 181, 181) 2px 2px 4px 1px; border-radius: 5px; background-color:  #FC6636; ; cursor: pointer; margin-left: 10px;}
+section .content label img{width: 25px; height: 25px;}
+
+section .img_box .recipe_img{width: 300px;height: 170px;}
+
+/* 정보박스 */
+section .info_box{padding: 6px 15px; box-sizing: border-box;}
+
+/* txt_box */
+section .info_box .txt_box{width: 85%; display: flex; align-items: center; justify-content: space-between;}
+section .txt_box .ex {font-size: 14px;}
+
+/* 라스트 박스 */
+section .last_box{ display: flex; justify-content: space-between; align-items: center;}
+section .last_box img{margin-right: 10px;}
+
+
+section .member_nickname {font-size: 14px;}
+
+
+
+
+section .search_list {font-size: 20px;}
+section .cnt{font-weight: bold; font-size: 23px;}
+
+
+
+/* 더보기 */
+section .items {height: auto; overflow: hidden;}
+section .more {width: 100%; padding: 10px; color: #fff;text-align: center;font-size: 18px; margin-top: 30px; border-radius: 5px; background-color: #55A72B; cursor: pointer;}
+
+/* TOP 버튼 */
+.top{width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background-color: #55A72B; color: #fff; position: fixed; right: 180px; bottom: 200px; cursor: pointer; font-weight: bold; box-sizing: border-box; box-shadow: #ddd 1px 1px 6px 1px}
+.top:active{background-color: #fdfdfd; color: #55A72B;}
+
+
 </style>
 <script>
 
-//$(function() {
 
-
-//	});
-
-/*카테고리별로 리스트보여주기*/
-function listcategory(data, name) { //name은 myrecipe
-	console.log(data);
-
-	$("." + name + " .items .item").each(function(index, element){
-		if(index == 0){
-			$(element).css("display", "inline-block");
-		}else{
-			$(element).remove();
-		}
-	});
-	var org = $("." + name + " .items .item");  //$(".myrecipe  .items .item")
-	
-	
-	if (data.status == -1) {
-		return false;
-	} else {
-		$("#search>span").html(data.list.length);
-		var i = 0;
-		$(data.list).each(
-				function(index, element) {
-					
-					var orgCopy = org.clone();
-					//orgCopy.addClass("aaa");
-					//레시피 관련
-					orgCopy.find(".recipe_no").val(element.recipe_no);
-					orgCopy.find(".recipe_img").attr('src',"../images/upload/" + element.recipe_img);
-					orgCopy.find(".recipe_name").text(element.recipe_name);
-					orgCopy.find(".recipe_time").text("#"+element.recipe_time);
-					orgCopy.find(".recipe_category").text("#"+element.recipe_category);
-					$(".items").append("<div class=\"listnum\" style=\"display:none;\" id =\""+i+"\"></div>");
-					i++;
-					
-				var level;
-					if(element.recipe_level==1){
-						level =  "초보환영"
-					}else if(element.recipe_level==2){
-						level =  "보통"
-					}else if(element.recipe_level==3){
-						level =  "어려움"
-					}								
-					orgCopy.find(".recipe_level").text("#"+level);
-					
-					$("." + name + " .items").append(orgCopy);
-				});
-		$("." + name + " .items .item:nth-of-type(1)").hide();
-		
-
-	}
-}
-
-function fn_categoryClick(t, savecategory) {
-		
-
-	var tId = t.getAttribute("id");
-
-	var findSavedTid = savecategory.indexOf(tId);
-	if (findSavedTid > -1) {
-		$("#" + tId).removeClass("on");
-		savecategory.splice(findSavedTid, 1);
-		console.log(findSavedTid);
-	} else {
-		$("#" + tId).addClass("on");
-		savecategory.push(tId);
-		console.log(findSavedTid);
-	}
-	console.log(JSON.stringify("savecategory"+ JSON.stringify(savecategory)));
-	$.ajax({
-		url : "../recipe/categorylist",
-		method : "post",
-		dataType: "json",
-		contentType: 'application/json',
-		data : 
-			JSON.stringify(savecategory)
-		,
-		success : function(responseObj) {
-			if (responseObj.status == 1) {
-				console.log("data:"+responseObj);
-				listcategory(responseObj, 'myrecipe');
-			} else {
-				alert(responseObj.msg);
-			}
-		},
-		error : function(jqXHR) {
-			alert("에러:" + jqXHR.status);
-		}
-	});
-
-	console.log(savecategory);
-
-}
 
 
 $(function() {
-	/*헤더, 푸터로드*/
-	$("#header").load("header.html");
-	$("#footer").load("footer.html");
-
-	/*레서피 리스트 최신순으로 */
-	$.ajax({
-		url : '../recipe/list',
-		method : 'post',
-		data : {
-			"member_id" : sessionStorage.getItem("member_id")
-		},
-		success : function(data) {
-			//console.log(data);
-			listcategory(data, 'myrecipe');			
-		},
-		error : function(jqueryXHR) {
-			alert(jQueryXHR);
-		}
-	});
-
-	/* 카테고리별 리스트 불러오기 */
-	var savecategory = new Array();
-	$("section>article>div.top>div>input.category").click(function(event){
-		fn_categoryClick(event.target, savecategory);
-	});
+   /*헤더, 푸터로드*/
+   $("#header").load("header.html");
+   $("#footer").load("footer.html");
 
 
-	$("#submit").click(function(){
-		/*레서피 재료 부재료 양념 검색하여 보여주기 */
-		$.ajax({
-			url : '../recipe/list',
-			method : 'post',
-			data : "word="+ $(".ingretext").val(),
-			
-			success : function(data) {
-				console.log(data);
-				listcategory(data, 'myrecipe');
-			},
-			error : function(jqueryXHR) {
-				alert(jQueryXHR);
-			}
-		});
-		
-	});
-	
-		
-	/* 레시피 리스트에서 디테일로 넘어감 */	
-	
-	$("body > section > article:nth-child(2) > div > div.my.contents.first.myrecipe > div.items").on("click", "div.item", function(){
-		var recipe_no = $(this).find("input[type='hidden']").val();
-		var list_num = $(this).prev().attr("id");
-		
-		location.href="recipedetail.html?recipe_no="+recipe_no;
-	});
 
-	
+
+   //파라미터값
+   var temp = location.href.split("?word=");
+   var paraWord = temp[1];
+   paraWord = unescape(paraWord);
+
+   //현재 아이템 높이
+   var itemsY;
+  
+
+   //더보기 보여주는 기능
+   function itemsHt(){
+      $(".items").css("height","auto");
+      let ht = $(".items").height();
+      console.log(ht + " 컨텐츠 높이")
+      itemsY = ht;
+      if(ht > 650){
+         $(".more").show();
+         $(".items").css("height","650px");  
+      }else{
+         $(".more").hide();
+         $(".items").css("height","auto");
+      }
+   }
+   
+
+
+
+
+
+   //검색결과
+   function cnt(){
+      var cnt = 0;
+      $(".item").each(function(index,element){
+         if($(this).attr("data-v") == "show"){
+            cnt++;
+         }
+      })
+      $(".cnt").text(cnt);
+   };
+
+
+
+
+   //스크랩 상태
+   function scrap(){
+      let scrap_no = [];
+      $.ajax({
+         url : '../recipe/scrap',
+         method : 'get',
+         success : function(data) {
+            scrap_no = data.list;
+
+            $(".item").each(function(index,element){
+               let recipe = $(this).find(".recipe_no").val();
+               for(var i = 0 ; scrap_no.length > i ; i++){
+                  if(scrap_no[i] == recipe){
+                     $(this).find(".recipescrap_img").attr("src","../images/web/mypage_clip.png");
+                  }
+               }
+               
+            });
+         },
+         error : function(jqueryXHR) {
+            alert(jQueryXHR);
+         }
+      });
+   }
+
+   
+
+  
+
+
+  	// 리스트 함수
+	function listView(data) { 
+      if (data.status == -1) {
+         return false;
+      } else {
+         $(".first").show();
+         $(".item").hide();
+         $(data.list).each(function(index, element) {
+            let org = $(".first");
+            let orgCopy = org.clone();
+
+            //레시피 관련
+            orgCopy.attr("class","item");
+            orgCopy.find(".recipe_no").val(element.recipe_no);
+            orgCopy.find(".recipe_img").attr('src',"../images/upload/" + element.recipe_img);
+            orgCopy.find(".recipe_name").text(element.recipe_name);
+            orgCopy.find(".recipe_time").text("#"+element.recipe_time + "분");
+            orgCopy.find(".recipe_category").text(element.recipe_category);
+            orgCopy.find(".member_nickname").text(element.member.member_nickname);
+
+            let level;  
+            if(element.recipe_level==1){
+               level =  "초보환영"
+            }else if(element.recipe_level==2){
+               level =  "보통"
+            }else if(element.recipe_level==3){
+               level =  "어려움"
+            }                
+            orgCopy.find(".recipe_level").text("#"+level);
+                
+            $(".items").append(orgCopy);
+
+            
+            
+         });	
+         scrap();
+         $(".first").remove();
+      }
+	}
+
+   
+
+   
+   /*레서피 리스트 최신순으로 */
+   $.ajax({
+      url : '../recipe/list',
+      method : 'get',
+      success : function(data) {
+         listView(data);
+         cnt();
+         itemsHt();
+         if(paraWord != null || paraWord != ""){
+            if(paraWord != "undefined"){
+               $(".search").val(paraWord);
+               $(".search_btn").trigger("click");
+            }
+         }
+         $("section").css("opacity","1");
+      },
+      error : function(jqueryXHR) {
+         alert(jQueryXHR);
+      }
+   });
+
+
+
+
+
+    //카테고리 on 상태 함수
+    function categoryOn(val){
+      $(".item").each(function(index,element){
+         let cate = $(this).find(".recipe_category").text();
+         if(cate == val){
+            $(this).show();
+            $(this).attr("data-v","show");
+         }
+      })
+   }
+
+   //카테고리 off 상태 함수
+   function categoryOff(val){
+      $(".item").each(function(index,element){
+         let cate = $(this).find(".recipe_category").val();
+         if(cate == val){
+            $(this).hide();
+            $(this).attr("data-v","hide");
+         }
+      })
+   }
+
+
+   //카테고리 뷰 함수
+   function categoryView(){
+      $(".category").each(function(index,element){
+         let CtStatus = $(this).attr("data-ct");
+         let val = $(this).val();
+         if(CtStatus == "on"){
+            categoryOn(val);
+         }else{
+            categoryOff(val);
+         }
+      })
+   }
+   
+
+
+
+    //카테고리가 선택된게 없으면 올 리스트
+    function categoryStatus(){
+      let status = "show";
+      $(".category").each(function(index,element){
+         let CtStatus = $(this).attr("data-ct");
+         if(CtStatus == "on"){
+            status = "hide";
+         }
+      })
+      if(status == "show"){
+         $(".item").show();
+         $(".item").attr("data-v","show");
+      }
+   }
+  
+
+
+   // //카테고리 클릭 이벤트
+   $("body").on("click", ".category",function(){
+      $(".search_btn").trigger("click");
+
+      console.log("클릭됨")
+      $(this).prev(".ct_img").toggleClass("act");
+      $(this).toggleClass("act");
+      $(".item").hide();
+      $(".item").attr("data-v","hide");
+
+      if($(this).attr("data-ct") == "off"){
+         $(this).attr("data-ct","on");
+      }else{
+         $(this).attr("data-ct","off");
+      }
+      categoryView();
+      categoryStatus();
+      cnt();
+      itemsHt();
+   })
+
+   
+
+   
+   //레시피 검색리스트
+   $(".search_btn").click(function(){
+      let searchVal = $(".search").val();
+      categoryStatus();
+      if(searchVal == null || searchVal == ""){
+         categoryView();
+         categoryStatus();
+         cnt();
+         itemsHt();
+      }else{
+         $.ajax({
+         url : '../recipe/searchlist',
+         method : 'post',
+         data : {"word" : searchVal},
+         success : function(data) {
+            let search_no = [];
+            search_no = data.list;
+            
+
+            $(".item").each(function(index,element){
+               if($(this).attr("data-v") == "show"){
+                  for(var i = 0 ; search_no.length > i ; i++){
+                     let recipe = $(this).find(".recipe_no").val();
+              
+                     if(search_no[i] == recipe){                   
+                        $(this).show();
+                        $(this).attr("data-v","show");
+                        break;
+                     }else if(search_no[i] != recipe){
+                        $(this).hide();
+                        $(this).attr("data-v","hide");
+                  
+                     }
+                  }  
+               }
+                  
+            });
+            cnt();
+            itemsHt();
+            
+         },
+         error : function(jqueryXHR) {
+            alert(jQueryXHR);
+         }
+         });
+      }
+      
+   });
+
+   //검색창 엔터키
+   $(".search").change(function(){
+      $(".search_btn").trigger("click");
+   })
+
+   
+   /* 레시피 리스트에서 디테일로 넘어감 */   
+   $(".items").on("click", ".item", function(){
+      var recipe_no = $(this).find("input[type='hidden']").val();      
+      location.href="recipedetail.html?recipe_no="+recipe_no;
+   });
+
+
+   //더보기
+   $("section").on("click",".more",function(){
+      let ht = $(".items").height();
+      if(ht >= itemsY){
+         $(".more").hide();
+         return;
+      }else{
+         ht += 650;
+         $(".items").height(ht)
+
+         if(ht >= itemsY){
+            $(".more").hide();
+         }
+      }
+   })
+
+
+
+   // top 버튼
+
+   $('.top').hide();
+   $(window).scroll(function() {
+      if ($(this).scrollTop() > 700) {
+         $('.top').show();
+      } else {
+         $('.top').hide();
+      }
+   });
+   
+   $(".top").click(function() {
+      $('html, body').animate({
+         scrollTop : 0
+      }, 0);
+      return false;
+   });
+   
 
 });
 </script>
 </head>
 <body>
-	<header id="header" style="position: relative;"> </header>
+   <header id="header" style="position: relative;"> </header>
 
-	<section>
-		<!--레시피 리스트-->
-		<article style="background-color: rgb(255, 248, 248);">
-			<div class="top">
-				<div class="title" style="font-family: 'Noto Sans KR', sans-serif;"></div>
-				<!-- 카테고리 : 한식, 양식, 일식, 중식 -->
-				<div style="margin-top: 27px; margin-left: 460px;">
+   <section>
+      <!--레시피 리스트-->
+      <article>
+         <div class="category_box">
+            <!-- 카테고리 : 한식, 양식, 일식, 중식 -->
+            <div class="category_list">
+                <label class="ct_btn"><img src="../images/web/recipelist_1.png" alt="한식" class="ct_img"><input type="button" value="한식" class="category" id="1" data-ct="off"></label>
+                <label class="ct_btn"><img src="../images/web/recipelist_2.png" alt="양식" class="ct_img"><input type="button" value="양식" class="category" id="2" data-ct="off"></label>
+                <label class="ct_btn"><img src="../images/web/recipelist_3.png" alt="중식" class="ct_img"><input type="button" value="중식" class="category" id="3" data-ct="off"></label>
+                <label class="ct_btn"><img src="../images/web/recipelist_4.png" alt="일식" class="ct_img"><input type="button" value="일식" class="category" id="4" data-ct="off"></label>
+                <label class="ct_btn"><img src="../images/web/recipelist_5.png" alt="퓨전" class="ct_img"><input type="button" value="퓨전" class="category" id="5" data-ct="off"></label>  
+            </div>
 
-					<input type="button" value="한식" class="category" id="1" 
-					> 
-					<input type="button"
-						value="양식" class="category" id="2"> 
-						<input type="button"
-						value="중식" class="category" id="3"
-						> 
-						<input type="button"
-						value="일식" class="category" id="4"> 
-						<input type="button"
-						value="퓨전" class="category" id="5">
-					<!-- <input type="button" value="한식" class="category" id="1" 
-						 onclick="fn_categroryClick(this);"
-					> 
-					<input type="button"
-						value="양식" class="category" id="2"
-						onclick="fn_categroryClick(this);"> <input type="button"
-						value="중식" class="category" id="3"
-						onclick="fn_categroryClick(this);"> <input type="button"
-						value="일식" class="category" id="4"
-						onclick="fn_categroryClick(this);"> <input type="button"
-						value="퓨전" class="category" id="5"
-						onclick="fn_categroryClick(this);"> <br> -->
-				</div>
+            <!-- 선택 : 재료/요리명, 부재료, 주재료, 양념 -->
+			   <div class="content">
+                <div class="ex">원하는 레시피를 입력하세요. ex) 요리명, 재료명</div>
+                <label><input type="search" name="recipe_search" placeholder="Search" class="search" value=""><button class="search_btn"><img src="../images/web/main_search.png" alt="돋보기"></button></label>
+            </div>
 
-				<!-- 선택 : 재료/요리명, 부재료, 주재료, 양념 -->
-				<div>
-					<select id="recipe_ingre"
-						style="margin-top: 22px; height: 37px; margin-left: 430px; margin-bottom: 50px; font-family: 'Noto Sans KR', sans-serif;"
-						class="box">
-						<option class="op" selected>재료/요리명</option>
-						<option class="op">부재료</option>
-						<option class="op">주재료</option>
-					</select>
+         </div>
+      </article>
 
-					<!-- 재료 및 부재료 입력 -->
-					<input type="text" placeholder="입력하여 주세요" id="text" class="box ingretext"
-						style="text-align: left; height: 37px;">
+      <!--검색결과-->
+      <article>
 
-					<!-- 검색버튼 -->
-					<input type="button" value="검색" id="submit"
-						style="cursor: pointer; height: 36px;" class="button">
-				</div>
-			</div>
-		</article>
-
-		<!--검색결과-->
-		<article>
-
-			<div>
-				<!--검색결과 조회-->
-				<div id="search">검색결과 : <span>**</span> 개 조회</div>
+         <div>
+            <!--검색결과 조회-->
+            <div class="search_list">검색결과 : <span class="cnt">**</span> 개 조회</div>
 
 
-				<div class="my contents first myrecipe" data-name="my">
-					<div class="items">
+            <div class="recipeList">
 
+               <div class="items">
 
-						<div  class="item"
-							style="display: inline-block; box-shadow: #ddd 1px 1px 6px 1px; margin: 25px 10px;">
-							<div>
-								<a href="#"> 
-									<input type="hidden" value="" class="recipe_no"> 
-									<img src="../images/upload/recipe_img1.png" alt="대표이미지" class="recipe_img" width="300px">
-								</a>
-							</div>
-							<!--#30분 #양식-->
-							<div class="txt" style="display: inline;">
-								<div class="ex recipe_time">&nbsp;&nbsp;#30분&nbsp;&nbsp;</div>
-								<div class="ex recipe_category">#양식&nbsp;&nbsp;</div>
-								<div class="ex recipe_level">#초보환영&nbsp; </div>
-								<img src="../images/web/mypage_clip.png"
-										width="25px" class="recipescrap_img">
-								<br>
-								<!--레시피 제목-->
-								<div class="ex recipe_name">&nbsp;&nbsp;미트볼스파게티</div>
-								<br>
-							</div>
-						</div>
+                  <div  class="first" style="display: inline-block; box-shadow: #ddd 1px 1px 6px 1px; margin: 28px 10px;" data-v="show">
 
-					</div>
-				</div>
+					   <!-- 이미지 -->
+                    <div class="img_box">
+                        <input type="hidden" value="" class="recipe_no"> 
+                        <img src="../images/upload/bbang1.jpg" alt="대표이미지" class="recipe_img">
+                    </div>
 
+                    <div class="info_box">
+                        <!--#30분 #양식 #난이도-->
+                        <div class="txt_box">
+                           <div class="ex recipe_time">&nbsp;&nbsp;#30분&nbsp;&nbsp;</div>
+                           <div class="ex recipe_category"><span>#</span>양식&nbsp;&nbsp;</div>
+                           <div class="ex recipe_level">#초보환영&nbsp; </div>
+                        </div>
+                           
+                        <!--레시피 제목-->
+                        <div class="title_box">
+                           <div class="ex recipe_name">&nbsp;&nbsp;미트볼스파게티</div>
+                           
+                           <div class="last_box">
+                              <div class="ex member_nickname">&nbsp;&nbsp;박아랑</div>
+                              <img src="../images/web/mypage_clip2.png" width="25px" class="recipescrap_img">
+                           </div>
+                        </div>
+                    </div>
 
-				<!--페이징-->
-				<div>
-					<div class="paging"
-						style="text-align: center; margin-top: 20px; cursor: pointer;">
-						<i class="fas fa-angle-double-left"></i> &nbsp; <i
-							class="fas fa-angle-left"></i> &nbsp; 1 &nbsp 2 &nbsp 3 &nbsp
-						4&nbsp 5 &nbsp 6 &nbsp 7 &nbsp 8 &nbsp <i
-							class="fas fa-angle-right"></i> &nbsp; <i
-							class="fas fa-angle-double-right"></i>
-					</div>
-				</div>
-		 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-		</article>
-	</section>
+                   
 
-	<footer id="footer"></footer>
+                  </div>
 
+               </div> 
+
+               <div class="more">더보기</div>
+
+            </div>
+
+      </article>
+   </section>
+
+   <footer id="footer"></footer>
+   <div class="top">TOP</div>
 
 
 </body>
