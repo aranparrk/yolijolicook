@@ -3,23 +3,9 @@
 
 <mapper namespace="yolijolicook.MemberMapper" >
 
-
-	<!--
-	<resultMap id="memberMap" type="com.my.vo.Member" autoMapping="true">
-	    <result column="MEMBER_ID" property="member_id"/>
-	    <result column="MEMBER_PWD" property="member_pwd"/>
-	    <result column="MEMBER_EMAIL" property="member_email"/>
-	    <result column="MEMBER_NICKNAME" property="member_nickname"/>
-	    <result column="MEMBER_STATUS" property="member_status"/>
-	    <result column="MEMBER_DT" property="member_dt"/>
-	    <collection property="recipe_no" resultMap="recipeMap"/>
-	</resultMap>
-	  -->
 	 
 	<resultMap  id="recipeMap" type="RecipeInfo" >
 		<id property = "recipe_no" column="recipe_no"/>
-<!-- 		<collection>
-		</collection> -->
 	</resultMap>
 	
 	

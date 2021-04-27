@@ -107,7 +107,7 @@
 
             <div class="content">
                 <div class="ex">원하는 레시피를 입력하세요. ex) 요리명, 재료명</div>
-                <label><input type="search" name="recipe_search" placeholder="Search"><button><img src="../images/web/main_search.png" alt="돋보기"></button></label>
+                <label><input type="search" name="recipe_search" placeholder="Search" class="search"><button><img src="../images/web/main_search.png" alt="돋보기"></button></label>
             </div>
         </section>
 
@@ -120,7 +120,6 @@
            $(function(){
 
             $(".logo img").attr("src","../images/web/header_logo2.png");
-            $(".bell img").attr("src","../images/web/header_bell2.png");
 
             var $text = $('header a,header .login_name');
             var $header = $('header');
@@ -129,14 +128,12 @@
                 $header.removeClass('act');
                 $text.removeClass('act');
                 $(".logo img").attr("src","../images/web/header_logo1.png");
-                $(".bell img").attr("src","../images/web/header_bell1.png");
             };
 
             function top(){
                 $header.addClass('act');
                 $text.addClass('act');
                 $(".logo img").attr("src","../images/web/header_logo2.png");
-                $(".bell img").attr("src","../images/web/header_bell2.png");
             };
 
             $header.hover(function(){move()},function(){top()});
@@ -155,9 +152,11 @@
             },5000);
 
 
+
+
             
 
-
+            // 스크롤 이벤트
             $(window).scroll(function(){
                 var navbar = $(this).scrollTop();
                 if(navbar < 50){
@@ -169,6 +168,19 @@
                 }
             });
 
+            // 검색클릭 이벤트
+            $("label button").click(function(){
+                let word = $(".search").val();
+                location.href="recipelist.html?word="+ escape(word);
+
+            });
+
+            // 검색 엔터 이벤트
+            $(".search").change(function(){
+                $("label button").trigger("click");
+            })
+
+            
 
         });
 
