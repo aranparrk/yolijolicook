@@ -53,7 +53,7 @@
 		SELECT * FROM BOARD WHERE board_no=#{board_no}
 	</select>
 	<select id="selectCommentByBoard_no" resultMap="boardcmtMap">
-		SELECT * FROM BOARD_COMMENT WHERE board_no=#{board_no} ORDER BY boardcmt_no DESC
+		SELECT * FROM BOARD_COMMENT WHERE board_no=#{board_no} ORDER BY boardcmt_no
 	</select>
 	
 	<update id="updateBoardCnt" parameterType="int">

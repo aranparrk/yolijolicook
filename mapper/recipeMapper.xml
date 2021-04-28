@@ -77,7 +77,7 @@ recipecmt_no, c.member_id cmtmember_id, recipecmt_detail, recipecmt_dt
 FROM recipe_info info JOIN recipe_process  pro ON(info.recipe_no=pro.recipe_no)
                       JOIN recipe_ingre ingre ON(info.recipe_no=ingre.recipe_no)
                       LEFT OUTER JOIN recipe_comment c ON(info.recipe_no = c.recipe_no)        
-WHERE info.recipe_no = #{recipe_no} ORDER BY recipe_ingre_no ASC , recipe_step_no ASC , recipecmt_no DESC
+WHERE info.recipe_no = #{recipe_no} ORDER BY recipe_ingre_no ASC , recipe_step_no ASC , recipecmt_no 
  </select>
    
    

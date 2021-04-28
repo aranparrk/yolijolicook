@@ -421,8 +421,10 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
                         var recipe_writer = $(".recipe_writer").text();
                         if(login_id == recipe_writer){
                             $(".modify").show();
+                            $(".scrap_btn").hide();
                         }else{
                             $(".modify").hide();
+                            $(".scrap_btn").show();
                         }
 
 
@@ -650,7 +652,7 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
             <a class="modify_btn" href="../html/recipemodify.html"><div class="modify"><input class="button modifyBtn" type="button" value="수정하기" style="cursor:pointer"> </div></a>
 
             <!-- 스크랩하기 버튼 -->
-            <a><div class="scrap"><input class="button scrapBtn" type="button" value="스크랩" style="cursor:pointer"> </div></a>
+            <a class="scrap_btn"><div class="scrap"><input class="button scrapBtn" type="button" value="스크랩" style="cursor:pointer"> </div></a>
             
             <!-- 스크랩 모달 -->
             <div class="scrapModal"> 

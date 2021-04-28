@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties>
+		<property name="username" value="yorijoricook" />
+	</properties>
+	<typeAliases>
+		<typeAlias alias="Board" type="com.my.vo.Board"/>
+		<typeAlias alias="Member" type="com.my.vo.Member"/>
+		<typeAlias alias="RecipeInfo" type="com.my.vo.RecipeInfo"/>
+		<typeAlias alias="Scrap" type="com.my.vo.Scrap"/>
+		<typeAlias alias="Report" type="com.my.vo.Report"/>
+		<typeAlias alias="QNA" type="com.my.vo.QNA"/>
+		<typeAlias alias="BoardComment" type="com.my.vo.BoardComment"/>
+		<typeAlias alias="RecipeComment" type="com.my.vo.RecipeComment"/>
+		<typeAlias alias="RecipeIngre" type="com.my.vo.RecipeIngre"/>
+        <typeAlias alias="RecipeProcess" type="com.my.vo.RecipeProcess"/>
+		
+	</typeAliases>
+	<mappers>
+		<mapper resource="memberMapper.xml"/>
+		<mapper resource="boardMapper.xml"/>
+		<mapper resource="qnaMapper.xml"/>
+		<mapper resource="recipeMapper.xml"/>
+	</mappers>
+</configuration>

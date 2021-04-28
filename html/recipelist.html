@@ -196,7 +196,7 @@ $(function() {
    function itemsHt(){
       $(".items").css("height","auto");
       let ht = $(".items").height();
-      console.log(ht + " 컨텐츠 높이")
+
       itemsY = ht;
       if(ht > 650){
          $(".more").show();
@@ -230,7 +230,7 @@ $(function() {
    function scrap(){
       let scrap_no = [];
       $.ajax({
-         url : '../recipe/scrap',
+         url : '../recipe/viewscrap',
          method : 'get',
          success : function(data) {
             scrap_no = data.list;
@@ -266,6 +266,8 @@ $(function() {
          $(data.list).each(function(index, element) {
             let org = $(".first");
             let orgCopy = org.clone();
+
+
 
             //레시피 관련
             orgCopy.attr("class","item");
@@ -384,7 +386,6 @@ $(function() {
    $("body").on("click", ".category",function(){
       $(".search_btn").trigger("click");
 
-      console.log("클릭됨")
       $(this).prev(".ct_img").toggleClass("act");
       $(this).toggleClass("act");
       $(".item").hide();

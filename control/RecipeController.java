@@ -153,13 +153,17 @@ public class RecipeController {
       
          //System.out.println("업로드 저장 위치 : " + uploadFolder);
 
-           
+         if(recipe_main_img == null) {
+             map.put("status", -2);
+             return map;
+          }
            UUID uuid = UUID.randomUUID();
            
            String mainImgName = recipe_main_img.getOriginalFilename(); 
+           String ext = mainImgName.substring(mainImgName.lastIndexOf(".")); // 확장자명 때오기
          //메인이미지 이름
-           String newMainImgName = uuid.toString()+"_main_"+mainImgName;
-           //System.out.println("파일 저장용 메인 이미지 이름 : "+ newMainImgName);
+           String newMainImgName = uuid.toString()+"_main" + ext;
+           
          
            //메인이미지 저장
            File mainImageFile = new File(uploadFolder,newMainImgName);
@@ -189,8 +193,9 @@ public class RecipeController {
             //step 이미지 이름 변경저장
                  int i = 1;
                  for(MultipartFile stepImg : recipe_step_img) {
-                    
-                    String newStepImgName = uuid.toString()+"_"+i+"_"+stepImg.getOriginalFilename();//과정이미지 이름
+                	  String stepImgName = stepImg.getOriginalFilename();
+                 	 String ext2 = stepImgName.substring(stepImgName.lastIndexOf(".")); // 확장자명 때오기
+                      String newStepImgName = uuid.toString()+"_"+i+ext2;//과정이미지 이름
                    
                     for(RecipeProcess steps : processes) {
                        if(steps.getRecipe_step_no()==i) {
@@ -306,7 +311,7 @@ public class RecipeController {
       
       
       
-      @RequestMapping("/scrap")
+      @RequestMapping("/viewscrap")
       @ResponseBody // json형태로 응답시 써줘야함
       public Map<String, Object> scrap(HttpServletRequest request) throws FindException {
          
@@ -348,6 +353,7 @@ public class RecipeController {
    
       //System.out.println("업로드 저장 위치 : " + uploadFolder);
 
+     
         
         UUID uuid = UUID.randomUUID();
         if(recipe_main_img == null) {
@@ -356,8 +362,9 @@ public class RecipeController {
         }
         
         String mainImgName = recipe_main_img.getOriginalFilename(); 
+        String ext = mainImgName.substring(mainImgName.lastIndexOf(".")); // 확장자명 때오기
       //메인이미지 이름
-        String newMainImgName = uuid.toString()+"_main_"+mainImgName;
+        String newMainImgName = uuid.toString()+"_main" + ext;
         
       
         //메인이미지 저장
@@ -386,8 +393,9 @@ public class RecipeController {
          //step 이미지 이름 변경저장
               int i = 1;
               for(MultipartFile stepImg : recipe_step_img) {
-                 
-                 String newStepImgName = uuid.toString()+"_"+i+"_"+stepImg.getOriginalFilename();//과정이미지 이름
+                 String stepImgName = stepImg.getOriginalFilename();
+            	 String ext2 = stepImgName.substring(stepImgName.lastIndexOf(".")); // 확장자명 때오기
+                 String newStepImgName = uuid.toString()+"_"+i+ext2;//과정이미지 이름
                  
                  for(RecipeProcess steps : processes) {
                     if(steps.getRecipe_step_no()==i) {

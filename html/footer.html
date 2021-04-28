@@ -29,6 +29,19 @@ footer{margin-top: 100px; background-color:rgb(243, 243, 243); font-size: 12px; 
 .footer_icon>a { font-size: 35px; color: rgb(44, 44, 44)}
 .foot_icon_size{width: 50%;}
 </style>
+<script src='https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js'></script>
+<script>
+	// 로그인 후 문의작성 가능
+	let idValue = sessionStorage.getItem("member_id");
+	$(".qnaclick").on("click",function(){
+		if (idValue != null && idValue != "") {
+			location.href="memberqna.html";
+		}else{
+			alert("로그인 후 문의해 주세요.");
+			location.href="memberlogin.html";
+		}
+	});
+</script>
 </head>
    <body>
         <footer>
@@ -42,7 +55,7 @@ footer{margin-top: 100px; background-color:rgb(243, 243, 243); font-size: 12px; 
                 </div>
             </div>
             <!-- 카피라이터 -->
-            <p class="footer_copyrights"><span><a href="memberqna.html" style="text-decoration: none; color:gray"><i class="fas fa-paper-plane"></i> 문의하기</a>　|　Copyright 2021. yolijolicook All copyrights cannot be copied without permission.</span></p>
+            <p class="footer_copyrights"><span><a href="#" class="qnaclick" style="text-decoration: none; color:gray"><i class="fas fa-paper-plane"></i> 문의하기</a>　|　Copyright 2021. yolijolicook All copyrights cannot be copied without permission.</span></p>
         </footer>
    </body>
 </html>

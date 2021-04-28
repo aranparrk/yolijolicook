@@ -158,7 +158,7 @@ header .logout {
          $('.bell_list_bg').toggleClass('show');
       });
       
-      let idValue = sessionStorage.getItem("member_id");
+      var idValue = sessionStorage.getItem("member_id");
       // 로그인 | 로그아웃에 따른 헤더 변화
       if (idValue != null && idValue != "") {
          $(".logout").css("display", "none")
@@ -200,7 +200,7 @@ header .logout {
          src="../images/web/header_logo1.png" alt="로고"></a>
       <ul class="menu">
          <li><a href="recipelist.html" class="recipe_list">레시피 찾기</a></li>
-         <li><a href="recipeupload.html" class="recipe_upload">레시피 작성</a></li>
+         <li><a href="#" class="recipe_upload">레시피 작성</a></li>
          <li><a href="boardlist.html" class="board_list">게시판</a></li>
          <li><a href="#" class="member_mypage">마이페이지</a></li>
       </ul>
