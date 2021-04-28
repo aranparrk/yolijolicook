@@ -3,6 +3,14 @@
    PUBLIC "=//mybatis.org//DTD Mapper 3.0..EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    <mapper namespace="mybatis.RecipeMapper">
+ <!-- ******레시피 리스트******* -->
+  <!-- 레시피 리스트 -->
+      <resultMap  id="recipeMap" type="RecipeInfo" autoMapping="true">
+      <id property = "recipe_no" column="recipe_no"/>
+      <association property="member" javaType="com.my.vo.Member" autoMapping="true"/>
+   </resultMap>
+   
+   
  <!-- ******레시피 디테일 ******* -->  
 <!-- 레시피 디테일 -->
 <resultMap  id="detailinfo" type="RecipeInfo" autoMapping="true">
@@ -35,18 +43,29 @@
 	</collection> 
    </resultMap>   
 
+
 <!-- ******레시피 리스트 ******* -->
-
-   <resultMap type="RecipeInfo" id="selectbyname" autoMapping="true">
-   	 <id property="recipe_no" column="recipe_no"/>
-   	 
-   	 <collection property="recipeingre" ofType="RecipeIngre" autoMapping="true">
-   	 	<id property="recipe_ingre_no" column="recipe_ingre_no"/>
-   	 </collection>
-   	 
-   </resultMap>
-
-   
+  
+ 
+   <!--  최근 등록된 레시피 순으로 불러오기  --> 
+  <select id="selectAllRecipeInfo" resultMap="recipeMap">
+   SELECT info.recipe_no,info.member_id,info.recipe_name, info.recipe_category, info.recipe_time, info.recipe_level, info.recipe_img, info.recipe_scrap_cnt , mem.member_nickname
+   FROM recipe_info info  JOIN member mem ON info.member_id = mem.member_id
+   ORDER BY recipe_dt desc
+  </select> 
+  
+  
+    <!-- 검색하여 레시피 리스트 찾아오기 --> 
+  <select id="selectByIngre_name" parameterType="String" resultType="Integer">
+   SELECT DISTINCT info.RECIPE_NO
+   FROM RECIPE_INFO info LEFT OUTER JOIN RECIPE_INGRE IG ON INFO.RECIPE_NO = IG.RECIPE_NO 
+   WHERE info.recipe_name LIKE '%${word}%' or (ig.recipe_ingre_name LIKE '%${word}%' and ig.recipe_ingre_type LIKE '%재료')
+  </select>  
+  
+<!--     사용자가 스크랩한 레시피 번호를 찾아옴  -->
+   <select id="selectMyScrap" resultType="Integer" parameterType="String">
+   SELECT recipe_no FROM scrap WHERE member_id= #{member_id}
+  </select>   
 
  <!-- ******레시피 디테일 ******* -->  
    <!-- 레시피 디테일 페이지 정보 불러오기-->
@@ -75,48 +94,6 @@ VALUES (SEQ_RECIPECMT.nextval,#{recipeinfo.recipe_no},#{member.member_id}, #{rec
 
 	
 	
-<!-- ******레시피 리스트 ******* -->
-  
-  <!-- 레시피 개수를 찾아옴 --> 
-  <select id="selectRecipeInfoCount" resultType="RecipeInfo">
-	SELECT count(*) FROM recipe_info 
-  </select>
- 
-   <!--  최근 등록된 레시피 순으로 불러오기  --> 
-  <select id="selectAllRecipeInfo" resultType="RecipeInfo">
-	SELECT recipe_no, member_id,recipe_name, recipe_category, recipe_time, recipe_level, recipe_img, recipe_scrap_cnt 
-	FROM recipe_info 
-	ORDER BY recipe_dt desc
-  </select> 
-  
-    <!-- 카테고리로 레시피 리스트 찾아오기 --> 
-  <select id="selectByCategory" resultType="RecipeInfo">
-	SELECT recipe_no, member_id,recipe_name, recipe_category, recipe_time, recipe_level, recipe_img, recipe_scrap_cnt 
-	FROM recipe_info
-	WHERE recipe_no IN (SELECT recipe_no 
-    	               FROM recipe_info 
-        	           WHERE recipe_category IN 
-        	            <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-      						  #{item}
-  						</foreach>
-  						)
-	ORDER BY recipe_dt desc
-  </select>   
-  
-    <!-- 검색하여 레시피 리스트 찾아오기 --> 
-  <select id="selectByIngre_name" parameterType="String" resultMap="selectbyname">
-	SELECT DISTINCT info.RECIPE_NO,info.RECIPE_CATEGORY,info.recipe_name,info.recipe_time,info.recipe_level,info.recipe_img,info.recipe_dt                   
-	FROM RECIPE_INFO info LEFT OUTER JOIN RECIPE_INGRE IG ON INFO.RECIPE_NO = IG.RECIPE_NO                   
-	WHERE info.recipe_name LIKE '%${word}%' or (ig.recipe_ingre_name LIKE '%${word}%' and ig.recipe_ingre_type LIKE '%재료')
-	ORDER BY info.recipe_dt desc
-
-  </select>  
-  
-    <!-- 사용자가 스크랩한 레시피 번호를 찾아옴 --> 
-   <select id="selectAllScrap" resultType="Scrap">
-	SELECT scrap_no FROM scrap WHERE recipe_no = 1 AND member_id='{member_id}';
-  </select>   
-
 
 <!-- ******레시피 등록******* -->  	
 
@@ -149,7 +126,7 @@ DELETE FROM recipe_process  WHERE recipe_no = #{recipe_no}
    </delete>
    
 
-<!-- 레시피 수정 메퍼 수정 필요 ,,,,,,,,,,,, date값 설정 변경 -->	
+<!-- 레시피 수정 정보 재입력 -->	
 	<insert id="updateRecipeInfo" parameterType="RecipeInfo">
 INSERT INTO recipe_info (recipe_no, member_id, recipe_name, recipe_intro, recipe_category, recipe_time, recipe_level,recipe_img ,recipe_dt) 
 VALUES(#{recipe_no}, #{member.member_id}, #{recipe_name}, #{recipe_intro}, #{recipe_category}, #{recipe_time},#{recipe_level}, #{recipe_img}, SYSDATE)	
