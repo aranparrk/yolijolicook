@@ -435,7 +435,12 @@ body > section > article > table > tbody > tr > td.cmtContent.recipeCmt_detail{
 			    				var recipe_ingre_type = data.list[0].recipeingre[i].recipe_ingre_type;
 			    				var recipe_ingre_name = data.list[0].recipeingre[i].recipe_ingre_name;
 			    				var recipe_ingre_metering = data.list[0].recipeingre[i].recipe_ingre_metering;
-
+								
+			    				if(recipe_ingre_metering == null){
+			    					recipe_ingre_metering="";
+			    				}
+			    				
+			    				
 				    			if(recipe_ingre_type =="주재료"){
 				    				$recipeMainIngreArea.append("<br><div class=\"ingreName mainIngrename\">"+recipe_ingre_name+"</div>&nbsp;&nbsp;&nbsp;&nbsp;<div class=\"mainIngreMetering IngreMetering\">"+recipe_ingre_metering+"</div>")
 			    				}else if(recipe_ingre_type =="부재료"){
