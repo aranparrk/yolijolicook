@@ -408,7 +408,7 @@ $(function() {
    //레시피 검색리스트
    $(".search_btn").click(function(){
       let searchVal = $(".search").val();
-      categoryStatus();
+
       if(searchVal == null || searchVal == ""){
          categoryView();
          categoryStatus();
@@ -422,28 +422,40 @@ $(function() {
          success : function(data) {
             let search_no = [];
             search_no = data.list;
+
+            // 검색결과가 없으면 실행
+            if(search_no.length == 0){
+               $(".item").each(function(index,element){
+                  $(this).hide();
+                  $(this).attr("data-v","hide");
+               
+               })
+               cnt();
+               itemsHt();
+            }else{
+               $(".item").each(function(index,element){
+                  if($(this).attr("data-v") == "show"){
+                     for(var i = 0 ; search_no.length > i ; i++){
+                        let recipe = $(this).find(".recipe_no").val();
+               
+                        if(search_no[i] == recipe){                   
+                           $(this).show();
+                           $(this).attr("data-v","show");
+                           break;
+                        }else if(search_no[i] != recipe){
+                           $(this).hide();
+                           $(this).attr("data-v","hide");
+                     
+                        }
+                     }  
+                  }
+                     
+               });
+               cnt();
+               itemsHt();
+            }
             
 
-            $(".item").each(function(index,element){
-               if($(this).attr("data-v") == "show"){
-                  for(var i = 0 ; search_no.length > i ; i++){
-                     let recipe = $(this).find(".recipe_no").val();
-              
-                     if(search_no[i] == recipe){                   
-                        $(this).show();
-                        $(this).attr("data-v","show");
-                        break;
-                     }else if(search_no[i] != recipe){
-                        $(this).hide();
-                        $(this).attr("data-v","hide");
-                  
-                     }
-                  }  
-               }
-                  
-            });
-            cnt();
-            itemsHt();
             
          },
          error : function(jqueryXHR) {
